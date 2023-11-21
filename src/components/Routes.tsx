@@ -4,6 +4,7 @@ import { OrderPage } from '../pages/OrderPage.tsx';
 import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { NameContext } from '../context/NameContext.ts';
 import { useState } from 'react';
+import { MainLayout } from '../layouts/MainLayout.tsx';
 
 const MainRoutes = () => {
   const [name, setName] = useState('');
@@ -11,7 +12,9 @@ const MainRoutes = () => {
     <NameContext.Provider value={{ name, setName }}>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/order" element={<OrderPage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/order" element={<OrderPage />} />
+        </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </NameContext.Provider>
