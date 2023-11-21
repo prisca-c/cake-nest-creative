@@ -2,6 +2,7 @@ import { Login } from '../components/LoginPage/Login.tsx';
 import styled from 'styled-components';
 import { theme } from '../theme';
 import { DivCenter } from '../components/DivCenter.tsx';
+import { Logo } from '../components/Logo.tsx';
 
 export const LoginPage = () => {
   return (
@@ -10,7 +11,7 @@ export const LoginPage = () => {
         <DivCenter>
           <LogoDiv>
             <p>Cake</p>
-            <Logo src="/src/assets/images/cupcake.png" alt="logo" />
+            <Logo />
             <p>Nest</p>
           </LogoDiv>
           <H1>Bienvenue chez nous ! </H1>
@@ -53,10 +54,6 @@ const LogoDiv = styled.div`
   color: ${theme.colors.primary};
   font-size: 2.5rem;
   height: 30vh;
-`;
-
-const Logo = styled.img`
-  width: clamp(50px, 10%, 100px);
 `;
 
 const BackgroundOpacity = styled.div`
