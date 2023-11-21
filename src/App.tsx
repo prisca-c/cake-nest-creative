@@ -12,4 +12,5 @@ export default function App() {
 const Div = styled.div`
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 `;

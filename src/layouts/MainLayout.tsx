@@ -17,13 +17,15 @@ export const MainLayout = () => {
 const Div = styled.div`
   background-color: ${theme.colors.primary};
   padding: 20px;
+	height: calc(100vh - 40px);
+	display: flex;
+	flex-flow: column;
 `;
 
-const Main = styled.main`
+const Main = styled.div`
   background-color: #fff;
   padding: 15px 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
-  overflow: auto;
-  height: calc(100vh - 10vh - 40px);
   border-radius: 0 0 10px 10px;
+	height: 100%;
 `;
