@@ -8,6 +8,7 @@ import { MainLayout } from '../layouts/MainLayout.tsx';
 
 const MainRoutes = () => {
   const [name, setName] = useState('');
+
   return (
     <NameContext.Provider value={{ name, setName }}>
       <Routes>

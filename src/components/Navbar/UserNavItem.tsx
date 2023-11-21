@@ -6,7 +6,11 @@ import { useContext } from 'react';
 import { NameContext } from '../../context/NameContext.ts';
 
 export const UserNavItem = () => {
-  const { name } = useContext(NameContext);
+  const { name, setName } = useContext(NameContext);
+  const handleLogout = () => {
+    document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setName('');
+  };
 
   return (
     <ProfileDiv>
@@ -15,7 +19,7 @@ export const UserNavItem = () => {
           Salut
           <span className={'profile-text-name'}> {name}</span>
         </p>
-        <Link to={'/'} className={'profile-text-logout'}>
+        <Link to={'/'} className={'profile-text-logout'} onClick={handleLogout}>
           Se déconnecter
         </Link>
       </div>
