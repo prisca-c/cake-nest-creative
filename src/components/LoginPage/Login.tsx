@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NameContext } from '../../context/NameContext.ts';
+import styled from 'styled-components';
+import { DivCenter } from '../DivCenter.tsx';
+import { LoginForm } from './LoginForm.tsx';
 
 export const Login = () => {
-  const { name, setName } = useContext(NameContext);
+  const { setName } = useContext(NameContext);
+  const [newName, setNewName] = useState('');
   const navigate = useNavigate();
 
   const handleNameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.value;
-    setName(inputName);
+    setNewName(inputName);
   };
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,23 +24,23 @@ export const Login = () => {
       return;
     }
 
-    setName(name);
+    setName(newName);
     navigate('/order');
   };
 
+  const H2 = styled.h2`
+    color: #fff;
+    text-align: center;
+  `;
+
   return (
-    <div>
-      <h2>Connectez-vous</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Entrez votre prénom ..."
-          id="name"
-          value={name}
-          onChange={handleNameOnChange}
-        />
-        <button>Accéder à votre espace</button>
-      </form>
-    </div>
+    <DivCenter>
+      <H2>Connectez-vous</H2>
+      <LoginForm
+        name={newName}
+        handleOnChange={handleNameOnChange}
+        handleLogin={handleLogin}
+      />
+    </DivCenter>
   );
 };
