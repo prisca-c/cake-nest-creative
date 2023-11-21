@@ -1,12 +1,19 @@
 import { Logo } from '../Logo.tsx';
 import styled from 'styled-components';
 import { theme } from '../../theme';
+import { useNavigate } from 'react-router-dom';
 
 export const LogoNavItem = () => {
+  const navigate = useNavigate();
+
+  const refreshPage = () => {
+    navigate(0);
+  };
+
   return (
     <LogoText>
       Cake
-      <Logo width={'clamp(2rem, 45px, 3rem)'} />
+      <Logo width={'clamp(2rem, 45px, 3rem)'} onClick={refreshPage} />
       Nest
     </LogoText>
   );
