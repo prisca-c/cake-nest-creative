@@ -10,17 +10,17 @@ export const Logo = ({ width, onClick }: LogoProps) => {
     <LogoStyle
       src="/src/assets/images/cupcake.png"
       alt="logo"
-      width={width}
+      $width={width}
       onClick={onClick}
-      cursorPointer={!!onClick}
+      $cursorPointer={!!onClick}
     />
   );
 };
 
 const LogoStyle = styled.img<{
-  width?: string;
-  cursorPointer?: boolean;
+  $width?: string;
+  $cursorPointer?: boolean;
 }>`
-  width: ${(props) => props.width || '50px'};
-  cursor: ${(props) => (props.cursorPointer ? 'pointer' : 'default')};
+  width: ${(props) => props.$width || '50px'};
+  cursor: ${(props) => (props.$cursorPointer ? 'pointer' : 'default')};
 `;
