@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { NameContext } from '../../context/NameContext.ts';
 
 export const Login = () => {
-  const [name, setName] = useState<string>('');
+  const { name, setName } = useContext(NameContext);
+  const navigate = useNavigate();
 
   const handleNameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.value;
@@ -17,8 +20,8 @@ export const Login = () => {
       return;
     }
 
-    alert(`Bienvenue ${name} !`);
-    setName('');
+    setName(name);
+    navigate('/order');
   };
 
   return (
