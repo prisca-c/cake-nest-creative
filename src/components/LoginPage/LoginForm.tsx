@@ -30,6 +30,9 @@ export const LoginForm = () => {
 
     setName(newName);
     navigate('/order');
+    document.cookie = `name=${newName}; expires=Thu, ${new Date(
+      Date.now() + 1000 * 60 * 10,
+    ).toUTCString()};`;
   };
 
   return (
