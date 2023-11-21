@@ -1,62 +1,70 @@
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { Button } from '../Button.tsx';
 import { IoIosArrowForward } from 'react-icons/io';
-import React from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { LoginFormInput } from './LoginFormInput.tsx';
+import { NameContext } from '../../context/NameContext.ts';
+import { useNavigate } from 'react-router-dom';
 
-type LoginFormProps = {
-  name: string;
-  handleOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleLogin: (event: React.FormEvent<HTMLFormElement>) => void;
-};
+export const LoginForm = () => {
+  const { setName } = useContext(NameContext);
+  const [newName, setNewName] = useState('');
+  const navigate = useNavigate();
 
-export const LoginForm = ({
-  name,
-  handleOnChange,
-  handleLogin,
-}: LoginFormProps) => {
-  const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: clamp(200px, 50%, 500px);
-  `;
+  const handleNameOnChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const inputName = event.target.value;
+      setNewName(inputName);
+    },
+    [],
+  );
 
-  const DivInput = styled.div`
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 10px 15px;
-  `;
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const Input = styled.input`
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    place-items: center;
-    gap: 10px;
-    width: 100%;
-  `;
+    if (newName === '') {
+      alert('Veuillez entrer un prénom');
+      return;
+    }
+
+    setName(newName);
+    navigate('/order');
+  };
 
   return (
     <Form onSubmit={handleLogin}>
       <DivInput>
         <IoPersonCircleOutline size={30} color={'#2d2d2d'} />
-        <Input
-          type="text"
-          placeholder="Entrez votre prénom ..."
-          id="name"
-          value={name}
-          onChange={handleOnChange}
-        />
+        <LoginFormInput name={newName} handleOnChange={handleNameOnChange} />
       </DivInput>
-      <Button variant={'primary'}>
-        Mon espace <IoIosArrowForward />
+      <Button variant={'primary'} width={'100%'}>
+        <Text>Mon espace</Text>
+        <IoIosArrowForward />
       </Button>
     </Form>
   );
 };
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  width: fit-content;
+  gap: 1rem;
+`;
+
+const DivInput = styled.div`
+  display: flex;
+  gap: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  width: 50vw;
+  margin-top: 1.5rem;
+`;
+
+const Text = styled.p`
+  text-align: center;
+  vertical-align: center;
+`;
