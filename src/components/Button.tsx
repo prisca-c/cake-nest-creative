@@ -41,11 +41,17 @@ const ButtonStyle = styled.button<{
   padding: 10px 15px;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
   gap: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: ${({ $width }) => $width};
   text-align: ${({ $textAlign }) => $textAlign};
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${theme.colors.white};
+    color: ${({ $variant }) => theme.colors[$variant]};
+    outline: 1px solid ${({ $variant }) => theme.colors[$variant]};
+  }
 `;
