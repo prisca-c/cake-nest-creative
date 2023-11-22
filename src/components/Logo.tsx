@@ -8,7 +8,7 @@ type LogoProps = {
 export const Logo = ({ width, onClick }: LogoProps) => {
   return (
     <LogoStyle
-      src="/src/assets/images/cupcake.png"
+      src="/images/cupcake.png"
       alt="logo"
       $width={width}
       onClick={onClick}
