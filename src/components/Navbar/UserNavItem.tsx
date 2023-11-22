@@ -2,18 +2,40 @@ import { Link } from 'react-router-dom';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { theme } from '../../theme';
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { NameContext } from '../../context/NameContext.ts';
+import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
+import { toast, ToastOptions } from 'react-toastify';
 
 export const UserNavItem = () => {
   const { name, setName } = useContext(NameContext);
+  const [adminMode, setAdminMode] = useState(false);
+
   const handleLogout = () => {
     document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     setName('');
   };
 
+  const handleAdminMode = () => {
+    setAdminMode(!adminMode);
+    const toastOptions: ToastOptions = {
+      position: 'bottom-right',
+      style: {
+        backgroundColor: theme.colors.incognito,
+        color: theme.colors.primary,
+      },
+    };
+
+    if (adminMode) {
+      toast.info('Mode admin désactivé', toastOptions);
+    } else {
+      toast.info('Mode admin activé', toastOptions);
+    }
+  };
+
   return (
     <ProfileDiv>
+      <TurnAdminModeButton active={adminMode} onClick={handleAdminMode} />
       <div className={'text'}>
         <p className={'profile-text'}>
           Salut
