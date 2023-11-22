@@ -56,4 +56,5 @@ const Main = styled.div`
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
   border-radius: 0 0 10px 10px;
   height: 100%;
+  overflow: scroll;
 `;

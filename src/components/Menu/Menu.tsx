@@ -17,14 +17,16 @@ export const Menu = () => {
 const MenuDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  width: 100%;
   gap: 20px;
+  padding: clamp(20px, 5vw, 40px) clamp(20px, 5vw, 40px);
 
   @media ${theme.devices.tablet} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
   }
 
   @media ${theme.devices.laptop} {
     grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
   }
 `;
