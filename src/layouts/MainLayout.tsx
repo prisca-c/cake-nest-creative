@@ -25,10 +25,12 @@ export const MainLayout = () => {
 
   return (
     <Div>
-      <Navbar />
-      <Main>
-        <Outlet />
-      </Main>
+      <Container>
+        <Navbar />
+        <Main>
+          <Outlet />
+        </Main>
+      </Container>
     </Div>
   );
 };
@@ -38,7 +40,14 @@ const Div = styled.div`
   padding: 20px;
   height: calc(100vh - 40px);
   display: flex;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
   flex-flow: column;
+  height: 100%;
+  width: clamp(300px, 100%, 1000px);
 `;
 
 const Main = styled.div`

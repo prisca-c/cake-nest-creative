@@ -63,6 +63,22 @@ const borderRadius = {
 
 const shadows = {};
 
+const breakpoints = {
+  xs: 320,
+  sm: 375,
+  md: 768,
+  lg: 1024,
+  xl: 1440,
+};
+
+const devices = {
+  mobile: `(min-width: ${breakpoints.xs}px)`,
+  mobileL: `(min-width: ${breakpoints.sm}px)`,
+  tablet: `(min-width: ${breakpoints.md}px)`,
+  laptop: `(min-width: ${breakpoints.lg}px)`,
+  desktop: `(min-width: ${breakpoints.xl}px)`,
+};
+
 export const theme = {
   colors,
   fonts,
@@ -70,4 +86,6 @@ export const theme = {
   borderRadius,
   shadows,
   spacing,
+  breakpoints,
+  devices,
 };
