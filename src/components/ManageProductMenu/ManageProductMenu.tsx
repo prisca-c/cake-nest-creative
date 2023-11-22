@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { ManageProductNavigationBar } from './ManageProductNavigationBar.tsx';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ProductAddTab } from './Tabs/ProductAddTab.tsx';
 import { ProductEditTab } from './Tabs/ProductEditTab.tsx';
+import { ManageProductSelectedTabContext } from '../../context/ManageProductSelectedTab.ts';
 
 export const ManageProductMenu = () => {
   const [openState, setOpenState] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState<'add' | 'edit'>('add');
+  const { selectedTab, setSelectedTab } = useContext(
+    ManageProductSelectedTabContext,
+  );
 
   const handleBodyClass = () => {
     return openState ? 'open' : '';

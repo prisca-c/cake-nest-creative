@@ -22,6 +22,7 @@ export const ManageProductNavigationBar = ({
   };
 
   const handleSelectedTab = (tab: 'add' | 'edit') => {
+    if (!openState) handleOpenState();
     setSelectedTab(tab);
   };
 
