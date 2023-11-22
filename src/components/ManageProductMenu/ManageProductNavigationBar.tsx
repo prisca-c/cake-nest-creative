@@ -18,10 +18,10 @@ export const ManageProductNavigationBar = ({
   };
 
   return (
-    <Container>
+    <Container $openState={openState}>
       <div className={'open-tab'} onClick={handleOpenState}>
         {openState ? (
-          <FiChevronDown color={theme.colors.white} />
+          <FiChevronDown color={theme.colors.background_dark} />
         ) : (
           <FiChevronUp color={theme.colors.white} />
         )}
@@ -38,7 +38,7 @@ export const ManageProductNavigationBar = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $openState: boolean }>`
   display: inline-flex;
   height: 50px;
   font-family: 'Open Sans', sans-serif;
@@ -50,24 +50,29 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 0 20px;\
+    padding: 0 20px;
     border-radius: 5px 5px 0 0;
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.35);
     cursor: pointer;
+  }
+
+  .open-tab {
+    background-color: ${({ $openState }) =>
+      !$openState ? theme.colors.incognito : theme.colors.white};
   }
 
   .add-tab {
     background-color: ${theme.colors.white};
     color: ${theme.colors.greyMedium};
   }
-  
-  .open-tab,
+
   .edit-tab {
     background-color: ${theme.colors.incognito};
     color: ${theme.colors.white};
   }
 
-  .add-tab, .edit-tab {
+  .add-tab,
+  .edit-tab {
     display: inline-flex;
     gap: 10px;
   }

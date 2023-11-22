@@ -44,6 +44,7 @@ const Div = styled.div`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -51,11 +52,11 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  position: relative;
   background-color: #fff;
   padding: 15px 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
   border-radius: 0 0 10px 10px;
   height: 100%;
+  width: auto;
   overflow: scroll;
 `;
