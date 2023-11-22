@@ -14,3 +14,7 @@ export function replaceFrenchCommaWithDot(price: number | string) {
   if (typeof price === 'string') price = parseFloat(price.replace(',', '.'));
   return price;
 }
+
+export const handleFrenchPriceFormat = (price: number | string) => {
+  return formatPrice(replaceFrenchCommaWithDot(price));
+};
