@@ -2,14 +2,15 @@ import { Link } from 'react-router-dom';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { theme } from '../../theme';
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { NameContext } from '../../context/NameContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
 import { toast, ToastOptions } from 'react-toastify';
+import { AdminModeContext } from '../../context/AdminModeContext.ts';
 
 export const UserNavItem = () => {
   const { name, setName } = useContext(NameContext);
-  const [adminMode, setAdminMode] = useState(false);
+  const { adminMode, setAdminMode } = useContext(AdminModeContext);
 
   const handleLogout = () => {
     document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
