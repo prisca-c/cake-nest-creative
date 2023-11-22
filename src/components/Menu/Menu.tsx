@@ -1,14 +1,17 @@
 import { ItemCard } from './ItemCard.tsx';
 import { ItemMenuType } from '../../types/ItemMenuType.ts';
-import { fakeMenu2 } from '../../data/fakeMenu.ts';
+import { fakeMenu1, fakeMenu2 } from '../../data/fakeMenu.ts';
 import styled from 'styled-components';
 import { theme } from '../../theme';
+import { getDateNowNumber } from '../../utils/date.ts';
 
 export const Menu = () => {
+  const menus = [...fakeMenu1, ...fakeMenu2];
+
   return (
     <MenuDiv>
-      {fakeMenu2.map((item: ItemMenuType) => (
-        <ItemCard item={item} />
+      {menus.map((item: ItemMenuType) => (
+        <ItemCard item={item} key={`${item.title}-${getDateNowNumber()}`} />
       ))}
     </MenuDiv>
   );
