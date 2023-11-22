@@ -53,7 +53,7 @@ const LogoDiv = styled.div`
   text-transform: uppercase;
   color: ${theme.colors.primary};
   font-size: 2.5rem;
-  height: 30vh;
+  height: 100px;
 `;
 
 const BackgroundOpacity = styled.div`

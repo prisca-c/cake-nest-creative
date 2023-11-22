@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { UserNavItem } from './UserNavItem.tsx';
 import { LogoNavItem } from './LogoNavItem.tsx';
+import { theme } from '../../theme';
 
 export const Navbar = () => {
   return (
@@ -13,11 +14,17 @@ export const Navbar = () => {
 
 const Div = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: clamp(3rem, 10vw, 5rem);
+  flex-direction: column;
+  height: fit-content;
   background-color: #fff;
   color: #000;
   border-radius: 10px 10px 0 0;
-  padding: 0 20px;
+  padding: 10px 20px;
+
+  @media ${theme.devices.mobileL} {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+  }
 `;
