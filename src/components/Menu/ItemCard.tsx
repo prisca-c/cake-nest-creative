@@ -36,12 +36,7 @@ const Card = styled.div`
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
   padding: 10px;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 
   img {
     height: 200px;
