@@ -59,4 +59,10 @@ const Main = styled.div`
   height: 100%;
   width: auto;
   overflow: scroll;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
