@@ -5,11 +5,15 @@ import { theme } from '../../theme';
 import styled from 'styled-components';
 
 type ManageProductNavigationBarProps = {
+  selectedTab: 'add' | 'edit';
+  setSelectedTab: (selectedTab: 'add' | 'edit') => void;
   openState: boolean;
   setOpenState: (openState: boolean) => void;
 };
 
 export const ManageProductNavigationBar = ({
+  selectedTab,
+  setSelectedTab,
   openState,
   setOpenState,
 }: ManageProductNavigationBarProps) => {
@@ -17,8 +21,16 @@ export const ManageProductNavigationBar = ({
     setOpenState(!openState);
   };
 
+  const handleSelectedTab = (tab: 'add' | 'edit') => {
+    setSelectedTab(tab);
+  };
+
+  const handleIconColor = (tab: 'add' | 'edit'): string => {
+    return selectedTab === tab ? theme.colors.white : theme.colors.greyMedium;
+  };
+
   return (
-    <Container $openState={openState}>
+    <Container $openState={openState} $selectedTab={selectedTab}>
       <div className={'open-tab'} onClick={handleOpenState}>
         {openState ? (
           <FiChevronDown color={theme.colors.background_dark} />
@@ -26,19 +38,22 @@ export const ManageProductNavigationBar = ({
           <FiChevronUp color={theme.colors.white} />
         )}
       </div>
-      <div className={'add-tab'}>
-        <AiOutlinePlus />
+      <div className={'add-tab'} onClick={() => handleSelectedTab('add')}>
+        <AiOutlinePlus color={handleIconColor('add')} />
         <p>Ajouter un produit</p>
       </div>
-      <div className={'edit-tab'}>
-        <MdModeEditOutline color={theme.colors.white} />
+      <div className={'edit-tab'} onClick={() => handleSelectedTab('edit')}>
+        <MdModeEditOutline color={handleIconColor('edit')} />
         <p>Modifier un produit</p>
       </div>
     </Container>
   );
 };
 
-const Container = styled.div<{ $openState: boolean }>`
+const Container = styled.div<{
+  $openState: boolean;
+  $selectedTab: 'add' | 'edit';
+}>`
   display: inline-flex;
   height: 50px;
   font-family: 'Open Sans', sans-serif;
@@ -62,13 +77,17 @@ const Container = styled.div<{ $openState: boolean }>`
   }
 
   .add-tab {
-    background-color: ${theme.colors.white};
-    color: ${theme.colors.greyMedium};
+    background-color: ${({ $selectedTab }) =>
+      $selectedTab === 'add' ? theme.colors.incognito : theme.colors.white};
+    color: ${({ $selectedTab }) =>
+      $selectedTab === 'add' ? theme.colors.white : theme.colors.greyMedium};
   }
 
   .edit-tab {
-    background-color: ${theme.colors.incognito};
-    color: ${theme.colors.white};
+    background-color: ${({ $selectedTab }) =>
+      $selectedTab === 'edit' ? theme.colors.incognito : theme.colors.white};
+    color: ${({ $selectedTab }) =>
+      $selectedTab === 'edit' ? theme.colors.white : theme.colors.greyMedium};
   }
 
   .add-tab,

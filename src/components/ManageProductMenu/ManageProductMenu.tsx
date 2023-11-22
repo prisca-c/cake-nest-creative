@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { ManageProductNavigationBar } from './ManageProductNavigationBar.tsx';
 import { useState } from 'react';
+import { ProductAddTab } from './Tabs/ProductAddTab.tsx';
+import { ProductEditTab } from './Tabs/ProductEditTab.tsx';
 
 export const ManageProductMenu = () => {
   const [openState, setOpenState] = useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = useState<'add' | 'edit'>('add');
+
   const handleBodyClass = () => {
     return openState ? 'open' : '';
   };
@@ -12,11 +16,13 @@ export const ManageProductMenu = () => {
     <MenuContainer>
       <div className={'fixed'}>
         <ManageProductNavigationBar
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
           openState={openState}
           setOpenState={setOpenState}
         />
         <MenuBody className={handleBodyClass()}>
-          <p>Test</p>
+          {selectedTab === 'add' ? <ProductAddTab /> : <ProductEditTab />}
         </MenuBody>
       </div>
     </MenuContainer>
@@ -38,6 +44,7 @@ const MenuBody = styled.div`
   height: 0;
   overflow: scroll;
   transition: height 0.3s ease-in-out;
+  font-family: 'Open Sans', sans-serif;
 
   p {
     display: none;
