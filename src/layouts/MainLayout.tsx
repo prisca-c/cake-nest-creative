@@ -51,6 +51,7 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
+  position: relative;
   background-color: #fff;
   padding: 15px 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
