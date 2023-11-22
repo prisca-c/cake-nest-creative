@@ -53,7 +53,7 @@ const Card = styled.div`
 
     h3 {
       font-family: 'Pacifico', cursive;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       font-weight: 600;
       color: #000;
     }
