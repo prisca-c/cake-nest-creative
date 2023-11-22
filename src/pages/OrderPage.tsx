@@ -1,10 +1,10 @@
-import { Menu } from '../components/Menu/Menu.tsx';
+import { OrderMenu } from '../components/OrderMenu/OrderMenu.tsx';
 import { DivCenter } from '../components/DivCenter.tsx';
 
 export const OrderPage = () => {
   return (
     <DivCenter>
-      <Menu />
+      <OrderMenu />
     </DivCenter>
   );
 };
