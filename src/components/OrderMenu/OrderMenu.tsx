@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { theme } from '../../theme';
 import { getDateNowNumber } from '../../utils/date.ts';
 
-export const Menu = () => {
+export const OrderMenu = () => {
   const menus = [...fakeMenu1, ...fakeMenu2];
 
   return (
