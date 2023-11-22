@@ -25,7 +25,7 @@ export const LoginPage = () => {
 
 const DivBackground = styled.div`
   font-family: 'Pacifico', cursive;
-  background-image: url('/src/assets/images/tarts.jpg');
+  background-image: url('/images/tarts.jpg');
   background-size: cover;
   background-position: center;
   height: 100%;
