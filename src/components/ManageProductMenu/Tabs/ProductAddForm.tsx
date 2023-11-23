@@ -16,12 +16,15 @@ type ProductAddFormProps = {
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
 };
 
-export const ProductAddForm = ({ data, setData }: ProductAddFormProps) => {
-  const [newData, setNewData] = useState<ManageProductType>({
-    name: '',
-    image: '',
-    price: 0.0,
-  });
+const initialData = {
+  name: '',
+  image: '',
+  price: 0.0,
+};
+
+export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
+  const [newData, setNewData] = useState<ManageProductType>(initialData);
+  const { menus, setMenus, selectedMenu } = React.useContext(MenusContext);
   const { timerState, setTimerState } = useTimer({
     time: 2000,
   });
@@ -33,21 +36,39 @@ export const ProductAddForm = ({ data, setData }: ProductAddFormProps) => {
     });
   };
 
+  const handleAddProduct = (data: ManageProductType) => {
+    const newProduct: ProductType = {
+      id: getDateNowNumber(),
+      title: data.name,
+      imageSource: data.image,
+      price: data.price,
+      quantity: 1,
+      isAdvertised: false,
+      isAvailable: true,
+    };
+
+    const newMenus = menus.map((menu) => {
+      if (menu.id === selectedMenu) {
+        return {
+          ...menu,
+          products: [...menu.products, newProduct],
+        };
+      }
+      return menu;
+    });
+    setMenus(newMenus);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //TODO Error handling
 
     setData(newData);
 
-    if (data) {
-      setTimerState(true);
-
-      setNewData({
-        name: '',
-        image: '',
-        price: 0,
-      });
-    }
+    handleAddProduct(newData);
+    setTimerState(true);
+    setNewData(initialData);
+    setData(initialData);
   };
 
   return (
