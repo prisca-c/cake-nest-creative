@@ -1,4 +1,4 @@
-import { MenuType } from '@Types/ProductType.ts';
+import { MenuType } from '@Types/MenuType.ts';
 
 export const fakeMenu1: MenuType = {
   id: '1',

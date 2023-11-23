@@ -7,9 +7,3 @@ export type ProductType = {
   isAvailable: boolean;
   isAdvertised: boolean;
 };
-
-export type MenuType = {
-  id: string;
-  name: string;
-  products: ProductType[];
-};

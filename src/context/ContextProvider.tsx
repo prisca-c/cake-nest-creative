@@ -4,7 +4,8 @@ import { NameContext } from './NameContext.ts';
 import { ManageProductStatesContext } from './ManageProductStates.ts';
 import { IsAdminContext } from './IsAdminContext.ts';
 import { MenusContext } from './MenusContext.ts';
-import type { MenuType } from '@Types/ProductType.ts';
+
+import { MenuType } from '@Types/MenuType.ts';
 
 type ContextProviderProps = {
   children: React.ReactNode;
