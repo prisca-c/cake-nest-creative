@@ -2,11 +2,11 @@ import { ItemCard } from './ItemCard.tsx';
 import { MenuType, ProductType } from '@Types/ProductType.ts';
 import { fakeMenu1, fakeMenu2 } from '../../data/fakeMenu.ts';
 import styled from 'styled-components';
-import { theme } from '../../theme';
-import { getDateNowNumber } from '../../utils/date.ts';
+import { theme } from '~@/theme';
+import { getDateNowNumber } from '@Utils/date.ts';
 import { OutOfStock } from './OutOfStock/OutOfStock.tsx';
 import { useContext, useEffect } from 'react';
-import { MenusContext } from '../../context/MenusContext.ts';
+import { MenusContext } from '@Context/MenusContext.ts';
 import { SelectMenu } from './SelectMenu.tsx';
 
 export const OrderMenu = () => {

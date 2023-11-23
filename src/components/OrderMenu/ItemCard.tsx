@@ -1,12 +1,12 @@
 import { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
-import { handleFrenchPriceFormat } from '../../utils/math.ts';
+import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { Button } from '../Button.tsx';
-import { theme } from '../../theme';
+import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { AdminModeContext } from '../../context/AdminModeContext.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { useContext } from 'react';
-import { MenusContext } from '../../context/MenusContext.ts';
+import { MenusContext } from '@Context/MenusContext.ts';
 
 type ItemCardProps = {
   item: ProductType;

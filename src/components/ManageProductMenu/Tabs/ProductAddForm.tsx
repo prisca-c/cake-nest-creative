@@ -1,12 +1,15 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { theme } from '../../../theme';
+import { theme } from '~@/theme';
 import { GiCupcake } from 'react-icons/gi';
 import { FaCamera } from 'react-icons/fa';
 import { MdEuro } from 'react-icons/md';
-import React, { useState } from 'react';
-import { ManageProductType } from '@Types/ManageProductType.ts';
 import { FiCheckCircle } from 'react-icons/fi';
-import { useTimer } from '../../../hooks/useTimer.ts';
+import { useTimer } from '@Hooks/useTimer.ts';
+import { MenusContext } from '@Context/MenusContext.ts';
+import { getDateNowNumber } from '@Utils/date.ts';
+import type { ProductType } from '@Types/ProductType.ts';
+import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 type ProductAddFormProps = {
   data: ManageProductType;
