@@ -3,18 +3,34 @@ import styled from 'styled-components';
 import { handleFrenchPriceFormat } from '../../utils/math.ts';
 import { Button } from '../Button.tsx';
 import { theme } from '../../theme';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { AdminModeContext } from '../../context/AdminModeContext.ts';
+import { useContext } from 'react';
 
 type ItemCardProps = {
   item: ItemMenuType;
 };
 
 export const ItemCard = ({ item }: ItemCardProps) => {
+  const { adminMode } = useContext(AdminModeContext);
   const handlePrice = (price: number | string) => {
     return handleFrenchPriceFormat(price);
   };
 
+  const handleDelete = () => {
+    console.log('delete');
+  };
+
   return (
     <Card>
+      {adminMode && (
+        <AiFillCloseCircle
+          className={'delete'}
+          color={theme.colors.primary}
+          size={20}
+          onClick={handleDelete}
+        />
+      )}
       <img src={item.imageSource} alt={item.title} />
       <div className={'infos'}>
         <h3>{item.title}</h3>
@@ -35,8 +51,12 @@ const Card = styled.div`
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  cursor: pointer;
   padding: 10px;
+
+  .delete {
+    margin-left: auto;
+    cursor: pointer;
+  }
 
   img {
     height: 200px;
