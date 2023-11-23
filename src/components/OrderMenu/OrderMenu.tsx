@@ -25,12 +25,12 @@ export const OrderMenu = () => {
   return (
     <>
       <SelectMenu />
-      {!getSelectedMenu() ? (
+      {getSelectedMenu()?.products?.length === 0 ? (
         <OutOfStock />
       ) : (
         <MenuDiv>
           {getSelectedMenu()?.products?.map((item: ProductType) => (
-            <ItemCard item={item} key={`${item.title}-${getDateNowNumber()}`} />
+            <ItemCard item={item} key={`${item.id}-${getDateNowNumber()}`} />
           ))}
         </MenuDiv>
       )}

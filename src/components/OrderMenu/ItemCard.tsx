@@ -6,6 +6,7 @@ import { theme } from '../../theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { AdminModeContext } from '../../context/AdminModeContext.ts';
 import { useContext } from 'react';
+import { MenusContext } from '../../context/MenusContext.ts';
 
 type ItemCardProps = {
   item: ProductType;
@@ -13,12 +14,19 @@ type ItemCardProps = {
 
 export const ItemCard = ({ item }: ItemCardProps) => {
   const { adminMode } = useContext(AdminModeContext);
+  const { menus, setMenus } = useContext(MenusContext);
   const handlePrice = (price: number | string) => {
     return handleFrenchPriceFormat(price);
   };
 
   const handleDelete = () => {
-    console.log('delete');
+    const newMenus = menus.map((menu) => {
+      const newProducts = menu.products.filter(
+        (product) => product.id !== item.id,
+      );
+      return { ...menu, products: newProducts };
+    });
+    setMenus(newMenus);
   };
 
   return (

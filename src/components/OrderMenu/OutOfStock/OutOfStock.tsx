@@ -19,4 +19,5 @@ const Main = styled.div`
   color: ${theme.colors.greyDark};
   font-size: ${theme.fonts.size.P3};
   text-align: center;
+  margin-top: clamp(20px, 5vw, 60px);
 `;
