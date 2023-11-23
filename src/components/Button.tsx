@@ -38,8 +38,9 @@ const ButtonStyle = styled.button<{
   color: ${theme.colors.white};
   border: none;
   border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 1.2rem;
+  padding: 15px 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
   cursor: pointer;
   gap: 10px;
   display: flex;
