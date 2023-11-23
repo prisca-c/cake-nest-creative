@@ -1,4 +1,4 @@
-export type ItemMenuType = {
+export type ProductType = {
   id: number;
   imageSource: string;
   title: string;
@@ -6,4 +6,10 @@ export type ItemMenuType = {
   quantity: number;
   isAvailable: boolean;
   isAdvertised: boolean;
+};
+
+export type MenuType = {
+  id: string;
+  name: string;
+  products: ProductType[];
 };

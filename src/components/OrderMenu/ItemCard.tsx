@@ -1,4 +1,4 @@
-import { ItemMenuType } from '../../types/ItemMenuType.ts';
+import { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
 import { handleFrenchPriceFormat } from '../../utils/math.ts';
 import { Button } from '../Button.tsx';
@@ -8,7 +8,7 @@ import { AdminModeContext } from '../../context/AdminModeContext.ts';
 import { useContext } from 'react';
 
 type ItemCardProps = {
-  item: ItemMenuType;
+  item: ProductType;
 };
 
 export const ItemCard = ({ item }: ItemCardProps) => {
