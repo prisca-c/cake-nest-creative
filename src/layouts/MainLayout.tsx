@@ -1,34 +1,11 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { Navbar } from '../components/Navbar/Navbar.tsx';
 import { theme } from '../theme';
-import { useContext, useEffect } from 'react';
-import { NameContext } from '../context/NameContext.ts';
-import { IsAdminContext } from '../context/IsAdminContext.ts';
+import { useHandleCookieName } from '../hooks/useHandleCookieName.ts';
 
 export const MainLayout = () => {
-  const { name, setName } = useContext(NameContext);
-  const { setIsAdmin } = useContext(IsAdminContext);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Handle Cookie
-    const cookies = decodeURIComponent(document.cookie);
-    const cookie = cookies
-      .split(';')
-      .find((cookie) => cookie.includes('name='));
-    const cookieName = cookie?.split('=')[1];
-
-    const getName = name || cookieName;
-
-    if (!getName) navigate('/');
-
-    if (!name && cookieName) setName(cookieName);
-
-    //Handle Admin
-    if (name === 'admin') setIsAdmin(true);
-  });
+  useHandleCookieName();
 
   return (
     <Div>
