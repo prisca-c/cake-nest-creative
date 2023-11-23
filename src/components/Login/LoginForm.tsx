@@ -1,11 +1,8 @@
-import { IoPersonCircleOutline } from 'react-icons/io5';
-import { Button } from '../Button.tsx';
-import { IoIosArrowForward } from 'react-icons/io';
-import React, { useContext, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { Button } from '../Button.tsx';
 import { LoginFormInput } from './LoginFormInput.tsx';
-import { NameContext } from '../../context/NameContext.ts';
-import { useNavigate } from 'react-router-dom';
+import { IoPersonCircleOutline } from 'react-icons/io5';
+import { IoIosArrowForward } from 'react-icons/io';
 
 export const LoginForm = () => {
   const { setName } = useContext(NameContext);
