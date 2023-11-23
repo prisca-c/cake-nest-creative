@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { useContext } from 'react';
 import { NameContext } from '../../context/NameContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
-import { toast, ToastOptions } from 'react-toastify';
 import { AdminModeContext } from '../../context/AdminModeContext.ts';
 import { IsAdminContext } from '../../context/IsAdminContext.ts';
+import { AdminToastInfo } from '../Toast/AdminToast.ts';
 
 export const UserNavItem = () => {
   const { name, setName } = useContext(NameContext);
@@ -21,18 +21,11 @@ export const UserNavItem = () => {
 
   const handleAdminMode = () => {
     setAdminMode(!adminMode);
-    const toastOptions: ToastOptions = {
-      position: 'bottom-right',
-      style: {
-        backgroundColor: theme.colors.incognito,
-        color: theme.colors.primary,
-      },
-    };
 
     if (adminMode) {
-      toast.info('Mode admin désactivé', toastOptions);
+      AdminToastInfo('Mode admin désactivé');
     } else {
-      toast.info('Mode admin activé', toastOptions);
+      AdminToastInfo('Mode admin activé');
     }
   };
 
