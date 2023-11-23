@@ -1,3 +1,4 @@
+import { useLoginForm } from '@Hooks/useLoginForm.ts';
 import styled from 'styled-components';
 import { Button } from '../Button.tsx';
 import { LoginFormInput } from './LoginFormInput.tsx';
@@ -5,32 +6,7 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 import { IoIosArrowForward } from 'react-icons/io';
 
 export const LoginForm = () => {
-  const { setName } = useContext(NameContext);
-  const [newName, setNewName] = useState('');
-  const navigate = useNavigate();
-
-  const handleNameOnChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const inputName = event.target.value;
-      setNewName(inputName);
-    },
-    [],
-  );
-
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (newName === '') {
-      alert('Veuillez entrer un prénom');
-      return;
-    }
-
-    setName(newName);
-    navigate('/order');
-    document.cookie = `name=${newName}; expires=Thu, ${new Date(
-      Date.now() + 1000 * 60 * 10,
-    ).toUTCString()};`;
-  };
+  const { handleLogin, handleNameOnChange, newName } = useLoginForm();
 
   return (
     <Form onSubmit={handleLogin}>
