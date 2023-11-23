@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { IoPersonCircleOutline } from 'react-icons/io5';
-import { theme } from '../../theme';
+import { theme } from '~@/theme';
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { NameContext } from '../../context/NameContext.ts';
+import { NameContext } from '@Context/NameContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
-import { toast, ToastOptions } from 'react-toastify';
-import { AdminModeContext } from '../../context/AdminModeContext.ts';
-import { IsAdminContext } from '../../context/IsAdminContext.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { IsAdminContext } from '@Context/IsAdminContext.ts';
+import { AdminToastInfo } from '../Toast/AdminToast.ts';
 
 export const UserNavItem = () => {
   const { name, setName } = useContext(NameContext);
@@ -21,18 +21,11 @@ export const UserNavItem = () => {
 
   const handleAdminMode = () => {
     setAdminMode(!adminMode);
-    const toastOptions: ToastOptions = {
-      position: 'bottom-right',
-      style: {
-        backgroundColor: theme.colors.incognito,
-        color: theme.colors.primary,
-      },
-    };
 
     if (adminMode) {
-      toast.info('Mode admin désactivé', toastOptions);
+      AdminToastInfo('Mode admin désactivé');
     } else {
-      toast.info('Mode admin activé', toastOptions);
+      AdminToastInfo('Mode admin activé');
     }
   };
 

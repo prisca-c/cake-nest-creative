@@ -8,6 +8,7 @@ type ButtonProps = {
   width: string;
   onClick?: () => void;
   textAlign?: string;
+  active?: boolean;
 };
 
 export const Button = ({
@@ -16,6 +17,7 @@ export const Button = ({
   onClick,
   width,
   textAlign = 'center',
+  active = false,
 }: ButtonProps) => {
   return (
     <ButtonStyle
@@ -23,6 +25,7 @@ export const Button = ({
       onClick={onClick}
       $textAlign={textAlign}
       $variant={variant}
+      $active={active}
     >
       {children}
     </ButtonStyle>
@@ -33,13 +36,18 @@ const ButtonStyle = styled.button<{
   $variant: keyof typeof theme.colors;
   $width: string;
   $textAlign: string;
+  $active: boolean;
 }>`
-  background-color: ${({ $variant }) => theme.colors[$variant]};
-  color: ${theme.colors.white};
-  border: none;
+  background-color: ${({ $active, $variant }) =>
+    $active ? theme.colors.white : theme.colors[$variant]};
+  color: ${({ $active }) =>
+    $active ? theme.colors.primary : theme.colors.white};
+  border: 1px solid
+    ${({ $active }) => ($active ? theme.colors.primary : theme.colors.white)};
   border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 1.2rem;
+  padding: 15px 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
   cursor: pointer;
   gap: 10px;
   display: flex;

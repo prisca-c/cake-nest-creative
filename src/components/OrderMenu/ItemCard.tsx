@@ -1,20 +1,44 @@
-import { ItemMenuType } from '../../types/ItemMenuType.ts';
+import { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
-import { handleFrenchPriceFormat } from '../../utils/math.ts';
+import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { Button } from '../Button.tsx';
-import { theme } from '../../theme';
+import { theme } from '~@/theme';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { useContext } from 'react';
+import { MenusContext } from '@Context/MenusContext.ts';
 
 type ItemCardProps = {
-  item: ItemMenuType;
+  item: ProductType;
 };
 
 export const ItemCard = ({ item }: ItemCardProps) => {
+  const { adminMode } = useContext(AdminModeContext);
+  const { menus, setMenus } = useContext(MenusContext);
   const handlePrice = (price: number | string) => {
     return handleFrenchPriceFormat(price);
   };
 
+  const handleDelete = () => {
+    const newMenus = menus.map((menu) => {
+      const newProducts = menu.products.filter(
+        (product) => product.id !== item.id,
+      );
+      return { ...menu, products: newProducts };
+    });
+    setMenus(newMenus);
+  };
+
   return (
     <Card>
+      {adminMode && (
+        <AiFillCloseCircle
+          className={'delete'}
+          color={theme.colors.primary}
+          size={20}
+          onClick={handleDelete}
+        />
+      )}
       <img src={item.imageSource} alt={item.title} />
       <div className={'infos'}>
         <h3>{item.title}</h3>
@@ -35,8 +59,12 @@ const Card = styled.div`
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  cursor: pointer;
   padding: 10px;
+
+  .delete {
+    margin-left: auto;
+    cursor: pointer;
+  }
 
   img {
     height: 200px;
