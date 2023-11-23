@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '../../Button.tsx';
 import { useContext } from 'react';
-import { ManageProductStatesContext } from '../../../context/ManageProductStates.ts';
+import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 
 export const AdminOutOfStock = () => {
   const { openState, setOpenState, setSelectedTab } = useContext(

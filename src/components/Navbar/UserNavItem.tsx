@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { IoPersonCircleOutline } from 'react-icons/io5';
-import { theme } from '../../theme';
+import { theme } from '~@/theme';
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { NameContext } from '../../context/NameContext.ts';
+import { NameContext } from '@Context/NameContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
-import { AdminModeContext } from '../../context/AdminModeContext.ts';
-import { IsAdminContext } from '../../context/IsAdminContext.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { IsAdminContext } from '@Context/IsAdminContext.ts';
 import { AdminToastInfo } from '../Toast/AdminToast.ts';
 
 export const UserNavItem = () => {

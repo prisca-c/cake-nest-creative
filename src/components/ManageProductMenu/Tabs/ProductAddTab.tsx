@@ -1,8 +1,8 @@
-import { theme } from '../../../theme';
+import { useState } from 'react';
+import { theme } from '~@/theme';
 import styled from 'styled-components';
 import { ProductAddForm } from './ProductAddForm.tsx';
-import { ManageProductType } from '@Types/ManageProductType.ts';
-import { useState } from 'react';
+import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 export const ProductAddTab = () => {
   const [data, setData] = useState<ManageProductType>({

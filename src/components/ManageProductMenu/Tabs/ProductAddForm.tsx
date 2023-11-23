@@ -1,12 +1,13 @@
-import React from 'react';
 import { useAddProductForm } from '@Hooks/useAddProductForm.ts';
-import styled from 'styled-components';
-import { theme } from '~@/theme';
-import { GiCupcake } from 'react-icons/gi';
+import React from 'react';
 import { FaCamera } from 'react-icons/fa';
-import { MdEuro } from 'react-icons/md';
 import { FiCheckCircle } from 'react-icons/fi';
+import { GiCupcake } from 'react-icons/gi';
+import { MdEuro } from 'react-icons/md';
+import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
+
+import { theme } from '~@/theme';
 
 type ProductAddFormProps = {
   data: ManageProductType;

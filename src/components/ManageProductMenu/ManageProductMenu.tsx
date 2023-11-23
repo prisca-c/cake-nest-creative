@@ -1,9 +1,9 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { ManageProductNavigationBar } from './ManageProductNavigationBar.tsx';
 import { ProductAddTab } from './Tabs/ProductAddTab.tsx';
 import { ProductEditTab } from './Tabs/ProductEditTab.tsx';
-import { ManageProductStatesContext } from '../../context/ManageProductStates.ts';
-import { useContext } from 'react';
+import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 
 export const ManageProductMenu = () => {
   const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(

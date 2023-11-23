@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { UserNavItem } from './UserNavItem.tsx';
 import { LogoNavItem } from './LogoNavItem.tsx';
-import { theme } from '../../theme';
+import { theme } from '~@/theme';
 
 export const Navbar = () => {
   return (
