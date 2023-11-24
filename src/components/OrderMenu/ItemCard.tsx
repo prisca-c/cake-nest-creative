@@ -65,6 +65,22 @@ const Card = styled.div`
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
   padding: 10px;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1);
+  background-color: ${theme.colors.white};
+
+  p {
+    color: ${theme.colors.primary};
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: ${theme.colors.primary};
+
+    p {
+      color: ${theme.colors.white};
+    }
+  }
 
   .delete {
     margin-left: auto;
@@ -101,7 +117,6 @@ const Card = styled.div`
         font-size: 1rem;
         font-weight: 400;
         vertical-align: center;
-        color: ${theme.colors.primary};
       }
     }
   }
