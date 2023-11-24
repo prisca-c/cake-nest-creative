@@ -5,7 +5,7 @@ import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 
 type ItemCardProps = {
@@ -13,8 +13,22 @@ type ItemCardProps = {
 };
 
 export const ItemCard = ({ item }: ItemCardProps) => {
-  const { adminMode } = useContext(AdminModeContext);
+  const { adminMode, selectedProduct, setSelectedProduct } =
+    useContext(AdminModeContext);
   const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const [hover, setHover] = useState(false);
+
+  const handleActiveSelectedCard = (id: string) => {
+    return selectedProduct.productId === id;
+  };
+
+  const handleSelect = (id: string) => {
+    setSelectedProduct({
+      productId: id,
+      menuId: selectedMenu,
+    });
+  };
+
   const handlePrice = (price: number | string) => {
     return handleFrenchPriceFormat(price);
   };
@@ -30,16 +44,33 @@ export const ItemCard = ({ item }: ItemCardProps) => {
       }
       return menu;
     });
-    console.log(newMenus);
     setMenus(newMenus);
   };
 
+  const handleOnHover = (state: boolean) => {
+    setHover(state);
+  };
+
+  const handleClass = (id: string) => {
+    return handleActiveSelectedCard(id) ? 'active' : '';
+  };
+
   return (
-    <Card>
+    <Card
+      onMouseOver={() => handleOnHover(true)}
+      onMouseOut={() => handleOnHover(false)}
+      $onHover={hover}
+      onClick={() => handleSelect(item.id)}
+      className={handleClass(item.id)}
+    >
       {adminMode && (
         <AiFillCloseCircle
           className={'delete'}
-          color={theme.colors.primary}
+          color={
+            handleActiveSelectedCard(item.id)
+              ? theme.colors.white
+              : theme.colors.primary
+          }
           size={20}
           onClick={() => handleDelete(item.id)}
         />
@@ -49,7 +80,11 @@ export const ItemCard = ({ item }: ItemCardProps) => {
         <h3>{item.title}</h3>
         <div className={'footer'}>
           <p>{handlePrice(item.price)}</p>
-          <Button variant={'primary'} width={'100px'}>
+          <Button
+            variant={'primary'}
+            width={'100px'}
+            active={handleActiveSelectedCard(item.id)}
+          >
             Ajouter
           </Button>
         </div>
@@ -58,7 +93,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
   );
 };
 
-const Card = styled.div`
+const Card = styled.div<{ $onHover: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -68,6 +103,7 @@ const Card = styled.div`
   transition: all 0.3s ease-in-out;
   transform: scale(1);
   background-color: ${theme.colors.white};
+  cursor: pointer;
 
   p {
     color: ${theme.colors.primary};
@@ -75,8 +111,12 @@ const Card = styled.div`
 
   &:hover {
     transform: scale(1.05);
-    background-color: ${theme.colors.primary};
+    box-shadow: ${theme.shadows.blue};
+  }
 
+  &.active {
+    background-color: ${theme.colors.primary};
+    transform: scale(1.05);
     p {
       color: ${theme.colors.white};
     }
