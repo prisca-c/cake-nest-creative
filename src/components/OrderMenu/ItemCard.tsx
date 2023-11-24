@@ -1,73 +1,25 @@
 import { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
-import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { AdminModeContext } from '@Context/AdminModeContext.ts';
-import { useContext, useState } from 'react';
-import { MenusContext } from '@Context/MenusContext.ts';
-import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
+import { useHandleCard } from '@Hooks/useHandleCard.ts';
 
 type ItemCardProps = {
   item: ProductType;
 };
 
 export const ItemCard = ({ item }: ItemCardProps) => {
-  const { adminMode, selectedProduct, setSelectedProduct } =
-    useContext(AdminModeContext);
-  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
-  const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
-    ManageProductStatesContext,
-  );
-  const [hover, setHover] = useState(false);
-
-  const handleActiveSelectedCard = (id: string) => {
-    return selectedProduct.productId === id;
-  };
-
-  const handleSelect = (id: string) => {
-    setSelectedProduct({
-      productId: id,
-      menuId: selectedMenu,
-    });
-
-    if (adminMode) {
-      if (selectedTab === 'add') {
-        setSelectedTab('edit');
-      }
-
-      if (!openState) {
-        setOpenState(true);
-      }
-    }
-  };
-
-  const handlePrice = (price: number | string) => {
-    return handleFrenchPriceFormat(price);
-  };
-
-  const handleDelete = (id: string) => {
-    const newMenus = menus.map((menu) => {
-      if (menu.id === selectedMenu) {
-        const newItems = menu.products.filter((item) => item.id !== id);
-        return {
-          ...menu,
-          products: newItems,
-        };
-      }
-      return menu;
-    });
-    setMenus(newMenus);
-  };
-
-  const handleOnHover = (state: boolean) => {
-    setHover(state);
-  };
-
-  const handleClass = (id: string) => {
-    return handleActiveSelectedCard(id) ? 'active' : '';
-  };
+  const {
+    handleSelect,
+    handleDelete,
+    handleOnHover,
+    handlePrice,
+    handleClass,
+    handleActiveSelectedCard,
+    hover,
+    adminMode,
+  } = useHandleCard();
 
   return (
     <Card
@@ -117,15 +69,18 @@ const Card = styled.div<{ $onHover: boolean }>`
   transition: all 0.3s ease-in-out;
   transform: scale(1);
   background-color: ${theme.colors.white};
-  cursor: pointer;
+  cursor: ${({ $onHover }) => ($onHover ? 'pointer' : 'default')};
 
   p {
     color: ${theme.colors.primary};
   }
 
   &:hover {
-    transform: scale(1.05);
-    box-shadow: ${theme.shadows.blue};
+    transform: ${({ $onHover }) => ($onHover ? 'scale(1.05)' : 'scale(1)')};
+    box-shadow: ${({ $onHover }) =>
+      $onHover
+        ? theme.shadows.blue
+        : 'box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);'};
   }
 
   &.active {
