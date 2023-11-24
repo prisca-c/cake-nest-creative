@@ -14,53 +14,33 @@ export const useHandleCard = () => {
 
   const [hover, setHover] = useState(false);
 
-  const handlePrice = (price: number | string) => {
-    return handleFrenchPriceFormat(price);
-  };
+  const handlePrice = (price: number | string) =>
+    handleFrenchPriceFormat(price);
 
   const handleDelete = (id: string) => {
-    const newMenus = menus.map((menu) => {
-      if (menu.id === selectedMenu) {
-        const newItems = menu.products.filter((item) => item.id !== id);
-        return {
-          ...menu,
-          products: newItems,
-        };
-      }
-      return menu;
-    });
+    const newMenus = menus.map((menu) =>
+      menu.id === selectedMenu
+        ? { ...menu, products: menu.products.filter((item) => item.id !== id) }
+        : menu,
+    );
     setMenus(newMenus);
   };
 
-  const handleOnHover = (state: boolean) => {
-    if (!adminMode) return;
-    setHover(state);
-  };
+  const handleOnHover = (state: boolean) => adminMode && setHover(state);
 
-  const handleActiveSelectedCard = (id: string) => {
-    return selectedProduct.productId === id;
-  };
+  const handleActiveSelectedCard = (id: string) =>
+    selectedProduct.productId === id;
 
-  const handleClass = (id: string) => {
-    return handleActiveSelectedCard(id) ? 'active' : '';
-  };
+  const handleClass = (id: string) =>
+    handleActiveSelectedCard(id) ? 'active' : '';
 
   const handleSelect = (id: string) => {
     if (!adminMode) return;
-    setSelectedProduct({
-      productId: id,
-      menuId: selectedMenu,
-    });
 
-    if (adminMode) {
-      if (selectedTab === 'add') {
-        setSelectedTab('edit');
-      }
+    setSelectedProduct({ productId: id, menuId: selectedMenu });
 
-      if (!openState) {
-        setOpenState(true);
-      }
-    }
+    if (selectedTab === 'add') setSelectedTab('edit');
+    if (!openState) setOpenState(true);
   };
 
   return {

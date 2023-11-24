@@ -6,24 +6,20 @@ import { useNavigate } from 'react-router-dom';
 export const useHandleCookieName = () => {
   const { name, setName } = useContext(NameContext);
   const { setIsAdmin } = useContext(IsAdminContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Handle Cookie
     const cookies = decodeURIComponent(document.cookie);
-    const cookie = cookies
+    const cookieName = cookies
       .split(';')
-      .find((cookie) => cookie.includes('name='));
-    const cookieName = cookie?.split('=')[1];
+      .find((cookie) => cookie.includes('name='))
+      ?.split('=')[1];
 
-    const getName = name || cookieName;
-
-    if (!getName) navigate('/');
-
-    if (!name && cookieName) setName(cookieName);
-
-    //Handle Admin
-    if (name === 'admin') setIsAdmin(true);
+    if (!name && cookieName) {
+      setName(cookieName);
+      if (cookieName === 'admin') setIsAdmin(true);
+    } else if (!name || !cookieName) {
+      navigate('/');
+    }
   });
 };

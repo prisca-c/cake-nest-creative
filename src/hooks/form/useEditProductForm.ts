@@ -14,7 +14,6 @@ export const useEditProductForm = ({
 }: UseEditProductFormProps) => {
   const { menus, setMenus } = useContext(MenusContext);
   const { selectedProduct } = useContext(AdminModeContext);
-
   const { productId, menuId } = selectedProduct;
 
   useEffect(() => {
@@ -26,10 +25,10 @@ export const useEditProductForm = ({
   }, [data]);
 
   const handleData = () => {
-    const menu = menus.find((menu) => menu.id === selectedProduct.menuId);
-    const product = menu?.products.find(
-      (product) => product.id === selectedProduct.productId,
-    );
+    const product = menus
+      .find((menu) => menu.id === menuId)
+      ?.products.find((product) => product.id === productId);
+
     if (product) {
       setData({
         name: product.title,
@@ -40,36 +39,30 @@ export const useEditProductForm = ({
   };
 
   const handleUpdateProduct = () => {
-    const newMenus = menus.map((menu) => {
-      if (menu.id === menuId) {
-        return {
-          ...menu,
-          products: menu.products.map((product) => {
-            if (product.id === productId) {
-              return {
-                ...product,
-                title: data.name,
-                imageSource: data.image,
-                price: data.price,
-              };
+    setMenus((prevMenus) =>
+      prevMenus.map((menu) =>
+        menu.id === menuId
+          ? {
+              ...menu,
+              products: menu.products.map((product) =>
+                product.id === productId
+                  ? {
+                      ...product,
+                      title: data.name,
+                      imageSource: data.image,
+                      price: data.price,
+                    }
+                  : product,
+              ),
             }
-            return product;
-          }),
-        };
-      }
-      return menu;
-    });
-    setMenus(newMenus);
+          : menu,
+      ),
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
-      [e.target.id]: e.target.value,
-    });
+    setData({ ...data, [e.target.id]: e.target.value });
   };
 
-  return {
-    handleChange,
-  };
+  return { handleChange };
 };

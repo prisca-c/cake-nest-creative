@@ -9,8 +9,7 @@ export const useLoginForm = () => {
 
   const handleNameOnChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const inputName = event.target.value;
-      setNewName(inputName);
+      setNewName(event.target.value);
     },
     [],
   );
@@ -20,14 +19,13 @@ export const useLoginForm = () => {
 
     if (newName === '') {
       alert('Veuillez entrer un prénom');
-      return;
+    } else {
+      setName(newName);
+      navigate('/order');
+      document.cookie = `name=${newName}; expires=${new Date(
+        Date.now() + 1000 * 60 * 10,
+      ).toUTCString()};`;
     }
-
-    setName(newName);
-    navigate('/order');
-    document.cookie = `name=${newName}; expires=Thu, ${new Date(
-      Date.now() + 1000 * 60 * 10,
-    ).toUTCString()};`;
   };
 
   return {

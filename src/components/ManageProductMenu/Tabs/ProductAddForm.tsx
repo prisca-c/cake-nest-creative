@@ -1,4 +1,4 @@
-import { useAddProductForm } from '@Hooks/useAddProductForm.ts';
+import { useAddProductForm } from '@Hooks/form/useAddProductForm.ts';
 import React from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { FiCheckCircle } from 'react-icons/fi';

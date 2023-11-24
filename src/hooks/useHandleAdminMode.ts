@@ -6,13 +6,11 @@ export const useHandleAdminMode = () => {
   const { adminMode, setAdminMode } = useContext(AdminModeContext);
 
   const handleAdminMode = () => {
-    setAdminMode(!adminMode);
-
-    if (adminMode) {
-      AdminToastInfo('Mode admin désactivé');
-    } else {
-      AdminToastInfo('Mode admin activé');
-    }
+    setAdminMode((prevMode) => {
+      const newMode = !prevMode;
+      AdminToastInfo(`Mode admin ${newMode ? 'activé' : 'désactivé'}`);
+      return newMode;
+    });
   };
 
   return {

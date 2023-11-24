@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 import { theme } from '~@/theme';
-import { useEditProductForm } from '@Hooks/useEditProductForm.ts';
+import { useEditProductForm } from '@Hooks/form/useEditProductForm.ts';
 
 type ProductAddFormProps = {
   data: ManageProductType;
