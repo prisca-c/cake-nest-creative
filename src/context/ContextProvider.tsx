@@ -14,6 +14,10 @@ type ContextProviderProps = {
 export const ContextProvider = ({ children }: ContextProviderProps) => {
   const [name, setName] = useState('');
   const [adminMode, setAdminMode] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<{
+    menuId: string;
+    productId: string;
+  }>({ menuId: '', productId: '' });
   const [selectedTab, setSelectedTab] = useState<'add' | 'edit'>('add');
   const [openState, setOpenState] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -28,7 +32,14 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
         <ManageProductStatesContext.Provider
           value={{ openState, setOpenState, selectedTab, setSelectedTab }}
         >
-          <AdminModeContext.Provider value={{ adminMode, setAdminMode }}>
+          <AdminModeContext.Provider
+            value={{
+              adminMode,
+              setAdminMode,
+              selectedProduct,
+              setSelectedProduct,
+            }}
+          >
             <NameContext.Provider value={{ name, setName }}>
               {children}
             </NameContext.Provider>
