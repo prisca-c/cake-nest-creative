@@ -46,6 +46,10 @@ const MenuBody = styled.div`
   overflow: scroll;
   transition: height 0.3s ease-in-out;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   p {
     display: none;

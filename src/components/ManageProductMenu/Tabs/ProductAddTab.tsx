@@ -40,6 +40,7 @@ const Main = styled.div`
     color: ${theme.colors.greyDark};
     padding: 20px;
     height: 100px;
+    text-align: center;
 
     img {
       width: 100%;
