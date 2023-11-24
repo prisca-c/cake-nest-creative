@@ -14,18 +14,23 @@ type ItemCardProps = {
 
 export const ItemCard = ({ item }: ItemCardProps) => {
   const { adminMode } = useContext(AdminModeContext);
-  const { menus, setMenus } = useContext(MenusContext);
+  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
   const handlePrice = (price: number | string) => {
     return handleFrenchPriceFormat(price);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (id: string) => {
     const newMenus = menus.map((menu) => {
-      const newProducts = menu.products.filter(
-        (product) => product.id !== item.id,
-      );
-      return { ...menu, products: newProducts };
+      if (menu.id === selectedMenu) {
+        const newItems = menu.products.filter((item) => item.id !== id);
+        return {
+          ...menu,
+          products: newItems,
+        };
+      }
+      return menu;
     });
+    console.log(newMenus);
     setMenus(newMenus);
   };
 
@@ -36,7 +41,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
           className={'delete'}
           color={theme.colors.primary}
           size={20}
-          onClick={handleDelete}
+          onClick={() => handleDelete(item.id)}
         />
       )}
       <img src={item.imageSource} alt={item.title} />
