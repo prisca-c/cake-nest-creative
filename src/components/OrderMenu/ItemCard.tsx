@@ -7,6 +7,7 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { useContext, useState } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
+import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 
 type ItemCardProps = {
   item: ProductType;
@@ -16,6 +17,9 @@ export const ItemCard = ({ item }: ItemCardProps) => {
   const { adminMode, selectedProduct, setSelectedProduct } =
     useContext(AdminModeContext);
   const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
+    ManageProductStatesContext,
+  );
   const [hover, setHover] = useState(false);
 
   const handleActiveSelectedCard = (id: string) => {
@@ -27,6 +31,16 @@ export const ItemCard = ({ item }: ItemCardProps) => {
       productId: id,
       menuId: selectedMenu,
     });
+
+    if (adminMode) {
+      if (selectedTab === 'add') {
+        setSelectedTab('edit');
+      }
+
+      if (!openState) {
+        setOpenState(true);
+      }
+    }
   };
 
   const handlePrice = (price: number | string) => {

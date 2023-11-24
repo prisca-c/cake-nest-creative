@@ -12,14 +12,14 @@ export const useEditProductForm = ({
   data,
   setData,
 }: UseEditProductFormProps) => {
-  const { selectedMenu, menus, setMenus } = useContext(MenusContext);
+  const { menus, setMenus } = useContext(MenusContext);
   const { selectedProduct } = useContext(AdminModeContext);
 
   const { productId, menuId } = selectedProduct;
 
   useEffect(() => {
     handleData();
-  }, []);
+  }, [selectedProduct]);
 
   useEffect(() => {
     handleUpdateProduct();
