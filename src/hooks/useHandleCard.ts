@@ -29,7 +29,7 @@ export const useHandleCard = () => {
   const handleOnHover = (state: boolean) => adminMode && setHover(state);
 
   const handleActiveSelectedCard = (id: string) =>
-    selectedProduct.productId === id;
+    selectedProduct.productId === id && adminMode;
 
   const handleClass = (id: string) =>
     handleActiveSelectedCard(id) ? 'active' : '';
