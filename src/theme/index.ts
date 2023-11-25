@@ -61,7 +61,9 @@ const borderRadius = {
   circle: '50%',
 };
 
-const shadows = {};
+const shadows = {
+  blue: '0 0 12px 0 rgb(122 180 184 / 100%)',
+};
 
 const breakpoints = {
   xs: 320,

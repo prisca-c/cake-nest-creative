@@ -5,28 +5,17 @@ import styled from 'styled-components';
 import { useContext } from 'react';
 import { NameContext } from '@Context/NameContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
-import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { IsAdminContext } from '@Context/IsAdminContext.ts';
-import { AdminToastInfo } from '../Toast/AdminToast.ts';
+import { useHandleAdminMode } from '@Hooks/useHandleAdminMode.ts';
 
 export const UserNavItem = () => {
   const { name, setName } = useContext(NameContext);
-  const { adminMode, setAdminMode } = useContext(AdminModeContext);
   const { isAdmin } = useContext(IsAdminContext);
+  const { adminMode, handleAdminMode } = useHandleAdminMode();
 
   const handleLogout = () => {
     document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     setName('');
-  };
-
-  const handleAdminMode = () => {
-    setAdminMode(!adminMode);
-
-    if (adminMode) {
-      AdminToastInfo('Mode admin désactivé');
-    } else {
-      AdminToastInfo('Mode admin activé');
-    }
   };
 
   return (

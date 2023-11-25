@@ -1,39 +1,30 @@
-import { useAddProductForm } from '@Hooks/form/useAddProductForm.ts';
 import React from 'react';
 import { FaCamera } from 'react-icons/fa';
-import { FiCheckCircle } from 'react-icons/fi';
 import { GiCupcake } from 'react-icons/gi';
 import { MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 import { theme } from '~@/theme';
+import { useEditProductForm } from '@Hooks/form/useEditProductForm.ts';
 
 type ProductAddFormProps = {
   data: ManageProductType;
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
 };
 
-const initialData = {
-  name: '',
-  image: '',
-  price: 0.0,
-};
-
-export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
-  const { newData, handleSubmit, handleChange, timerState } = useAddProductForm(
-    { setData, initialData },
-  );
+export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
+  const { handleChange } = useEditProductForm({ data, setData });
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Main>
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
         <input
           type="text"
           placeholder="Nom du produit"
           onChange={handleChange}
-          value={newData.name}
+          value={data.name}
           id="name"
         />
       </div>
@@ -43,7 +34,7 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           type="text"
           placeholder="Lien URL de l'image (ex: https://mon-url.me/mon-produit.png)"
           onChange={handleChange}
-          value={newData.image}
+          value={data.image}
           id="image"
         />
       </div>
@@ -53,25 +44,17 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           type="number"
           placeholder="Prix du produit"
           onChange={handleChange}
-          value={newData.price}
+          value={data.price}
           step="0.01"
           id="price"
         />
       </div>
-      <div className={'add-group'}>
-        <button type={'submit'}>Ajouter un nouveau produit au menu</button>
-        {timerState && (
-          <p>
-            <FiCheckCircle color={theme.colors.success} size={20} /> Produit
-            ajouté avec succès !
-          </p>
-        )}
-      </div>
-    </Form>
+      <p>Cliquez sur un produit pour le modifier en temps réel</p>
+    </Main>
   );
 };
 
-const Form = styled.form`
+const Main = styled.div`
   .input-group {
     display: flex;
     align-items: center;
@@ -90,33 +73,8 @@ const Form = styled.form`
     }
   }
 
-  .add-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-
-    button {
-      border: none;
-      background-color: ${theme.colors.success};
-      color: ${theme.colors.white};
-      font-size: 16px;
-      padding: 10px 20px;
-      border-radius: ${theme.borderRadius.round};
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        background-color: ${theme.colors.white};
-        color: ${theme.colors.success};
-        outline: 1px solid ${theme.colors.success};
-      }
-    }
-
-    p {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: ${theme.colors.success};
-    }
+  p {
+    color: ${theme.colors.success};
+    font-size: 14px;
   }
 `;

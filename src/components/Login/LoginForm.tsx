@@ -1,4 +1,4 @@
-import { useLoginForm } from '@Hooks/useLoginForm.ts';
+import { useLoginForm } from '@Hooks/form/useLoginForm.ts';
 import styled from 'styled-components';
 import { Button } from '../Button.tsx';
 import { LoginFormInput } from './LoginFormInput.tsx';
