@@ -15,10 +15,8 @@ export const useAddProductForm = ({
   initialData,
 }: UseAddProductFormProps) => {
   const [newData, setNewData] = useState<ManageProductType>(initialData);
-  const { menus, setMenus, selectedMenu } = React.useContext(MenusContext);
-  const { timerState, setTimerState } = useTimer({
-    time: 2000,
-  });
+  const { setMenus, selectedMenu } = React.useContext(MenusContext);
+  const { timerState, setTimerState } = useTimer({ time: 2000 });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewData({
@@ -38,16 +36,16 @@ export const useAddProductForm = ({
       isAvailable: true,
     };
 
-    const newMenus = menus.map((menu) => {
-      if (menu.id === selectedMenu) {
-        return {
-          ...menu,
-          products: [...menu.products, newProduct],
-        };
-      }
-      return menu;
-    });
-    setMenus(newMenus);
+    setMenus((prevMenus) =>
+      prevMenus.map((menu) =>
+        menu.id === selectedMenu
+          ? {
+              ...menu,
+              products: [...menu.products, newProduct],
+            }
+          : menu,
+      ),
+    );
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,7 +53,6 @@ export const useAddProductForm = ({
     //TODO Error handling
 
     setData(newData);
-
     handleAddProduct(newData);
     setTimerState(true);
     setNewData(initialData);
