@@ -1,6 +1,6 @@
-import { CartItemType } from '@Types/CartType.ts';
-import { MenuType } from '@Types/MenuType.ts';
-import { ProductType } from '@Types/ProductType.ts';
+import type { CartItemType } from '@Types/CartType.ts';
+import type { MenuType } from '@Types/MenuType.ts';
+import type { ProductType } from '@Types/ProductType.ts';
 
 export const getAssociatedProduct = (
   cartItem: CartItemType,

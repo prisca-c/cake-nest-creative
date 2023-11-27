@@ -1,10 +1,10 @@
-import { ProductType } from '@Types/ProductType.ts';
+import React from 'react';
+import type { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
 import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useHandleCard } from '@Hooks/useHandleCard.ts';
-import React from 'react';
 
 type ItemCardProps = {
   item: ProductType;

@@ -4,9 +4,9 @@ import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { CartContext } from '@Context/CartContext.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
-import { CartItemType } from '@Types/CartType.ts';
-import { ProductType } from '@Types/ProductType.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
+import type { ProductType } from '@Types/ProductType.ts';
+import type { CartItemType } from '@Types/CartType.ts';
 
 export const useHandleCard = () => {
   const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(

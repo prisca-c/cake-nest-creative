@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { useContext } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
+import styled from 'styled-components';
 import { theme } from '~@/theme';
 import { CartItem } from '@Components/Cart/CartItem.tsx';
 
