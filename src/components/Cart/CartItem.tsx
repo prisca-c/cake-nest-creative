@@ -13,8 +13,7 @@ export const CartItem = ({ item }: CartItemProps) => {
       <div>
         <h3>{item.title}</h3>
         <div className="information">
-          <p>Prix : {item.price}€</p>
-          <p>Total : {handleFrenchPriceFormat(item.price)}€</p>
+          <p>{handleFrenchPriceFormat(item.price)}</p>
         </div>
       </div>
     </Main>

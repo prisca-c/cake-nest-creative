@@ -15,7 +15,11 @@ export const Cart = () => {
         </p>
       </div>
       {cart.items?.length > 0 ? (
-        cart.items.map((item) => <CartItem key={item.id} item={item.product} />)
+        <div className={'list'}>
+          {cart.items.map((item) => (
+            <CartItem key={item.id} item={item.product} />
+          ))}
+        </div>
       ) : (
         <div className={'empty'}>
           <p>Votre panier est vide</p>
@@ -46,6 +50,20 @@ const Main = styled.div`
         font-size: 20px;
         font-weight: 700;
       }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    flex: 1;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
   .empty {
