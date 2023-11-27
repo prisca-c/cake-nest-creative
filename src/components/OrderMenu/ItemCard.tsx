@@ -17,6 +17,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     handlePrice,
     handleClass,
     handleActiveSelectedCard,
+    handleAddToCart,
     hover,
     adminMode,
   } = useHandleCard();
@@ -50,6 +51,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
             variant={'primary'}
             width={'100px'}
             active={handleActiveSelectedCard(item.id)}
+            onClick={() => handleAddToCart(item)}
           >
             Ajouter
           </Button>

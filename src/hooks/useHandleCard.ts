@@ -2,7 +2,10 @@ import { useContext, useState } from 'react';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
+import { CartContext } from '@Context/CartContext.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
+import { CartItemType } from '@Types/CartType.ts';
+import { ProductType } from '@Types/ProductType.ts';
 
 export const useHandleCard = () => {
   const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
@@ -11,6 +14,7 @@ export const useHandleCard = () => {
   const { adminMode, selectedProduct, setSelectedProduct } =
     useContext(AdminModeContext);
   const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const { cart, setCart, setTotal } = useContext(CartContext);
 
   const [hover, setHover] = useState(false);
 
@@ -43,6 +47,23 @@ export const useHandleCard = () => {
     if (!openState) setOpenState(true);
   };
 
+  const handleAddToCart = (item: ProductType) => {
+    const cartItem: CartItemType = {
+      id: item.id,
+      menuId: selectedMenu,
+      product: item,
+    };
+
+    const newCartItems = [...cart.items, cartItem];
+    const newTotal = newCartItems.reduce(
+      (acc, item) => acc + item.product.price,
+      0,
+    );
+
+    setTotal(handleFrenchPriceFormat(newTotal));
+    setCart({ ...cart, items: newCartItems });
+  };
+
   return {
     handlePrice,
     handleDelete,
@@ -50,6 +71,7 @@ export const useHandleCard = () => {
     handleClass,
     handleSelect,
     handleActiveSelectedCard,
+    handleAddToCart,
     adminMode,
     hover,
   };
