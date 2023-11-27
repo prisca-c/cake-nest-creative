@@ -4,8 +4,10 @@ import { NameContext } from './NameContext.ts';
 import { ManageProductStatesContext } from './ManageProductStates.ts';
 import { IsAdminContext } from './IsAdminContext.ts';
 import { MenusContext } from './MenusContext.ts';
+import { CartContext } from '@Context/CartContext.ts';
 
-import { MenuType } from '@Types/MenuType.ts';
+import type { MenuType } from '@Types/MenuType.ts';
+import type { CartType } from '@Types/CartType.ts';
 
 type ContextProviderProps = {
   children: React.ReactNode;
@@ -23,29 +25,37 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [selectedMenu, setSelectedMenu] = useState<string>('');
+  const [cart, setCart] = useState<CartType>({
+    id: '',
+    user: '',
+    items: [],
+  });
+  const [total, setTotal] = useState('0,00');
 
   return (
-    <MenusContext.Provider
-      value={{ menus, setMenus, selectedMenu, setSelectedMenu }}
-    >
-      <IsAdminContext.Provider value={{ isAdmin, setIsAdmin }}>
-        <ManageProductStatesContext.Provider
-          value={{ openState, setOpenState, selectedTab, setSelectedTab }}
-        >
-          <AdminModeContext.Provider
-            value={{
-              adminMode,
-              setAdminMode,
-              selectedProduct,
-              setSelectedProduct,
-            }}
+    <CartContext.Provider value={{ cart, setCart, total, setTotal }}>
+      <MenusContext.Provider
+        value={{ menus, setMenus, selectedMenu, setSelectedMenu }}
+      >
+        <IsAdminContext.Provider value={{ isAdmin, setIsAdmin }}>
+          <ManageProductStatesContext.Provider
+            value={{ openState, setOpenState, selectedTab, setSelectedTab }}
           >
-            <NameContext.Provider value={{ name, setName }}>
-              {children}
-            </NameContext.Provider>
-          </AdminModeContext.Provider>
-        </ManageProductStatesContext.Provider>
-      </IsAdminContext.Provider>
-    </MenusContext.Provider>
+            <AdminModeContext.Provider
+              value={{
+                adminMode,
+                setAdminMode,
+                selectedProduct,
+                setSelectedProduct,
+              }}
+            >
+              <NameContext.Provider value={{ name, setName }}>
+                {children}
+              </NameContext.Provider>
+            </AdminModeContext.Provider>
+          </ManageProductStatesContext.Provider>
+        </IsAdminContext.Provider>
+      </MenusContext.Provider>
+    </CartContext.Provider>
   );
 };
