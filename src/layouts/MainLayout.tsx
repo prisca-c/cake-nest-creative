@@ -50,6 +50,7 @@ const Main = styled.div`
 
   .content {
     overflow: scroll;
+    width: 100%;
 
     scrollbar-width: none;
     -ms-overflow-style: none;

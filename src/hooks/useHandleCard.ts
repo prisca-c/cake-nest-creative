@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
@@ -22,7 +22,8 @@ export const useHandleCard = () => {
   const handlePrice = (price: number | string) =>
     handleFrenchPriceFormat(price);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    e.stopPropagation();
     const newMenus = menus.map((menu) =>
       menu.id === selectedMenu
         ? { ...menu, products: menu.products.filter((item) => item.id !== id) }
@@ -52,7 +53,9 @@ export const useHandleCard = () => {
   const handleClass = (id: string) =>
     handleActiveSelectedCard(id) ? 'active' : '';
 
-  const handleSelect = (id: string) => {
+  const handleSelect = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    e.stopPropagation();
+
     if (!adminMode) return;
 
     setSelectedProduct({ productId: id, menuId: selectedMenu });
@@ -61,7 +64,11 @@ export const useHandleCard = () => {
     if (!openState) setOpenState(true);
   };
 
-  const handleAddToCart = (item: ProductType) => {
+  const handleAddToCart = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: ProductType,
+  ) => {
+    e.stopPropagation();
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>
         item.id === cartItem.product.id && selectedMenu === cartItem.menuId,
