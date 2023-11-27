@@ -10,7 +10,7 @@ export const CartContext = createContext<{
   cart: {
     id: '',
     user: '',
-    cart: [],
+    items: [],
   },
   setCart: () => {},
   total: '0,00',

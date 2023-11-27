@@ -28,7 +28,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
   const [cart, setCart] = useState<CartType>({
     id: '',
     user: '',
-    cart: [],
+    items: [],
   });
   const [total, setTotal] = useState('0,00');
 
