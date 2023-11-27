@@ -49,14 +49,8 @@ const Main = styled.div`
   overflow: hidden;
 
   .content {
-    overflow: scroll;
+    display: flex;
+    flex: 1;
     width: 100%;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 `;
