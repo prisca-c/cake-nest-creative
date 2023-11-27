@@ -1,11 +1,11 @@
-import { CartContext } from '@Context/CartContext.ts';
 import { useContext, useState } from 'react';
-import { handleFrenchPriceFormat } from '@Utils/math.ts';
-import styled from 'styled-components';
-import { CartItemType } from '@Types/CartType.ts';
-import { theme } from '~@/theme';
-import { BiSolidTrash } from 'react-icons/bi';
+import { CartContext } from '@Context/CartContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
+import styled from 'styled-components';
+import { theme } from '~@/theme';
+import { handleFrenchPriceFormat } from '@Utils/math.ts';
+import { BiSolidTrash } from 'react-icons/bi';
+import type { CartItemType } from '@Types/CartType.ts';
 
 type CartItemProps = {
   cartItem: CartItemType;

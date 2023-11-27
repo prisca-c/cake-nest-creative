@@ -1,14 +1,14 @@
+import { useContext, useEffect } from 'react';
+import { MenusContext } from '@Context/MenusContext.ts';
 import { ItemCard } from './ItemCard.tsx';
-import { ProductType } from '@Types/ProductType.ts';
 import { fakeMenu1, fakeMenu2 } from '../../data/fakeMenu.ts';
 import styled from 'styled-components';
 import { theme } from '~@/theme';
 import { getDateNowNumber } from '@Utils/date.ts';
 import { OutOfStock } from './OutOfStock/OutOfStock.tsx';
-import { useContext, useEffect } from 'react';
-import { MenusContext } from '@Context/MenusContext.ts';
 import { SelectMenu } from './SelectMenu.tsx';
-import { MenuType } from '@Types/MenuType.ts';
+import type { ProductType } from '@Types/ProductType.ts';
+import type { MenuType } from '@Types/MenuType.ts';
 
 export const OrderMenu = () => {
   const { menus, setMenus, setSelectedMenu, selectedMenu } =
