@@ -40,7 +40,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
               : theme.colors.primary
           }
           size={20}
-          onClick={(e: any) => handleDelete(e, item.id)}
+          onClick={(e: any) => handleDelete(e, item)}
         />
       )}
       <img src={item.imageSource} alt={item.title} />

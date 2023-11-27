@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { CartItemType } from '@Types/CartType.ts';
 import { theme } from '~@/theme';
 import { BiSolidTrash } from 'react-icons/bi';
+import { MenusContext } from '@Context/MenusContext.ts';
 
 type CartItemProps = {
   cartItem: CartItemType;
@@ -12,18 +13,23 @@ type CartItemProps = {
 
 export const CartItem = ({ cartItem }: CartItemProps) => {
   const [onHover, setOnHover] = useState(false);
-  const { product, quantity } = cartItem;
+  const { quantity } = cartItem;
   const { cart, setCart, setTotal } = useContext(CartContext);
+  const { menus } = useContext(MenusContext);
+
+  const menu = menus.find((menu) => menu.id === cartItem.menuId);
+  const product = menu?.products.find(
+    (product) => product.id === cartItem.productId,
+  );
+
+  if (!product) return null;
 
   const handleDelete = () => {
     const newCart = cart.items.filter((item) => item.id !== cartItem.id);
     setCart({ ...cart, items: newCart });
     setTotal(
       handleFrenchPriceFormat(
-        newCart.reduce(
-          (acc, item) => acc + item.product.price * item.quantity,
-          0,
-        ),
+        newCart.reduce((acc, item) => acc + product.price * item.quantity, 0),
       ),
     );
   };

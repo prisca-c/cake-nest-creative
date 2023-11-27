@@ -22,22 +22,28 @@ export const useHandleCard = () => {
   const handlePrice = (price: number | string) =>
     handleFrenchPriceFormat(price);
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+  const handleDelete = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    product: ProductType,
+  ) => {
     e.stopPropagation();
     const newMenus = menus.map((menu) =>
       menu.id === selectedMenu
-        ? { ...menu, products: menu.products.filter((item) => item.id !== id) }
+        ? {
+            ...menu,
+            products: menu.products.filter((item) => item.id !== product.id),
+          }
         : menu,
     );
     setMenus(newMenus);
 
     const newCartItems = cart.items.filter(
       (cartItem) =>
-        cartItem.product.id !== id || selectedMenu !== cartItem.menuId,
+        cartItem.productId !== product.id || selectedMenu !== cartItem.menuId,
     );
 
     const newTotal = newCartItems.reduce(
-      (acc, item) => acc + item.product.price * item.quantity,
+      (acc, item) => acc + product.price * item.quantity,
       0,
     );
 
@@ -66,22 +72,22 @@ export const useHandleCard = () => {
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement>,
-    item: ProductType,
+    product: ProductType,
   ) => {
     e.stopPropagation();
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>
-        item.id === cartItem.product.id && selectedMenu === cartItem.menuId,
+        product.id === cartItem.productId && selectedMenu === cartItem.menuId,
     );
 
     if (cartItem) {
       const newCartItems = cart.items.map((cartItem) =>
-        cartItem.product.id === item.id && selectedMenu === cartItem.menuId
+        cartItem.productId === product.id && selectedMenu === cartItem.menuId
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem,
       );
       const newTotal = newCartItems.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
+        (acc, item) => acc + product.price * item.quantity,
         0,
       );
 
@@ -92,19 +98,14 @@ export const useHandleCard = () => {
       const newCartItems = [
         ...cart.items,
         {
-          id: `${item.id}-${getDateNowNumber()}`,
+          id: `${product.id}-${getDateNowNumber()}`,
           menuId: selectedMenu,
           quantity: 1,
-          product: item,
+          productId: product.id,
           createdAt: new Date().toISOString(),
         },
       ];
-      const newTotal = newCartItems.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
-        0,
-      );
 
-      setTotal(handleFrenchPriceFormat(newTotal));
       setCart({ ...cart, items: newCartItems });
       return;
     }

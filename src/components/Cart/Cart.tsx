@@ -19,10 +19,7 @@ export const Cart = () => {
           {cart.items
             .map((item) => <CartItem key={item.id} cartItem={item} />)
             .sort((a, b) =>
-              a.props.cartItem.product.createdAt >
-              b.props.cartItem.product.createdAt
-                ? 1
-                : -1,
+              a.props.cartItem.createdAt > b.props.cartItem.createdAt ? 1 : -1,
             )}
         </div>
       ) : (
