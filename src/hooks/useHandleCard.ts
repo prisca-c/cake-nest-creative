@@ -29,6 +29,19 @@ export const useHandleCard = () => {
         : menu,
     );
     setMenus(newMenus);
+
+    const newCartItems = cart.items.filter(
+      (cartItem) =>
+        cartItem.product.id !== id && selectedMenu === cartItem.menuId,
+    );
+
+    const newTotal = newCartItems.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0,
+    );
+
+    setTotal(handleFrenchPriceFormat(newTotal));
+    setCart({ ...cart, items: newCartItems });
   };
 
   const handleOnHover = (state: boolean) => adminMode && setHover(state);

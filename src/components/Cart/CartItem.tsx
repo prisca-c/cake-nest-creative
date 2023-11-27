@@ -1,16 +1,39 @@
+import { CartContext } from '@Context/CartContext.ts';
+import { useContext, useState } from 'react';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import styled from 'styled-components';
 import { CartItemType } from '@Types/CartType.ts';
 import { theme } from '~@/theme';
+import { BiSolidTrash } from 'react-icons/bi';
 
 type CartItemProps = {
   cartItem: CartItemType;
 };
 
 export const CartItem = ({ cartItem }: CartItemProps) => {
+  const [onHover, setOnHover] = useState(false);
   const { product, quantity } = cartItem;
+  const { cart, setCart, setTotal } = useContext(CartContext);
+
+  const handleDelete = () => {
+    const newCart = cart.items.filter((item) => item.id !== cartItem.id);
+    setCart({ ...cart, items: newCart });
+    setTotal(
+      handleFrenchPriceFormat(
+        newCart.reduce(
+          (acc, item) => acc + item.product.price * item.quantity,
+          0,
+        ),
+      ),
+    );
+  };
+
   return (
-    <Main>
+    <Main
+      $onHover={onHover}
+      onMouseOver={() => setOnHover(true)}
+      onMouseOut={() => setOnHover(false)}
+    >
       <div className={'left'}>
         <img src={product.imageSource} alt={product.title} />
         <div>
@@ -20,17 +43,19 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
           </div>
         </div>
       </div>
-      <p className={'quantity'}>x {quantity}</p>
+      <div className={'action'} onClick={handleDelete}>
+        {onHover && <BiSolidTrash color={theme.colors.white} size={20} />}
+        {!onHover && <p className={'quantity'}>x {quantity}</p>}
+      </div>
     </Main>
   );
 };
 
-const Main = styled.div`
+const Main = styled.div<{ $onHover: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 10px 20px;
   background-color: ${theme.colors.white};
   border-radius: ${theme.borderRadius.round};
 
@@ -60,7 +85,17 @@ const Main = styled.div`
     }
   }
 
-  .quantity {
-    color: ${theme.colors.primary};
+  .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 100%;
+    cursor: pointer;
+    background-color: ${({ $onHover }) =>
+      $onHover ? theme.colors.red : theme.colors.white};
+    .quantity {
+      color: ${theme.colors.primary};
+    }
   }
 `;
