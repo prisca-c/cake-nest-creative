@@ -27,6 +27,7 @@ export const useHandleCard = () => {
     product: ProductType,
   ) => {
     e.stopPropagation();
+
     const newMenus = menus.map((menu) =>
       menu.id === selectedMenu
         ? {
@@ -75,17 +76,19 @@ export const useHandleCard = () => {
     product: ProductType,
   ) => {
     e.stopPropagation();
+
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>
         product.id === cartItem.productId && selectedMenu === cartItem.menuId,
     );
 
-    if (cartItem) {
+    const updateCart = (quantity: number) => {
       const newCartItems = cart.items.map((cartItem) =>
         cartItem.productId === product.id && selectedMenu === cartItem.menuId
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          ? { ...cartItem, quantity }
           : cartItem,
       );
+
       const newTotal = newCartItems.reduce(
         (acc, item) => acc + product.price * item.quantity,
         0,
@@ -93,7 +96,10 @@ export const useHandleCard = () => {
 
       setTotal(handleFrenchPriceFormat(newTotal));
       setCart({ ...cart, items: newCartItems });
-      return;
+    };
+
+    if (cartItem) {
+      updateCart(cartItem.quantity + 1);
     } else {
       const newCartItems = [
         ...cart.items,
@@ -107,7 +113,6 @@ export const useHandleCard = () => {
       ];
 
       setCart({ ...cart, items: newCartItems });
-      return;
     }
   };
 
