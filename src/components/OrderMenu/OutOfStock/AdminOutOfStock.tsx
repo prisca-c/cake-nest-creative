@@ -1,16 +1,25 @@
-import styled from 'styled-components';
-import { Button } from '../../Button.tsx';
 import { useContext } from 'react';
-import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
+import styled from 'styled-components';
+import { Button } from '@Components/Button.tsx';
+import { MenusContext } from '@Context/MenusContext.ts';
+import { fakeMenu1, fakeMenu2 } from '~@/data/fakeMenu.ts';
 
 export const AdminOutOfStock = () => {
-  const { openState, setOpenState, setSelectedTab } = useContext(
-    ManageProductStatesContext,
-  );
+  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
 
   const handleNewProducts = () => {
-    if (!openState) setOpenState(true);
-    setSelectedTab('add');
+    const seletedFakeMenu = selectedMenu === '1' ? fakeMenu1 : fakeMenu2;
+    if (!menus) return;
+    const newMenus = menus?.map((menu) => {
+      if (menu.products.length > 0) {
+        return menu;
+      } else {
+        return seletedFakeMenu;
+      }
+    });
+    if (typeof newMenus === 'undefined') return;
+
+    setMenus(newMenus);
   };
 
   return (
