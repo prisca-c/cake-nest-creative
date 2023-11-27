@@ -14,7 +14,9 @@ export const MainLayout = () => {
         <Navbar />
         <Main>
           <Cart />
-          <Outlet />
+          <div className={'content'}>
+            <Outlet />
+          </div>
         </Main>
       </Container>
     </Div>
@@ -44,11 +46,17 @@ const Main = styled.div`
   border-radius: 0 0 10px 10px;
   height: 100%;
   width: auto;
-  overflow: scroll;
+  overflow: hidden;
 
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
+  .content {
+    overflow: scroll;
+    width: 100%;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;

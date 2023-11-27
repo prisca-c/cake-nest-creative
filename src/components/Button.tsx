@@ -6,7 +6,7 @@ type ButtonProps = {
   variant: keyof typeof theme.colors;
   children: React.ReactNode;
   width: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   textAlign?: string;
   active?: boolean;
 };
