@@ -6,6 +6,7 @@ import { CartContext } from '@Context/CartContext.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { CartItemType } from '@Types/CartType.ts';
 import { ProductType } from '@Types/ProductType.ts';
+import { getDateNowNumber } from '@Utils/date.ts';
 
 export const useHandleCard = () => {
   const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
@@ -48,20 +49,44 @@ export const useHandleCard = () => {
   };
 
   const handleAddToCart = (item: ProductType) => {
-    const cartItem: CartItemType = {
-      id: item.id,
-      menuId: selectedMenu,
-      product: item,
-    };
-
-    const newCartItems = [...cart.items, cartItem];
-    const newTotal = newCartItems.reduce(
-      (acc, item) => acc + item.product.price,
-      0,
+    const cartItem: CartItemType | undefined = cart.items.find(
+      (cartItem) =>
+        item.id === cartItem.product.id && selectedMenu === cartItem.menuId,
     );
 
-    setTotal(handleFrenchPriceFormat(newTotal));
-    setCart({ ...cart, items: newCartItems });
+    if (cartItem) {
+      const newCartItems = cart.items.map((cartItem) =>
+        cartItem.product.id === item.id && selectedMenu === cartItem.menuId
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem,
+      );
+      const newTotal = newCartItems.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0,
+      );
+
+      setTotal(handleFrenchPriceFormat(newTotal));
+      setCart({ ...cart, items: newCartItems });
+      return;
+    } else {
+      const newCartItems = [
+        ...cart.items,
+        {
+          id: `${item.id}-${getDateNowNumber()}`,
+          menuId: selectedMenu,
+          quantity: 1,
+          product: item,
+        },
+      ];
+      const newTotal = newCartItems.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0,
+      );
+
+      setTotal(handleFrenchPriceFormat(newTotal));
+      setCart({ ...cart, items: newCartItems });
+      return;
+    }
   };
 
   return {
