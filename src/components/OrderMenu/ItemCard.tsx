@@ -4,6 +4,7 @@ import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useHandleCard } from '@Hooks/useHandleCard.ts';
+import React from 'react';
 
 type ItemCardProps = {
   item: ProductType;
@@ -17,6 +18,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
     handlePrice,
     handleClass,
     handleActiveSelectedCard,
+    handleAddToCart,
     hover,
     adminMode,
   } = useHandleCard();
@@ -26,7 +28,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
       onMouseOver={() => handleOnHover(true)}
       onMouseOut={() => handleOnHover(false)}
       $onHover={hover}
-      onClick={() => handleSelect(item.id)}
+      onClick={(e) => handleSelect(e, item.id)}
       className={handleClass(item.id)}
     >
       {adminMode && (
@@ -38,7 +40,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
               : theme.colors.primary
           }
           size={20}
-          onClick={() => handleDelete(item.id)}
+          onClick={(e: any) => handleDelete(e, item.id)}
         />
       )}
       <img src={item.imageSource} alt={item.title} />
@@ -50,6 +52,9 @@ export const ItemCard = ({ item }: ItemCardProps) => {
             variant={'primary'}
             width={'100px'}
             active={handleActiveSelectedCard(item.id)}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              handleAddToCart(e, item)
+            }
           >
             Ajouter
           </Button>
@@ -128,5 +133,10 @@ const Card = styled.div<{ $onHover: boolean }>`
         vertical-align: center;
       }
     }
+  }
+
+  .delete,
+  .footer {
+    z-index: 10;
   }
 `;
