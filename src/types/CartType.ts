@@ -1,10 +1,8 @@
-import { ProductType } from '@Types/ProductType.ts';
-
 export type CartItemType = {
   id: string;
   menuId: string;
+  productId: string;
   quantity: number;
-  product: ProductType;
   createdAt: string;
 };
 

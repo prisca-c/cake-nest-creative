@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminModeContext } from './AdminModeContext.ts';
 import { NameContext } from './NameContext.ts';
 import { ManageProductStatesContext } from './ManageProductStates.ts';
@@ -8,6 +8,8 @@ import { CartContext } from '@Context/CartContext.ts';
 
 import type { MenuType } from '@Types/MenuType.ts';
 import type { CartType } from '@Types/CartType.ts';
+import { getAssociatedProduct } from '@Utils/cartHelper.ts';
+import { handleFrenchPriceFormat } from '@Utils/math.ts';
 
 type ContextProviderProps = {
   children: React.ReactNode;
@@ -31,6 +33,19 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     items: [],
   });
   const [total, setTotal] = useState('0,00');
+
+  useEffect(() => {
+    const cartItems = cart.items;
+    const itemsPrices = cartItems.map((item) => {
+      const product = getAssociatedProduct(item, menus);
+      if (!product) return 0;
+      return product.price * item.quantity;
+    });
+
+    const total = itemsPrices.reduce((acc, price) => acc + price, 0);
+
+    setTotal(handleFrenchPriceFormat(total));
+  }, [menus, cart]);
 
   return (
     <CartContext.Provider value={{ cart, setCart, total, setTotal }}>
