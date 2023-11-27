@@ -1,21 +1,26 @@
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import styled from 'styled-components';
-import type { ProductType } from '@Types/ProductType.ts';
+import { CartItemType } from '@Types/CartType.ts';
+import { theme } from '~@/theme';
 
 type CartItemProps = {
-  item: ProductType;
+  cartItem: CartItemType;
 };
 
-export const CartItem = ({ item }: CartItemProps) => {
+export const CartItem = ({ cartItem }: CartItemProps) => {
+  const { product, quantity } = cartItem;
   return (
     <Main>
-      <img src={item.imageSource} alt={item.title} />
-      <div>
-        <h3>{item.title}</h3>
-        <div className="information">
-          <p>{handleFrenchPriceFormat(item.price)}</p>
+      <div className={'left'}>
+        <img src={product.imageSource} alt={product.title} />
+        <div>
+          <h3>{product.title}</h3>
+          <div className="information">
+            <p className={'price'}>{handleFrenchPriceFormat(product.price)}</p>
+          </div>
         </div>
       </div>
+      <p className={'quantity'}>x {quantity}</p>
     </Main>
   );
 };
@@ -23,23 +28,39 @@ export const CartItem = ({ item }: CartItemProps) => {
 const Main = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
-  padding: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  background-color: ${theme.colors.white};
+  border-radius: ${theme.borderRadius.round};
 
-  img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-
-  h3 {
-    margin: 0;
-  }
-
-  .information {
+  .left {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 20px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    h3 {
+      margin: 0;
+    }
+    .price {
+      color: ${theme.colors.primary};
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .information {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .quantity {
+    color: ${theme.colors.primary};
   }
 `;

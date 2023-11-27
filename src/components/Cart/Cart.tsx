@@ -11,13 +11,13 @@ export const Cart = () => {
       <div className={'header'}>
         <p>
           <span>Total</span>
-          <span>{total}€</span>
+          <span>{total}</span>
         </p>
       </div>
       {cart.items?.length > 0 ? (
         <div className={'list'}>
           {cart.items.map((item) => (
-            <CartItem key={item.id} item={item.product} />
+            <CartItem key={item.id} cartItem={item} />
           ))}
         </div>
       ) : (
@@ -32,9 +32,10 @@ export const Cart = () => {
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40vw;
+  width: 30vw;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
   font-family: 'Pacifico', cursive;
+  background-color: ${theme.colors.greyLight};
 
   .header {
     p {
@@ -56,7 +57,7 @@ const Main = styled.div`
   .list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     padding: 20px;
     flex: 1;
     overflow: scroll;
