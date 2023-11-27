@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Navbar } from '../components/Navbar/Navbar.tsx';
 import { theme } from '../theme';
 import { useHandleCookieName } from '../hooks/useHandleCookieName.ts';
+import { Cart } from '@Components/Cart/Cart.tsx';
 
 export const MainLayout = () => {
   useHandleCookieName();
@@ -12,6 +13,7 @@ export const MainLayout = () => {
       <Container>
         <Navbar />
         <Main>
+          <Cart />
           <Outlet />
         </Main>
       </Container>
@@ -32,12 +34,12 @@ const Container = styled.div`
   display: flex;
   flex-flow: column;
   height: 100%;
-  width: clamp(300px, 100%, 1000px);
+  flex: 1;
 `;
 
 const Main = styled.div`
+  display: flex;
   background-color: #fff;
-  padding: 15px 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
   border-radius: 0 0 10px 10px;
   height: 100%;
