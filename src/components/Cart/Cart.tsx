@@ -16,9 +16,14 @@ export const Cart = () => {
       </div>
       {cart.items?.length > 0 ? (
         <div className={'list'}>
-          {cart.items.map((item) => (
-            <CartItem key={item.id} cartItem={item} />
-          ))}
+          {cart.items
+            .map((item) => <CartItem key={item.id} cartItem={item} />)
+            .sort((a, b) =>
+              a.props.cartItem.product.createdAt >
+              b.props.cartItem.product.createdAt
+                ? 1
+                : -1,
+            )}
         </div>
       ) : (
         <div className={'empty'}>

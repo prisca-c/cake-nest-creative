@@ -33,7 +33,7 @@ export const useHandleCard = () => {
 
     const newCartItems = cart.items.filter(
       (cartItem) =>
-        cartItem.product.id !== id && selectedMenu === cartItem.menuId,
+        cartItem.product.id !== id || selectedMenu !== cartItem.menuId,
     );
 
     const newTotal = newCartItems.reduce(
@@ -96,6 +96,7 @@ export const useHandleCard = () => {
           menuId: selectedMenu,
           quantity: 1,
           product: item,
+          createdAt: new Date().toISOString(),
         },
       ];
       const newTotal = newCartItems.reduce(

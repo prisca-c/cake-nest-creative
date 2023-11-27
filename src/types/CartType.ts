@@ -5,6 +5,7 @@ export type CartItemType = {
   menuId: string;
   quantity: number;
   product: ProductType;
+  createdAt: string;
 };
 
 export type CartType = {
