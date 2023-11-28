@@ -10,7 +10,7 @@ import type { CartItemType } from '@Types/CartType.ts';
 export const useHandleCard = () => {
   const { adminMode } = useContext(AdminModeContext);
   const { menus, setMenus, selectedMenu } = useContext(MenusContext);
-  const { cart, setCart, setTotal } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
 
   const [hover, setHover] = useState(false);
 
@@ -38,12 +38,6 @@ export const useHandleCard = () => {
         cartItem.productId !== product.id || selectedMenu !== cartItem.menuId,
     );
 
-    const newTotal = newCartItems.reduce(
-      (acc, item) => acc + product.price * item.quantity,
-      0,
-    );
-
-    setTotal(handleFrenchPriceFormat(newTotal));
     setCart({ ...cart, items: newCartItems });
   };
 
@@ -69,12 +63,6 @@ export const useHandleCard = () => {
           : cartItem,
       );
 
-      const newTotal = newCartItems.reduce(
-        (acc, item) => acc + product.price * item.quantity,
-        0,
-      );
-
-      setTotal(handleFrenchPriceFormat(newTotal));
       setCart({ ...cart, items: newCartItems });
     };
 

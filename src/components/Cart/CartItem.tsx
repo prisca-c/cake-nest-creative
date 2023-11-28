@@ -39,9 +39,11 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
           <h3>{product.title}</h3>
           <div className="information">
             <p className={'price'}>
-              {!isNaN(product.price)
-                ? handleFrenchPriceFormat(product.price)
-                : 'NaN€'}
+              {product.quantity <= 0
+                ? 'Rupture de stock'
+                : !isNaN(product.price)
+                  ? handleFrenchPriceFormat(product.price)
+                  : 'NaN€'}
             </p>
           </div>
         </div>

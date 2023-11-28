@@ -38,8 +38,9 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     const cartItems = cart.items;
     const itemsPrices = cartItems.map((item) => {
       const product = getAssociatedProduct(item, menus);
-      if (!product) return 0;
-      if (isNaN(product.price)) return 0;
+      const unavailable =
+        !product || product.quantity <= 0 || isNaN(product.price);
+      if (unavailable) return 0;
       return product.price * item.quantity;
     });
 
