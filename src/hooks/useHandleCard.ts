@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { CartContext } from '@Context/CartContext.ts';
@@ -9,11 +8,7 @@ import type { ProductType } from '@Types/ProductType.ts';
 import type { CartItemType } from '@Types/CartType.ts';
 
 export const useHandleCard = () => {
-  const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
-    ManageProductStatesContext,
-  );
-  const { adminMode, selectedProduct, setSelectedProduct } =
-    useContext(AdminModeContext);
+  const { adminMode } = useContext(AdminModeContext);
   const { menus, setMenus, selectedMenu } = useContext(MenusContext);
   const { cart, setCart, setTotal } = useContext(CartContext);
 
@@ -53,23 +48,6 @@ export const useHandleCard = () => {
   };
 
   const handleOnHover = (state: boolean) => adminMode && setHover(state);
-
-  const handleActiveSelectedCard = (id: string) =>
-    selectedProduct.productId === id && adminMode;
-
-  const handleClass = (id: string) =>
-    handleActiveSelectedCard(id) ? 'active' : '';
-
-  const handleSelect = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
-    e.stopPropagation();
-
-    if (!adminMode) return;
-
-    setSelectedProduct({ productId: id, menuId: selectedMenu });
-
-    if (selectedTab === 'add') setSelectedTab('edit');
-    if (!openState) setOpenState(true);
-  };
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -120,9 +98,6 @@ export const useHandleCard = () => {
     handlePrice,
     handleDelete,
     handleOnHover,
-    handleClass,
-    handleSelect,
-    handleActiveSelectedCard,
     handleAddToCart,
     adminMode,
     hover,

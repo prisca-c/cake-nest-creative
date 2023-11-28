@@ -5,6 +5,7 @@ import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useHandleCard } from '@Hooks/useHandleCard.ts';
+import { useHandleProductSelected } from '@Hooks/useHandleProductSelected.ts';
 
 type ItemCardProps = {
   item: ProductType;
@@ -12,16 +13,15 @@ type ItemCardProps = {
 
 export const ItemCard = ({ item }: ItemCardProps) => {
   const {
-    handleSelect,
     handleDelete,
     handleOnHover,
     handlePrice,
-    handleClass,
-    handleActiveSelectedCard,
     handleAddToCart,
     hover,
     adminMode,
   } = useHandleCard();
+  const { handleSelect, handleClass, handleActiveSelectedCard } =
+    useHandleProductSelected();
 
   return (
     <Card
