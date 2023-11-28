@@ -66,7 +66,11 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
         <div>
           <h3>{product.title}</h3>
           <div className="information">
-            <p className={'price'}>{handleFrenchPriceFormat(product.price)}</p>
+            <p className={'price'}>
+              {!isNaN(product.price)
+                ? handleFrenchPriceFormat(product.price)
+                : 'NaN€'}
+            </p>
           </div>
         </div>
       </div>
