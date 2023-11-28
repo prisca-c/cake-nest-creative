@@ -119,6 +119,10 @@ const Card = styled.div<{ $onHover: boolean }>`
       font-size: 1.6rem;
       font-weight: 600;
       color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: clamp(100px, 200px, 20vw);
     }
 
     .footer {

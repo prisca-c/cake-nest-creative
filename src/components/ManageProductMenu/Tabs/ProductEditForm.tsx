@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { GiCupcake } from 'react-icons/gi';
 import { MdEuro } from 'react-icons/md';
@@ -14,7 +14,17 @@ type ProductAddFormProps = {
 };
 
 export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
-  const { handleChange } = useEditProductForm({ data, setData });
+  const { handleChange, openState, selectedProduct } = useEditProductForm({
+    data,
+    setData,
+  });
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (openState) {
+      inputRef.current?.focus();
+    }
+  }, [openState, selectedProduct]);
 
   return (
     <Main>
@@ -26,6 +36,7 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
           onChange={handleChange}
           value={data.name}
           id="name"
+          ref={inputRef}
         />
       </div>
       <div className={'input-group'}>
@@ -70,6 +81,11 @@ const Main = styled.div`
       margin-left: 10px;
       background-color: ${theme.colors.greyLight};
       width: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    input:focus {
+      border: ${theme.colors.primary};
     }
   }
 
