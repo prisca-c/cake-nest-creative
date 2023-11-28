@@ -39,6 +39,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     const itemsPrices = cartItems.map((item) => {
       const product = getAssociatedProduct(item, menus);
       if (!product) return 0;
+      if (isNaN(product.price)) return 0;
       return product.price * item.quantity;
     });
 
