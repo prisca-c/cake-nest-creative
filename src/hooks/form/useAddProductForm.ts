@@ -33,7 +33,7 @@ export const useAddProductForm = ({
       price: data.price,
       quantity: data.quantity,
       isAdvertised: false,
-      isAvailable: true,
+      isAvailable: data.isAvailable,
     };
 
     setMenus((prevMenus) =>
@@ -79,6 +79,10 @@ export const useAddProductForm = ({
     return newData.quantity <= 0;
   };
 
+  const handleAvailable = () => {
+    setNewData((prev) => ({ ...prev, isAvailable: !prev.isAvailable }));
+  };
+
   return {
     setNewData,
     newData,
@@ -87,5 +91,6 @@ export const useAddProductForm = ({
     timerState,
     handleQuantity,
     stockStatus,
+    handleAvailable,
   };
 };

@@ -45,11 +45,19 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
     }
   };
 
+  const handleLabel = () => {
+    if (!product.isAvailable) return 'Indisponible à la vente';
+    if (product.quantity <= 0) return 'Rupture de stock';
+    if (isNaN(product.price)) return 'NaN€';
+    return handleFrenchPriceFormat(product.price);
+  };
+
   return {
     handleDelete,
     handleOnHover,
     handleSelect,
     handleClass,
+    handleLabel,
     handleActiveSelectedCard,
     product,
     selectOnOver,

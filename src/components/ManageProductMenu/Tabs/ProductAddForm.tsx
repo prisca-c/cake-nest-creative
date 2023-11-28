@@ -3,7 +3,7 @@ import React from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { FiCheckCircle, FiPackage } from 'react-icons/fi';
 import { GiCupcake } from 'react-icons/gi';
-import { MdEuro } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
@@ -20,6 +20,7 @@ const initialData = {
   image: '',
   price: 0.0,
   quantity: 0,
+  isAvailable: false,
 };
 
 export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
@@ -29,11 +30,16 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
     handleChange,
     timerState,
     handleQuantity,
+    handleAvailable,
     stockStatus,
   } = useAddProductForm({ setData, initialData });
 
   return (
-    <Form onSubmit={handleSubmit} $stockStatus={stockStatus()}>
+    <Form
+      onSubmit={handleSubmit}
+      $stockStatus={stockStatus()}
+      $available={newData.isAvailable}
+    >
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
         <input
@@ -89,6 +95,15 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           />
           <p>{stockStatus() ? 'En rupture' : 'En stock'}</p>
         </div>
+
+        <div className={'available'} onClick={handleAvailable}>
+          {newData.isAvailable ? (
+            <MdCheckBox color={theme.colors.greyDark} size={20} />
+          ) : (
+            <MdCheckBoxOutlineBlank color={theme.colors.greyDark} size={20} />
+          )}
+          <p>Disponible</p>
+        </div>
       </div>
       <div className={'add-group'}>
         <button type={'submit'}>Ajouter un nouveau produit au menu</button>
@@ -103,7 +118,7 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
   );
 };
 
-const Form = styled.form<{ $stockStatus: boolean }>`
+const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
   .input-group {
     display: flex;
     align-items: center;
@@ -123,8 +138,8 @@ const Form = styled.form<{ $stockStatus: boolean }>`
   }
 
   .stock {
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
     .quantity {
       display: flex;
@@ -185,5 +200,20 @@ const Form = styled.form<{ $stockStatus: boolean }>`
       gap: 10px;
       color: ${theme.colors.success};
     }
+  }
+
+  .available {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: ${theme.colors.greyLight};
+    padding: 10px 20px;
+    border-radius: ${theme.borderRadius.round};
+    cursor: pointer;
+    color: ${({ $available }) =>
+      $available ? theme.colors.success : theme.colors.greyDark};
+    border: 1px solid
+      ${({ $available }) =>
+        $available ? theme.colors.success : theme.colors.greyLight};
   }
 `;

@@ -21,6 +21,7 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
     product,
     selectOnOver,
     deleteOnOver,
+    handleLabel,
   } = useHandleCartItem(cartItem)!;
 
   return (
@@ -38,13 +39,7 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
         <div>
           <h3>{product.title}</h3>
           <div className="information">
-            <p className={'price'}>
-              {product.quantity <= 0
-                ? 'Rupture de stock'
-                : !isNaN(product.price)
-                  ? handleFrenchPriceFormat(product.price)
-                  : 'NaN€'}
-            </p>
+            <p className={'price'}>{handleLabel()}</p>
           </div>
         </div>
       </div>

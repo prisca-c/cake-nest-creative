@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { GiCupcake } from 'react-icons/gi';
-import { MdEuro } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
@@ -16,40 +16,19 @@ type ProductAddFormProps = {
 };
 
 export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
-  const { handleChange, openState, selectedProduct } = useEditProductForm({
+  const {
+    handleChange,
+    handleAvailable,
+    handleQuantity,
+    stockStatus,
+    inputRef,
+  } = useEditProductForm({
     data,
     setData,
   });
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (openState) {
-      inputRef.current?.focus();
-    }
-  }, [openState, selectedProduct]);
-
-  const handleQuantity = (type: 'add' | 'remove') => {
-    if (type === 'add') {
-      setData((prevState) => ({
-        ...prevState,
-        quantity: prevState.quantity + 1,
-      }));
-    }
-
-    if (type === 'remove' && data.quantity > 0) {
-      setData((prevState) => ({
-        ...prevState,
-        quantity: prevState.quantity - 1,
-      }));
-    }
-  };
-
-  const stockStatus = () => {
-    return data.quantity <= 0;
-  };
 
   return (
-    <Main $stockStatus={stockStatus()}>
+    <Main $stockStatus={stockStatus()} $available={data.isAvailable}>
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
         <input
@@ -106,6 +85,15 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
           />
           <p>{stockStatus() ? 'En rupture' : 'En stock'}</p>
         </div>
+
+        <div className={'available'} onClick={handleAvailable}>
+          {data.isAvailable ? (
+            <MdCheckBox color={theme.colors.greyDark} size={20} />
+          ) : (
+            <MdCheckBoxOutlineBlank color={theme.colors.greyDark} size={20} />
+          )}
+          <p>Disponible</p>
+        </div>
       </div>
       <p className={'real_time'}>
         Cliquez sur un produit pour le modifier en temps réel
@@ -114,7 +102,7 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
   );
 };
 
-const Main = styled.div<{ $stockStatus: boolean }>`
+const Main = styled.div<{ $stockStatus: boolean; $available: boolean }>`
   position: relative;
   .input-group {
     display: flex;
@@ -140,7 +128,8 @@ const Main = styled.div<{ $stockStatus: boolean }>`
   }
 
   .stock {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
 
     .quantity {
@@ -177,5 +166,20 @@ const Main = styled.div<{ $stockStatus: boolean }>`
     margin-top: 10px;
     color: ${theme.colors.success};
     font-size: 14px;
+  }
+
+  .available {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: ${theme.colors.greyLight};
+    padding: 10px 20px;
+    border-radius: ${theme.borderRadius.round};
+    cursor: pointer;
+    color: ${({ $available }) =>
+      $available ? theme.colors.success : theme.colors.greyDark};
+    border: 1px solid
+      ${({ $available }) =>
+        $available ? theme.colors.success : theme.colors.greyLight};
   }
 `;

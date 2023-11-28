@@ -18,7 +18,7 @@ export const useHandleCard = () => {
     handleFrenchPriceFormat(price);
 
   const handleDelete = (
-    e: React.MouseEvent<HTMLButtonElement>,
+    e: React.MouseEvent<SVGSVGElement>,
     product: ProductType,
   ) => {
     e.stopPropagation();
@@ -49,7 +49,7 @@ export const useHandleCard = () => {
   ) => {
     e.stopPropagation();
 
-    if (product.quantity === 0) return;
+    if (product.quantity === 0 || !product.isAvailable) return;
 
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>

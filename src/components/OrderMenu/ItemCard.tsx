@@ -33,6 +33,11 @@ export const ItemCard = ({ item }: ItemCardProps) => {
       className={handleClass(item.id)}
     >
       {item.quantity <= 0 && <ItemCardOutOfStock />}
+      {!item.isAvailable && (
+        <div className={'unavailable'}>
+          <p>Indisponible</p>
+        </div>
+      )}
       {adminMode && (
         <AiFillCloseCircle
           className={'delete'}
@@ -42,7 +47,9 @@ export const ItemCard = ({ item }: ItemCardProps) => {
               : theme.colors.primary
           }
           size={20}
-          onClick={(e: any) => handleDelete(e, item)}
+          onClick={(e: React.MouseEvent<SVGSVGElement>) =>
+            handleDelete(e, item)
+          }
         />
       )}
       <img src={item.imageSource} alt={item.title} />
@@ -141,6 +148,17 @@ const Card = styled.div<{ $onHover: boolean }>`
 
   .price {
     color: ${theme.colors.primary};
+  }
+
+  .unavailable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding: 10px 0;
+    background-color: ${theme.colors.red};
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
   }
 
   .delete,
