@@ -3,4 +3,5 @@ export type ManageProductType = {
   image: string;
   price: number;
   quantity: number;
+  isAvailable: boolean;
 };

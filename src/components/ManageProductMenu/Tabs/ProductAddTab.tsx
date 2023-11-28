@@ -10,6 +10,7 @@ export const ProductAddTab = () => {
     image: '',
     price: 0,
     quantity: 0,
+    isAvailable: false,
   });
 
   return (

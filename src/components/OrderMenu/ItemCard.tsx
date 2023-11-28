@@ -6,6 +6,7 @@ import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useHandleCard } from '@Hooks/components/useHandleCard.ts';
 import { useHandleProductSelected } from '@Hooks/useHandleProductSelected.ts';
+import { ItemCardOutOfStock } from '@Components/OrderMenu/OutOfStock/ItemCardOutOfStock.tsx';
 
 type ItemCardProps = {
   item: ProductType;
@@ -31,6 +32,12 @@ export const ItemCard = ({ item }: ItemCardProps) => {
       onClick={(e) => handleSelect(e, item.id)}
       className={handleClass(item.id)}
     >
+      {item.quantity <= 0 && <ItemCardOutOfStock />}
+      {!item.isAvailable && (
+        <div className={'unavailable'}>
+          <p>Indisponible</p>
+        </div>
+      )}
       {adminMode && (
         <AiFillCloseCircle
           className={'delete'}
@@ -40,14 +47,16 @@ export const ItemCard = ({ item }: ItemCardProps) => {
               : theme.colors.primary
           }
           size={20}
-          onClick={(e: any) => handleDelete(e, item)}
+          onClick={(e: React.MouseEvent<SVGSVGElement>) =>
+            handleDelete(e, item)
+          }
         />
       )}
       <img src={item.imageSource} alt={item.title} />
       <div className={'infos'}>
         <h3>{item.title}</h3>
         <div className={'footer'}>
-          <p>{handlePrice(item.price)}</p>
+          <p className={'price'}>{handlePrice(item.price)}</p>
           <Button
             variant={'primary'}
             width={'100px'}
@@ -66,6 +75,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
 };
 
 const Card = styled.div<{ $onHover: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -76,10 +86,6 @@ const Card = styled.div<{ $onHover: boolean }>`
   transform: scale(1);
   background-color: ${theme.colors.white};
   cursor: ${({ $onHover }) => ($onHover ? 'pointer' : 'default')};
-
-  p {
-    color: ${theme.colors.primary};
-  }
 
   &:hover {
     transform: ${({ $onHover }) => ($onHover ? 'scale(1.05)' : 'scale(1)')};
@@ -138,6 +144,21 @@ const Card = styled.div<{ $onHover: boolean }>`
         vertical-align: center;
       }
     }
+  }
+
+  .price {
+    color: ${theme.colors.primary};
+  }
+
+  .unavailable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding: 10px 0;
+    background-color: ${theme.colors.red};
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
   }
 
   .delete,

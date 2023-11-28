@@ -9,10 +9,12 @@ import { OutOfStock } from './OutOfStock/OutOfStock.tsx';
 import { SelectMenu } from './SelectMenu.tsx';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { MenuType } from '@Types/MenuType.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
 
 export const OrderMenu = () => {
   const { menus, setMenus, setSelectedMenu, selectedMenu } =
     useContext(MenusContext);
+  const { adminMode } = useContext(AdminModeContext);
 
   useEffect(() => {
     setMenus([fakeMenu1, fakeMenu2]);
@@ -30,9 +32,15 @@ export const OrderMenu = () => {
         <OutOfStock />
       ) : (
         <MenuDiv>
-          {getSelectedMenu()?.products?.map((item: ProductType) => (
-            <ItemCard item={item} key={`${item.id}-${getDateNowNumber()}`} />
-          ))}
+          {getSelectedMenu()?.products?.map(
+            (item: ProductType) =>
+              (item.isAvailable || adminMode) && (
+                <ItemCard
+                  item={item}
+                  key={`${item.id}-${getDateNowNumber()}`}
+                />
+              ),
+          )}
         </MenuDiv>
       )}
     </>
@@ -47,11 +55,11 @@ const MenuDiv = styled.div`
 
   @media ${theme.devices.tablet} {
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: 20px;
   }
 
   @media ${theme.devices.laptop} {
     grid-template-columns: repeat(3, 1fr);
-    gap: 60px;
+    gap: 30px;
   }
 `;

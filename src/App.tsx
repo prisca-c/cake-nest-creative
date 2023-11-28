@@ -16,4 +16,9 @@ const Div = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 `;
