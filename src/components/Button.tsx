@@ -9,6 +9,7 @@ type ButtonProps = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   textAlign?: string;
   active?: boolean;
+  disabled?: boolean;
 };
 
 export const Button = ({
@@ -18,6 +19,7 @@ export const Button = ({
   width,
   textAlign = 'center',
   active = false,
+  disabled = false,
 }: ButtonProps) => {
   return (
     <ButtonStyle
@@ -26,6 +28,7 @@ export const Button = ({
       $textAlign={textAlign}
       $variant={variant}
       $active={active}
+      disabled={disabled}
     >
       {children}
     </ButtonStyle>
@@ -61,5 +64,12 @@ const ButtonStyle = styled.button<{
     background-color: ${theme.colors.white};
     color: ${({ $variant }) => theme.colors[$variant]};
     outline: 1px solid ${({ $variant }) => theme.colors[$variant]};
+  }
+
+  &:disabled {
+    background-color: ${theme.colors.greyLight};
+    color: ${theme.colors.greyDark};
+    border: 1px solid ${theme.colors.greyLight};
+    cursor: not-allowed;
   }
 `;

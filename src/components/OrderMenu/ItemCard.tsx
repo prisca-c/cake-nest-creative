@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from '../Button.tsx';
 import { theme } from '~@/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { useHandleCard } from '@Hooks/useHandleCard.ts';
+import { useHandleCard } from '@Hooks/components/useHandleCard.ts';
 import { useHandleProductSelected } from '@Hooks/useHandleProductSelected.ts';
 
 type ItemCardProps = {
@@ -52,6 +52,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
             variant={'primary'}
             width={'100px'}
             active={handleActiveSelectedCard(item.id)}
+            disabled={item.quantity === 0}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
               handleAddToCart(e, item)
             }

@@ -18,6 +18,7 @@ const initialData = {
   name: '',
   image: '',
   price: 0.0,
+  quantity: 0,
 };
 
 export const ProductAddForm = ({ setData }: ProductAddFormProps) => {

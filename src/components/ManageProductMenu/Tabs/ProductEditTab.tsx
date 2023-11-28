@@ -13,6 +13,7 @@ export const ProductEditTab = () => {
     name: '',
     image: '',
     price: 0,
+    quantity: 0,
   });
 
   return (

@@ -36,6 +36,7 @@ export const useEditProductForm = ({
         name: product.title,
         image: product.imageSource,
         price: product.price,
+        quantity: product.quantity,
       });
     }
   };
@@ -53,6 +54,7 @@ export const useEditProductForm = ({
                       title: data.name,
                       imageSource: data.image,
                       price: data.price,
+                      quantity: data.quantity,
                     }
                   : product,
               ),
