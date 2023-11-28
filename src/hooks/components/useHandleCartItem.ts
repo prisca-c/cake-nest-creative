@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
@@ -22,7 +22,9 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
 
   if (!product) return null;
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
     if (!deleteOnOver) return;
     const newCart = cart.items.filter((item) => item.id !== cartItem.id);
     setCart({ ...cart, items: newCart });
@@ -43,11 +45,19 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
     }
   };
 
+  const handleLabel = () => {
+    if (!product.isAvailable) return 'Indisponible à la vente';
+    if (product.quantity <= 0) return 'Rupture de stock';
+    if (isNaN(product.price)) return 'NaN€';
+    return handleFrenchPriceFormat(product.price);
+  };
+
   return {
     handleDelete,
     handleOnHover,
     handleSelect,
     handleClass,
+    handleLabel,
     handleActiveSelectedCard,
     product,
     selectOnOver,

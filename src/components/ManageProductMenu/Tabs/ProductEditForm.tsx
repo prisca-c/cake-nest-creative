@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { GiCupcake } from 'react-icons/gi';
-import { MdEuro } from 'react-icons/md';
+import { MdCheckBox, MdCheckBoxOutlineBlank, MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 import { theme } from '~@/theme';
 import { useEditProductForm } from '@Hooks/form/useEditProductForm.ts';
 import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io';
+import { FiPackage } from 'react-icons/fi';
 
 type ProductAddFormProps = {
   data: ManageProductType;
@@ -15,35 +16,19 @@ type ProductAddFormProps = {
 };
 
 export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
-  const { handleChange, openState, selectedProduct } = useEditProductForm({
+  const {
+    handleChange,
+    handleAvailable,
+    handleQuantity,
+    stockStatus,
+    inputRef,
+  } = useEditProductForm({
     data,
     setData,
   });
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (openState) {
-      inputRef.current?.focus();
-    }
-  }, [openState, selectedProduct]);
-
-  const handleQuantity = (type: 'add' | 'remove') => {
-    if (type === 'add') {
-      setData((prevState) => ({
-        ...prevState,
-        quantity: prevState.quantity + 1,
-      }));
-    }
-    if (type === 'remove') {
-      setData((prevState) => ({
-        ...prevState,
-        quantity: prevState.quantity - 1,
-      }));
-    }
-  };
 
   return (
-    <Main>
+    <Main $stockStatus={stockStatus()} $available={data.isAvailable}>
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
         <input
@@ -76,27 +61,49 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
           id="price"
         />
       </div>
-      <div className={'quantity'}>
-        <IoMdRemoveCircle
-          color={theme.colors.greyDark}
-          size={20}
-          onClick={() => handleQuantity('remove')}
-          className={'icon'}
-        />
-        <p>{data.quantity}</p>
-        <IoMdAddCircle
-          color={theme.colors.greyDark}
-          size={20}
-          onClick={() => handleQuantity('add')}
-          className={'icon'}
-        />
+      <div className={'stock'}>
+        <div className={'quantity'}>
+          <IoMdRemoveCircle
+            color={theme.colors.greyDark}
+            size={20}
+            onClick={() => handleQuantity('remove')}
+            className={'icon'}
+          />
+          <p>{data.quantity}</p>
+          <IoMdAddCircle
+            color={theme.colors.greyDark}
+            size={20}
+            onClick={() => handleQuantity('add')}
+            className={'icon'}
+          />
+        </div>
+
+        <div className={'stock_label'}>
+          <FiPackage
+            color={stockStatus() ? theme.colors.red : theme.colors.success}
+            size={20}
+          />
+          <p>{stockStatus() ? 'En rupture' : 'En stock'}</p>
+        </div>
+
+        <div className={'available'} onClick={handleAvailable}>
+          {data.isAvailable ? (
+            <MdCheckBox color={theme.colors.greyDark} size={20} />
+          ) : (
+            <MdCheckBoxOutlineBlank color={theme.colors.greyDark} size={20} />
+          )}
+          <p>Disponible</p>
+        </div>
       </div>
-      <p>Cliquez sur un produit pour le modifier en temps réel</p>
+      <p className={'real_time'}>
+        Cliquez sur un produit pour le modifier en temps réel
+      </p>
     </Main>
   );
 };
 
-const Main = styled.div`
+const Main = styled.div<{ $stockStatus: boolean; $available: boolean }>`
+  position: relative;
   .input-group {
     display: flex;
     align-items: center;
@@ -120,26 +127,59 @@ const Main = styled.div`
     }
   }
 
-  .quantity {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  .stock {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
 
-    p {
-      text-align: center;
-      background-color: ${theme.colors.greyLight};
-      width: 30px;
-      padding: 10px 20px;
-      border-radius: ${theme.borderRadius.round};
+    .quantity {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      p {
+        text-align: center;
+        background-color: ${theme.colors.greyLight};
+        width: 30px;
+        padding: 10px 20px;
+        border-radius: ${theme.borderRadius.round};
+      }
+
+      .icon {
+        cursor: pointer;
+      }
     }
 
-    .icon {
-      cursor: pointer;
+    .stock_label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: ${theme.colors.greyLight};
+      padding: 10px 20px;
+      border-radius: ${theme.borderRadius.round};
+      color: ${({ $stockStatus }) =>
+        $stockStatus ? theme.colors.red : theme.colors.success};
     }
   }
 
-  p {
+  .real_time {
+    margin-top: 10px;
     color: ${theme.colors.success};
     font-size: 14px;
+  }
+
+  .available {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: ${theme.colors.greyLight};
+    padding: 10px 20px;
+    border-radius: ${theme.borderRadius.round};
+    cursor: pointer;
+    color: ${({ $available }) =>
+      $available ? theme.colors.success : theme.colors.greyDark};
+    border: 1px solid
+      ${({ $available }) =>
+        $available ? theme.colors.success : theme.colors.greyLight};
   }
 `;

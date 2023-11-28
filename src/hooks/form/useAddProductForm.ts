@@ -7,13 +7,16 @@ import type { ProductType } from '@Types/ProductType.ts';
 
 type UseAddProductFormProps = {
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
-  initialData: ManageProductType;
 };
 
-export const useAddProductForm = ({
-  setData,
-  initialData,
-}: UseAddProductFormProps) => {
+export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
+  const initialData = {
+    name: '',
+    image: '',
+    price: 0.0,
+    quantity: 0,
+    isAvailable: false,
+  };
   const [newData, setNewData] = useState<ManageProductType>(initialData);
   const { setMenus, selectedMenu } = React.useContext(MenusContext);
   const { timerState, setTimerState } = useTimer({ time: 2000 });
@@ -31,9 +34,9 @@ export const useAddProductForm = ({
       title: data.name,
       imageSource: data.image,
       price: data.price,
-      quantity: 1,
+      quantity: data.quantity,
       isAdvertised: false,
-      isAvailable: true,
+      isAvailable: data.isAvailable,
     };
 
     setMenus((prevMenus) =>
@@ -59,10 +62,38 @@ export const useAddProductForm = ({
     setData(initialData);
   };
 
+  const handleQuantity = (type: 'add' | 'remove') => {
+    if (type === 'add') {
+      setNewData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity + 1,
+      }));
+    }
+
+    if (type === 'remove' && newData.quantity > 0) {
+      setNewData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity - 1,
+      }));
+    }
+  };
+
+  const stockStatus = () => {
+    return newData.quantity <= 0;
+  };
+
+  const handleAvailable = () => {
+    setNewData((prev) => ({ ...prev, isAvailable: !prev.isAvailable }));
+  };
+
   return {
+    setNewData,
     newData,
     handleChange,
     handleSubmit,
     timerState,
+    handleQuantity,
+    stockStatus,
+    handleAvailable,
   };
 };

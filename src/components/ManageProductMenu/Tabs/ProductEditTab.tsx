@@ -14,6 +14,7 @@ export const ProductEditTab = () => {
     image: '',
     price: 0,
     quantity: 0,
+    isAvailable: false,
   });
 
   return (
