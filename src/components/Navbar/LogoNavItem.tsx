@@ -11,9 +11,9 @@ export const LogoNavItem = () => {
   };
 
   return (
-    <LogoText>
+    <LogoText onClick={refreshPage}>
       Cake
-      <Logo width={'clamp(2rem, 45px, 3rem)'} onClick={refreshPage} />
+      <Logo width={'clamp(2rem, 45px, 3rem)'} />
       Nest
     </LogoText>
   );
@@ -29,4 +29,5 @@ const LogoText = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
