@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
@@ -22,7 +22,9 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
 
   if (!product) return null;
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
     if (!deleteOnOver) return;
     const newCart = cart.items.filter((item) => item.id !== cartItem.id);
     setCart({ ...cart, items: newCart });

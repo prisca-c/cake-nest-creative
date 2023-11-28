@@ -8,6 +8,7 @@ import type { ManageProductType } from '@Types/ManageProductType.ts';
 import { theme } from '~@/theme';
 import { useEditProductForm } from '@Hooks/form/useEditProductForm.ts';
 import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io';
+import { FiPackage } from 'react-icons/fi';
 
 type ProductAddFormProps = {
   data: ManageProductType;
@@ -34,7 +35,8 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
         quantity: prevState.quantity + 1,
       }));
     }
-    if (type === 'remove') {
+
+    if (type === 'remove' && data.quantity > 0) {
       setData((prevState) => ({
         ...prevState,
         quantity: prevState.quantity - 1,
@@ -42,8 +44,12 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
     }
   };
 
+  const stockStatus = () => {
+    return data.quantity <= 0;
+  };
+
   return (
-    <Main>
+    <Main $stockStatus={stockStatus()}>
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
         <input
@@ -76,27 +82,40 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
           id="price"
         />
       </div>
-      <div className={'quantity'}>
-        <IoMdRemoveCircle
-          color={theme.colors.greyDark}
-          size={20}
-          onClick={() => handleQuantity('remove')}
-          className={'icon'}
-        />
-        <p>{data.quantity}</p>
-        <IoMdAddCircle
-          color={theme.colors.greyDark}
-          size={20}
-          onClick={() => handleQuantity('add')}
-          className={'icon'}
-        />
+      <div className={'stock'}>
+        <div className={'quantity'}>
+          <IoMdRemoveCircle
+            color={theme.colors.greyDark}
+            size={20}
+            onClick={() => handleQuantity('remove')}
+            className={'icon'}
+          />
+          <p>{data.quantity}</p>
+          <IoMdAddCircle
+            color={theme.colors.greyDark}
+            size={20}
+            onClick={() => handleQuantity('add')}
+            className={'icon'}
+          />
+        </div>
+
+        <div className={'stock_label'}>
+          <FiPackage
+            color={stockStatus() ? theme.colors.red : theme.colors.success}
+            size={20}
+          />
+          <p>{stockStatus() ? 'En rupture' : 'En stock'}</p>
+        </div>
       </div>
-      <p>Cliquez sur un produit pour le modifier en temps réel</p>
+      <p className={'real_time'}>
+        Cliquez sur un produit pour le modifier en temps réel
+      </p>
     </Main>
   );
 };
 
-const Main = styled.div`
+const Main = styled.div<{ $stockStatus: boolean }>`
+  position: relative;
   .input-group {
     display: flex;
     align-items: center;
@@ -120,25 +139,42 @@ const Main = styled.div`
     }
   }
 
-  .quantity {
+  .stock {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    gap: 20px;
 
-    p {
-      text-align: center;
-      background-color: ${theme.colors.greyLight};
-      width: 30px;
-      padding: 10px 20px;
-      border-radius: ${theme.borderRadius.round};
+    .quantity {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      p {
+        text-align: center;
+        background-color: ${theme.colors.greyLight};
+        width: 30px;
+        padding: 10px 20px;
+        border-radius: ${theme.borderRadius.round};
+      }
+
+      .icon {
+        cursor: pointer;
+      }
     }
 
-    .icon {
-      cursor: pointer;
+    .stock_label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: ${theme.colors.greyLight};
+      padding: 10px 20px;
+      border-radius: ${theme.borderRadius.round};
+      color: ${({ $stockStatus }) =>
+        $stockStatus ? theme.colors.red : theme.colors.success};
     }
   }
 
-  p {
+  .real_time {
+    margin-top: 10px;
     color: ${theme.colors.success};
     font-size: 14px;
   }

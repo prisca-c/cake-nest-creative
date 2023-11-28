@@ -47,11 +47,11 @@ const MenuDiv = styled.div`
 
   @media ${theme.devices.tablet} {
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: 20px;
   }
 
   @media ${theme.devices.laptop} {
     grid-template-columns: repeat(3, 1fr);
-    gap: 60px;
+    gap: 30px;
   }
 `;

@@ -4,6 +4,7 @@ import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { BiSolidTrash } from 'react-icons/bi';
 import type { CartItemType } from '@Types/CartType.ts';
 import { useHandleCartItem } from '@Hooks/components/useHandleCartItem.ts';
+import React from 'react';
 
 type CartItemProps = {
   cartItem: CartItemType;
@@ -45,7 +46,10 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
           </div>
         </div>
       </div>
-      <div className={'action'} onClick={handleDelete}>
+      <div
+        className={'action'}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => handleDelete(e)}
+      >
         {deleteOnOver && <BiSolidTrash color={theme.colors.white} size={20} />}
         {!deleteOnOver && <p className={'quantity'}>x {quantity}</p>}
       </div>
