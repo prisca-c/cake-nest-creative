@@ -17,9 +17,10 @@ export const useHandleCookieName = () => {
 
     if (!name && cookieName) {
       setName(cookieName);
-      if (cookieName === 'admin') setIsAdmin(true);
     } else if (!name || !cookieName) {
-      navigate('/');
+      return navigate('/');
     }
+
+    if (cookieName === 'admin' || name === 'admin') setIsAdmin(true);
   });
 };
