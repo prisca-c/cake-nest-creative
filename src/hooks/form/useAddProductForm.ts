@@ -31,7 +31,7 @@ export const useAddProductForm = ({
       title: data.name,
       imageSource: data.image,
       price: data.price,
-      quantity: 1,
+      quantity: data.quantity,
       isAdvertised: false,
       isAvailable: true,
     };
@@ -59,10 +59,33 @@ export const useAddProductForm = ({
     setData(initialData);
   };
 
+  const handleQuantity = (type: 'add' | 'remove') => {
+    if (type === 'add') {
+      setNewData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity + 1,
+      }));
+    }
+
+    if (type === 'remove' && newData.quantity > 0) {
+      setNewData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity - 1,
+      }));
+    }
+  };
+
+  const stockStatus = () => {
+    return newData.quantity <= 0;
+  };
+
   return {
+    setNewData,
     newData,
     handleChange,
     handleSubmit,
     timerState,
+    handleQuantity,
+    stockStatus,
   };
 };
