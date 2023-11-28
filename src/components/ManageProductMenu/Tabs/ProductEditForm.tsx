@@ -7,6 +7,7 @@ import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 import { theme } from '~@/theme';
 import { useEditProductForm } from '@Hooks/form/useEditProductForm.ts';
+import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io';
 
 type ProductAddFormProps = {
   data: ManageProductType;
@@ -25,6 +26,21 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
       inputRef.current?.focus();
     }
   }, [openState, selectedProduct]);
+
+  const handleQuantity = (type: 'add' | 'remove') => {
+    if (type === 'add') {
+      setData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity + 1,
+      }));
+    }
+    if (type === 'remove') {
+      setData((prevState) => ({
+        ...prevState,
+        quantity: prevState.quantity - 1,
+      }));
+    }
+  };
 
   return (
     <Main>
@@ -60,6 +76,21 @@ export const ProductEditForm = ({ data, setData }: ProductAddFormProps) => {
           id="price"
         />
       </div>
+      <div className={'quantity'}>
+        <IoMdRemoveCircle
+          color={theme.colors.greyDark}
+          size={20}
+          onClick={() => handleQuantity('remove')}
+          className={'icon'}
+        />
+        <p>{data.quantity}</p>
+        <IoMdAddCircle
+          color={theme.colors.greyDark}
+          size={20}
+          onClick={() => handleQuantity('add')}
+          className={'icon'}
+        />
+      </div>
       <p>Cliquez sur un produit pour le modifier en temps réel</p>
     </Main>
   );
@@ -86,6 +117,24 @@ const Main = styled.div`
 
     input:focus {
       border: ${theme.colors.primary};
+    }
+  }
+
+  .quantity {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    p {
+      text-align: center;
+      background-color: ${theme.colors.greyLight};
+      width: 30px;
+      padding: 10px 20px;
+      border-radius: ${theme.borderRadius.round};
+    }
+
+    .icon {
+      cursor: pointer;
     }
   }
 

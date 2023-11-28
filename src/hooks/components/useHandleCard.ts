@@ -55,6 +55,8 @@ export const useHandleCard = () => {
   ) => {
     e.stopPropagation();
 
+    if (product.quantity === 0) return;
+
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>
         product.id === cartItem.productId && selectedMenu === cartItem.menuId,

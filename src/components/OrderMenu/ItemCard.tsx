@@ -52,6 +52,7 @@ export const ItemCard = ({ item }: ItemCardProps) => {
             variant={'primary'}
             width={'100px'}
             active={handleActiveSelectedCard(item.id)}
+            disabled={item.quantity === 0}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
               handleAddToCart(e, item)
             }
