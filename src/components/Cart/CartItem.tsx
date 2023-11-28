@@ -113,6 +113,10 @@ const Main = styled.div<{
 
     h3 {
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100px;
     }
     .price {
       color: ${({ $selectOnHover, $active }) =>
