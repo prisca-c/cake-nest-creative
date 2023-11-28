@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 
 type UseEditProductFormProps = {
   data: ManageProductType;
@@ -14,6 +15,7 @@ export const useEditProductForm = ({
 }: UseEditProductFormProps) => {
   const { menus, setMenus } = useContext(MenusContext);
   const { selectedProduct } = useContext(AdminModeContext);
+  const { openState } = useContext(ManageProductStatesContext);
   const { productId, menuId } = selectedProduct;
 
   useEffect(() => {
@@ -64,5 +66,5 @@ export const useEditProductForm = ({
     setData({ ...data, [e.target.id]: e.target.value });
   };
 
-  return { handleChange };
+  return { handleChange, openState, selectedProduct };
 };
