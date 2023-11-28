@@ -1,75 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AdminModeContext } from './AdminModeContext.ts';
 import { NameContext } from './NameContext.ts';
 import { ManageProductStatesContext } from './ManageProductStates.ts';
 import { IsAdminContext } from './IsAdminContext.ts';
 import { MenusContext } from './MenusContext.ts';
 import { CartContext } from '@Context/CartContext.ts';
-
-import type { MenuType } from '@Types/MenuType.ts';
-import type { CartType } from '@Types/CartType.ts';
-import { getAssociatedProduct } from '@Utils/cartHelper.ts';
-import { handleFrenchPriceFormat } from '@Utils/math.ts';
+import { useContextProviderState } from '@Hooks/useContextProviderState.ts';
+import { useUpdateTotal } from '@Hooks/useUpdateTotal.ts';
 
 type ContextProviderProps = {
   children: React.ReactNode;
 };
 
 export const ContextProvider = ({ children }: ContextProviderProps) => {
-  const [name, setName] = useState('');
-  const [adminMode, setAdminMode] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<{
-    menuId: string;
-    productId: string;
-  }>({ menuId: '', productId: '' });
-  const [selectedTab, setSelectedTab] = useState<'add' | 'edit'>('add');
-  const [openState, setOpenState] = useState<boolean>(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [menus, setMenus] = useState<MenuType[]>([]);
-  const [selectedMenu, setSelectedMenu] = useState<string>('');
-  const [cart, setCart] = useState<CartType>({
-    id: '',
-    user: '',
-    items: [],
+  const {
+    adminModeState,
+    isAdminState,
+    cartState,
+    totalState,
+    selectedTabState,
+    openStateState,
+    nameState,
+    menusState,
+    selectedMenuState,
+    selectedProductState,
+  } = useContextProviderState();
+  useUpdateTotal({
+    menus: menusState.menus,
+    cart: cartState.cart,
+    setTotal: totalState.setTotal,
   });
-  const [total, setTotal] = useState('0,00');
-
-  useEffect(() => {
-    const cartItems = cart.items;
-    const itemsPrices = cartItems.map((item) => {
-      const product = getAssociatedProduct(item, menus);
-      const unavailable =
-        !product ||
-        product.quantity <= 0 ||
-        isNaN(product.price) ||
-        !product.isAvailable;
-      if (unavailable) return 0;
-      return product.price * item.quantity;
-    });
-
-    const total = itemsPrices.reduce((acc, price) => acc + price, 0);
-
-    setTotal(handleFrenchPriceFormat(total));
-  }, [menus, cart]);
 
   return (
-    <CartContext.Provider value={{ cart, setCart, total, setTotal }}>
-      <MenusContext.Provider
-        value={{ menus, setMenus, selectedMenu, setSelectedMenu }}
-      >
-        <IsAdminContext.Provider value={{ isAdmin, setIsAdmin }}>
+    <CartContext.Provider value={{ ...cartState, ...totalState }}>
+      <MenusContext.Provider value={{ ...menusState, ...selectedMenuState }}>
+        <IsAdminContext.Provider value={{ ...isAdminState }}>
           <ManageProductStatesContext.Provider
-            value={{ openState, setOpenState, selectedTab, setSelectedTab }}
+            value={{ ...openStateState, ...selectedTabState }}
           >
             <AdminModeContext.Provider
               value={{
-                adminMode,
-                setAdminMode,
-                selectedProduct,
-                setSelectedProduct,
+                ...adminModeState,
+                ...selectedProductState,
               }}
             >
-              <NameContext.Provider value={{ name, setName }}>
+              <NameContext.Provider value={{ ...nameState }}>
                 {children}
               </NameContext.Provider>
             </AdminModeContext.Provider>

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { theme } from '~@/theme';
-import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { BiSolidTrash } from 'react-icons/bi';
 import type { CartItemType } from '@Types/CartType.ts';
 import { useHandleCartItem } from '@Hooks/components/useHandleCartItem.ts';

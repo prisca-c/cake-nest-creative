@@ -15,14 +15,6 @@ type ProductAddFormProps = {
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
 };
 
-const initialData = {
-  name: '',
-  image: '',
-  price: 0.0,
-  quantity: 0,
-  isAvailable: false,
-};
-
 export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
   const {
     newData,
@@ -32,7 +24,7 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
     handleQuantity,
     handleAvailable,
     stockStatus,
-  } = useAddProductForm({ setData, initialData });
+  } = useAddProductForm({ setData });
 
   return (
     <Form
