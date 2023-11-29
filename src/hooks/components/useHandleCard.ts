@@ -97,11 +97,22 @@ export const useHandleCard = () => {
     }
   };
 
+  const handleTopLabel = (
+    product: ProductType,
+  ): { label: string; class: string } | null => {
+    if (!product.isAvailable)
+      return { label: 'Indisponible', class: 'unavailable' };
+    if (product.isAdvertised)
+      return { label: 'Incroyable', class: 'advertise' };
+    return null;
+  };
+
   return {
     handlePrice,
     handleDelete,
     handleOnHover,
     handleAddToCart,
+    handleTopLabel,
     adminMode,
     hover,
   };

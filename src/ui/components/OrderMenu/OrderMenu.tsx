@@ -14,21 +14,25 @@ export const OrderMenu = () => {
   const { menus, selectedMenu } = useContext(MenusContext);
   const { adminMode } = useContext(AdminModeContext);
 
-  const getSelectedMenu = (): MenuType | null => {
+  const getSelectedMenu = (): ProductType[] | null => {
     if (!menus) return null;
-    return menus.find((menu: MenuType) => menu.id === selectedMenu) ?? null;
+    const items = menus.find((menu: MenuType) => menu.id === selectedMenu);
+    if (!items) return null;
+    return items.products.sort((a, b) => {
+      if (a.isAdvertised && !b.isAdvertised) return -1;
+      if (!a.isAdvertised && b.isAdvertised) return 1;
+      return 0;
+    });
   };
 
   return (
     <>
       <SelectMenu />
-      {menus &&
-      getSelectedMenu() &&
-      getSelectedMenu()?.products?.length === 0 ? (
+      {menus && getSelectedMenu() && getSelectedMenu()?.length === 0 ? (
         <OutOfStock />
       ) : (
         <MenuDiv>
-          {getSelectedMenu()?.products?.map(
+          {getSelectedMenu()?.map(
             (item: ProductType) =>
               (item.isAvailable || adminMode) && (
                 <ItemCard
