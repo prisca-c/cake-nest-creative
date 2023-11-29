@@ -3,19 +3,20 @@ import { IoPersonCircleOutline } from 'react-icons/io5';
 import { theme } from '~@/theme';
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { NameContext } from '@Context/NameContext.ts';
+import { UserContext } from '@Context/UserContext.ts';
 import { TurnAdminModeButton } from './TurnAdminModeButton.tsx';
 import { IsAdminContext } from '@Context/IsAdminContext.ts';
 import { useHandleAdminMode } from '@Hooks/useHandleAdminMode.ts';
+import { initialUserState } from '@Types/UserType.ts';
 
 export const UserNavItem = () => {
-  const { name, setName } = useContext(NameContext);
+  const { user, setUser } = useContext(UserContext);
   const { isAdmin } = useContext(IsAdminContext);
   const { adminMode, handleAdminMode } = useHandleAdminMode();
 
   const handleLogout = () => {
     document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    setName('');
+    setUser(initialUserState);
   };
 
   return (
@@ -26,7 +27,7 @@ export const UserNavItem = () => {
       <div className={'text'}>
         <p className={'profile-text'}>
           Salut
-          <span className={'profile-text-name'}> {name}</span>
+          <span className={'profile-text-name'}> {user.username}</span>
         </p>
         <Link to={'/'} className={'profile-text-logout'} onClick={handleLogout}>
           Se déconnecter
