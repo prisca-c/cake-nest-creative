@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { Button } from '@Components/Button.tsx';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { fakeMenu1, fakeMenu2 } from '~@/data/fakeMenu.ts';
+import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
 
 export const AdminOutOfStock = () => {
-  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const { menus, selectedMenu } = useContext(MenusContext);
+  const { updateMenus } = useUpdateMenuUseCases();
 
-  const handleNewProducts = () => {
+  const handleNewProducts = async () => {
     const seletedFakeMenu = selectedMenu === '1' ? fakeMenu1 : fakeMenu2;
     if (!menus) return;
     const newMenus = menus?.map((menu) => {
@@ -19,7 +21,7 @@ export const AdminOutOfStock = () => {
     });
     if (typeof newMenus === 'undefined') return;
 
-    setMenus(newMenus);
+    await updateMenus(newMenus);
   };
 
   return (

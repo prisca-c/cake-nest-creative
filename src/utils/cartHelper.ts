@@ -8,7 +8,7 @@ export const getAssociatedProduct = (
 ): ProductType | undefined => {
   const menu = menus.find((menu) => menu.id === cartItem.menuId);
   const product = menu?.products.find(
-    (product) => product.id === cartItem.productId,
+    (product) => product.id === cartItem.product.id,
   );
   return product;
 };

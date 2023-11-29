@@ -2,11 +2,11 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { Navbar } from '../components/Navbar/Navbar.tsx';
 import { theme } from '../theme';
-import { useHandleCookieName } from '../hooks/useHandleCookieName.ts';
+import { useAuthMiddleware } from '@Hooks/useAuthMiddleware.ts';
 import { Cart } from '@Components/Cart/Cart.tsx';
 
 export const MainLayout = () => {
-  useHandleCookieName();
+  useAuthMiddleware();
 
   return (
     <Div>

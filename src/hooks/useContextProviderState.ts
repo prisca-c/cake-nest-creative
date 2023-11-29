@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { MenuType } from '@Types/MenuType.ts';
-import { CartType } from '@Types/CartType.ts';
+import { CartType, initialCartState } from '@Types/CartType.ts';
+import { initialUserState, UserType } from '@Types/UserType.ts';
 
 export const useContextProviderState = () => {
-  const [name, setName] = useState('');
+  const [user, setUser] = useState<UserType>(initialUserState);
   const [adminMode, setAdminMode] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<{
     menuId: string;
@@ -14,17 +15,13 @@ export const useContextProviderState = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [selectedMenu, setSelectedMenu] = useState<string>('');
-  const [cart, setCart] = useState<CartType>({
-    id: '',
-    user: '',
-    items: [],
-  });
+  const [cart, setCart] = useState<CartType>(initialCartState);
   const [total, setTotal] = useState('0,00');
 
   return {
-    nameState: {
-      name,
-      setName,
+    userState: {
+      user,
+      setUser,
     },
     adminModeState: {
       adminMode,

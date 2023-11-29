@@ -1,7 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { ItemCard } from './ItemCard.tsx';
-import { fakeMenu1, fakeMenu2 } from '../../data/fakeMenu.ts';
 import styled from 'styled-components';
 import { theme } from '~@/theme';
 import { getDateNowNumber } from '@Utils/date.ts';
@@ -12,23 +11,20 @@ import type { MenuType } from '@Types/MenuType.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 
 export const OrderMenu = () => {
-  const { menus, setMenus, setSelectedMenu, selectedMenu } =
-    useContext(MenusContext);
+  const { menus, selectedMenu } = useContext(MenusContext);
   const { adminMode } = useContext(AdminModeContext);
 
-  useEffect(() => {
-    setMenus([fakeMenu1, fakeMenu2]);
-    setSelectedMenu(fakeMenu1.id);
-  }, [setMenus, setSelectedMenu]);
-
   const getSelectedMenu = (): MenuType | null => {
-    return menus.find((menu: MenuType) => menu.id === selectedMenu) || null;
+    if (!menus) return null;
+    return menus.find((menu: MenuType) => menu.id === selectedMenu) ?? null;
   };
 
   return (
     <>
       <SelectMenu />
-      {getSelectedMenu()?.products?.length === 0 ? (
+      {menus &&
+      getSelectedMenu() &&
+      getSelectedMenu()?.products?.length === 0 ? (
         <OutOfStock />
       ) : (
         <MenuDiv>
