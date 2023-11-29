@@ -16,20 +16,17 @@ export const useAuthMiddleware = () => {
 
     if (userLocal) {
       //console.log('cparse', userLocalParsed);
-      const userExist = ApiUsersFirebase.getUser(userLocalParsed.id).then(
-        (result) => {
-          if (result) {
-            //console.log(result);
-            setUser(result as UserType);
-            setIsAdmin(result.isAdmin);
-            localStorage.setItem('user', JSON.stringify(result));
-          }
-        },
-      );
-
-      if (!userExist) {
-        navigate('/');
-      }
+      ApiUsersFirebase.getUser(userLocalParsed.id).then((result) => {
+        if (result) {
+          //console.log(result);
+          setUser(result as UserType);
+          setIsAdmin(result.isAdmin);
+          localStorage.setItem('user', JSON.stringify(result));
+        } else {
+          localStorage.removeItem('user');
+          navigate('/');
+        }
+      });
     }
 
     if (!userLocal && !user.username) {
