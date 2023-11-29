@@ -15,11 +15,12 @@ import { UserType } from '@Types/UserType.ts';
 export class ApiUsersFirebase {
   static #db: Firestore = db;
 
-  static async getUser(userId: string): Promise<DocumentData | null> {
+  static async getUser(userId: string): Promise<UserType | null> {
     const collectionRef = doc(this.#db, 'users', userId);
     const result = await getDoc(collectionRef);
     if (result.exists()) {
-      return result.data();
+      const user = result.data();
+      return user as UserType;
     }
     return null;
   }

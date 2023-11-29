@@ -3,7 +3,7 @@ import type { ManageProductType } from '@Types/ManageProductType.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
-import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
+import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
 
 type UseEditProductFormProps = {
   data: ManageProductType;
@@ -19,7 +19,7 @@ export const useEditProductForm = ({
   const { openState } = useContext(ManageProductStatesContext);
   const inputRef = useRef<HTMLInputElement>(null);
   const { productId, menuId } = selectedProduct;
-  const { updateMenus } = updateMenuUseCases();
+  const { updateMenus } = useUpdateMenuUseCases();
 
   useEffect(() => {
     handleData();

@@ -5,7 +5,7 @@ import { MenusContext } from '@Context/MenusContext.ts';
 import { useHandleProductSelected } from '@Hooks/useHandleProductSelected.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { CartItemType } from '@Types/CartType.ts';
-import { updateCartUseCases } from '~@/usecases/updateCartUseCases.ts';
+import { useUpdateCartUseCases } from '~@/usecases/useUpdateCartUseCases.ts';
 
 export const useHandleCartItem = (cartItem: CartItemType) => {
   const [deleteOnOver, setDeleteOnOver] = useState(false);
@@ -15,7 +15,7 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
   const { menus } = useContext(MenusContext);
   const { handleSelect, handleClass, handleActiveSelectedCard } =
     useHandleProductSelected();
-  const { updateCart } = updateCartUseCases();
+  const { updateCart } = useUpdateCartUseCases();
 
   const menu = menus.find((menu) => menu.id === cartItem.menuId);
   const product = menu?.products.find(

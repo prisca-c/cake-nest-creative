@@ -4,7 +4,7 @@ import { useTimer } from '@Hooks/useTimer.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 import type { ProductType } from '@Types/ProductType.ts';
-import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
+import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
 
 type UseAddProductFormProps = {
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
@@ -21,7 +21,7 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
   const [newData, setNewData] = useState<ManageProductType>(initialData);
   const { menus, selectedMenu } = React.useContext(MenusContext);
   const { timerState, setTimerState } = useTimer({ time: 2000 });
-  const { updateMenus } = updateMenuUseCases();
+  const { updateMenus } = useUpdateMenuUseCases();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewData({

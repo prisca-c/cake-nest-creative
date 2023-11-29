@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { ItemCard } from './ItemCard.tsx';
 import styled from 'styled-components';
@@ -9,36 +9,22 @@ import { SelectMenu } from './SelectMenu.tsx';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { MenuType } from '@Types/MenuType.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
-import { UserContext } from '@Context/UserContext.ts';
-import { CartContext } from '@Context/CartContext.ts';
-import { IsAdminContext } from '@Context/IsAdminContext.ts';
 
 export const OrderMenu = () => {
-  const { user } = useContext(UserContext);
-  const { menus, setMenus, setSelectedMenu, selectedMenu } =
-    useContext(MenusContext);
-  const { setCart } = useContext(CartContext);
-  const { setIsAdmin } = useContext(IsAdminContext);
+  const { menus, selectedMenu } = useContext(MenusContext);
   const { adminMode } = useContext(AdminModeContext);
 
-  useEffect(() => {
-    if (user) {
-      const { menus, cart, isAdmin } = user;
-      setCart(cart);
-      setMenus(menus);
-      setSelectedMenu(menus[0].id);
-      setIsAdmin(isAdmin);
-    }
-  }, [setMenus, setSelectedMenu]);
-
   const getSelectedMenu = (): MenuType | null => {
-    return menus.find((menu: MenuType) => menu.id === selectedMenu) || null;
+    if (!menus) return null;
+    return menus.find((menu: MenuType) => menu.id === selectedMenu) ?? null;
   };
 
   return (
     <>
       <SelectMenu />
-      {menus && getSelectedMenu()?.products?.length === 0 ? (
+      {menus &&
+      getSelectedMenu() &&
+      getSelectedMenu()?.products?.length === 0 ? (
         <OutOfStock />
       ) : (
         <MenuDiv>

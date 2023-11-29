@@ -6,15 +6,15 @@ import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { CartItemType } from '@Types/CartType.ts';
-import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
-import { updateCartUseCases } from '~@/usecases/updateCartUseCases.ts';
+import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
+import { useUpdateCartUseCases } from '~@/usecases/useUpdateCartUseCases.ts';
 
 export const useHandleCard = () => {
   const { adminMode } = useContext(AdminModeContext);
   const { menus, selectedMenu } = useContext(MenusContext);
   const { cart, setCart } = useContext(CartContext);
-  const { updateMenus } = updateMenuUseCases();
-  const { updateCart: updateCartDB } = updateCartUseCases();
+  const { updateMenus } = useUpdateMenuUseCases();
+  const { updateCart: updateCartDB } = useUpdateCartUseCases();
 
   const [hover, setHover] = useState(false);
 
