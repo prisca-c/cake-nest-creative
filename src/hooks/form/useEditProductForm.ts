@@ -3,6 +3,7 @@ import type { ManageProductType } from '@Types/ManageProductType.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
+import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
 
 type UseEditProductFormProps = {
   data: ManageProductType;
@@ -13,11 +14,12 @@ export const useEditProductForm = ({
   data,
   setData,
 }: UseEditProductFormProps) => {
-  const { menus, setMenus } = useContext(MenusContext);
+  const { menus } = useContext(MenusContext);
   const { selectedProduct } = useContext(AdminModeContext);
   const { openState } = useContext(ManageProductStatesContext);
   const inputRef = useRef<HTMLInputElement>(null);
   const { productId, menuId } = selectedProduct;
+  const { updateMenus } = updateMenuUseCases();
 
   useEffect(() => {
     handleData();
@@ -49,28 +51,30 @@ export const useEditProductForm = ({
     }
   };
 
-  const handleUpdateProduct = () => {
-    setMenus((prevMenus) =>
-      prevMenus.map((menu) =>
-        menu.id === menuId
-          ? {
-              ...menu,
-              products: menu.products.map((product) =>
-                product.id === productId
-                  ? {
-                      ...product,
-                      title: data.name,
-                      imageSource: data.image,
-                      price: data.price,
-                      quantity: data.quantity,
-                      isAvailable: data.isAvailable,
-                    }
-                  : product,
-              ),
+  const handleUpdateProduct = async () => {
+    const newMenus = menus.map((menu) => {
+      if (menu.id === menuId) {
+        return {
+          ...menu,
+          products: menu.products.map((product) => {
+            if (product.id === productId) {
+              return {
+                ...product,
+                title: data.name,
+                imageSource: data.image,
+                price: data.price,
+                quantity: data.quantity,
+                isAvailable: data.isAvailable,
+              };
             }
-          : menu,
-      ),
-    );
+            return product;
+          }),
+        };
+      }
+      return menu;
+    });
+
+    await updateMenus(newMenus);
   };
 
   const handleAvailable = () => {

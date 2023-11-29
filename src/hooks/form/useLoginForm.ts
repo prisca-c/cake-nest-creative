@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { UserContext } from '@Context/UserContext.ts';
 import { useNavigate } from 'react-router-dom';
-import { ApiUsersFirebase } from '~@/services/Firebase/ApiUsersFirebase.ts';
+import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { initialUserState } from '@Types/UserType.ts';
 
 export const useLoginForm = () => {

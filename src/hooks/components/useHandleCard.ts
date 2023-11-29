@@ -6,18 +6,20 @@ import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { CartItemType } from '@Types/CartType.ts';
+import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
 
 export const useHandleCard = () => {
   const { adminMode } = useContext(AdminModeContext);
-  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const { menus, selectedMenu } = useContext(MenusContext);
   const { cart, setCart } = useContext(CartContext);
+  const { updateMenus } = updateMenuUseCases();
 
   const [hover, setHover] = useState(false);
 
   const handlePrice = (price: number | string) =>
     handleFrenchPriceFormat(price);
 
-  const handleDelete = (
+  const handleDelete = async (
     e: React.MouseEvent<SVGSVGElement>,
     product: ProductType,
   ) => {
@@ -31,7 +33,8 @@ export const useHandleCard = () => {
           }
         : menu,
     );
-    setMenus(newMenus);
+
+    await updateMenus(newMenus);
 
     const newCartItems = cart.items.filter(
       (cartItem) =>

@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '@Context/UserContext.ts';
 import { IsAdminContext } from '../context/IsAdminContext.ts';
 import { useNavigate } from 'react-router-dom';
-import { ApiUsersFirebase } from '~@/services/Firebase/ApiUsersFirebase.ts';
+import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { UserType } from '@Types/UserType.ts';
 
 export const useAuthMiddleware = () => {

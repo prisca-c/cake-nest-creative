@@ -4,6 +4,7 @@ import { useTimer } from '@Hooks/useTimer.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 import type { ProductType } from '@Types/ProductType.ts';
+import { updateMenuUseCases } from '~@/usecases/updateMenuUseCases.ts';
 
 type UseAddProductFormProps = {
   setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
@@ -18,8 +19,9 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
     isAvailable: false,
   };
   const [newData, setNewData] = useState<ManageProductType>(initialData);
-  const { setMenus, selectedMenu } = React.useContext(MenusContext);
+  const { menus, selectedMenu } = React.useContext(MenusContext);
   const { timerState, setTimerState } = useTimer({ time: 2000 });
+  const { updateMenus } = updateMenuUseCases();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewData({
@@ -28,7 +30,7 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
     });
   };
 
-  const handleAddProduct = (data: ManageProductType) => {
+  const handleAddProduct = async (data: ManageProductType) => {
     const newProduct: ProductType = {
       id: getDateNowNumber(),
       title: data.name,
@@ -39,16 +41,16 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
       isAvailable: data.isAvailable,
     };
 
-    setMenus((prevMenus) =>
-      prevMenus.map((menu) =>
-        menu.id === selectedMenu
-          ? {
-              ...menu,
-              products: [...menu.products, newProduct],
-            }
-          : menu,
-      ),
+    const newMenus = menus.map((menu) =>
+      menu.id === selectedMenu
+        ? {
+            ...menu,
+            products: [...menu.products, newProduct],
+          }
+        : menu,
     );
+
+    await updateMenus(newMenus);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
