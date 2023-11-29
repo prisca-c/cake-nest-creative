@@ -21,12 +21,14 @@ export const useLoginForm = () => {
 
     if (newName === '') {
       alert('Veuillez entrer un prénom');
+      return;
     } else {
       setUser(initialUserState);
       const user = await ApiUsersFirebase.checkIfUsernameExists(newName);
       //console.log('before if', user);
       if (user) {
         //console.log('user exists');
+        localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(user));
         return navigate('/order');
       } else {
