@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { UserContext } from '@Context/UserContext.ts';
 import { useNavigate } from 'react-router-dom';
 import { ApiUsersFirebase } from '~@/services/Firebase/ApiUsersFirebase.ts';
-import { fakeMenu2 } from '~@/data/fakeMenu.ts';
+import { initialUserState } from '@Types/UserType.ts';
 
 export const useLoginForm = () => {
   const { setUser } = useContext(UserContext);
@@ -22,16 +22,7 @@ export const useLoginForm = () => {
     if (newName === '') {
       alert('Veuillez entrer un prénom');
     } else {
-      setUser({
-        id: crypto.randomUUID(),
-        username: newName,
-        isAdmin: false,
-        menu: fakeMenu2,
-        cart: {
-          id: '',
-          products: [],
-        },
-      });
+      setUser(initialUserState);
       const user = await ApiUsersFirebase.checkIfUsernameExists(newName);
       //console.log('before if', user);
       if (user) {
@@ -41,14 +32,8 @@ export const useLoginForm = () => {
       } else {
         //console.log('user does not exist');
         const userInfo = {
-          id: crypto.randomUUID(),
+          ...initialUserState,
           username: newName,
-          isAdmin: false,
-          menu: fakeMenu2,
-          cart: {
-            id: '',
-            products: [],
-          },
         };
         await ApiUsersFirebase.createUser(userInfo).then(() => {
           //console.log('user created');

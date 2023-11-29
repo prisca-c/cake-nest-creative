@@ -15,7 +15,7 @@ export const UserNavItem = () => {
   const { adminMode, handleAdminMode } = useHandleAdminMode();
 
   const handleLogout = () => {
-    document.cookie = 'name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    localStorage.removeItem('user');
     setUser(initialUserState);
   };
 

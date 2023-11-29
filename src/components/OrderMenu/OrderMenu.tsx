@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { ItemCard } from './ItemCard.tsx';
-import { fakeMenu1, fakeMenu2 } from '../../data/fakeMenu.ts';
 import styled from 'styled-components';
 import { theme } from '~@/theme';
 import { getDateNowNumber } from '@Utils/date.ts';
@@ -10,15 +9,22 @@ import { SelectMenu } from './SelectMenu.tsx';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { MenuType } from '@Types/MenuType.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { UserContext } from '@Context/UserContext.ts';
 
 export const OrderMenu = () => {
+  const { user } = useContext(UserContext);
   const { menus, setMenus, setSelectedMenu, selectedMenu } =
     useContext(MenusContext);
   const { adminMode } = useContext(AdminModeContext);
 
   useEffect(() => {
-    setMenus([fakeMenu1, fakeMenu2]);
-    setSelectedMenu(fakeMenu1.id);
+    if (user) {
+      const { menu } = user;
+      if (menu) {
+        setMenus(menu);
+        setSelectedMenu(menu[0].id);
+      }
+    }
   }, [setMenus, setSelectedMenu]);
 
   const getSelectedMenu = (): MenuType | null => {

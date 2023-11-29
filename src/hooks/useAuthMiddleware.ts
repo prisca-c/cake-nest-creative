@@ -15,10 +15,13 @@ export const useAuthMiddleware = () => {
     const userLocalParsed = userLocal ? JSON.parse(userLocal) : null;
 
     if (userLocal) {
-      const userExist = ApiUsersFirebase.getUser(userLocalParsed.username).then(
+      //console.log('cparse', userLocalParsed);
+      const userExist = ApiUsersFirebase.getUser(userLocalParsed.id).then(
         (result) => {
           if (result) {
+            //console.log(result);
             setUser(result as UserType);
+            setIsAdmin(result.isAdmin);
             localStorage.setItem('user', JSON.stringify(result));
           }
         },
@@ -32,9 +35,5 @@ export const useAuthMiddleware = () => {
     if (!userLocal && !user.username) {
       navigate('/');
     }
-
-    if (user.isAdmin) {
-      setIsAdmin(user.isAdmin);
-    }
-  }, [user]);
+  }, []);
 };
