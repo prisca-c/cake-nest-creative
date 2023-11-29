@@ -2,24 +2,19 @@ import { useState } from 'react';
 import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
 import { ProductAddForm } from './ProductAddForm.tsx';
-import type { ManageProductType } from '@Types/ManageProductType.ts';
+import type { ProductType } from '@Types/ProductType.ts';
+import { initialProductState } from '@Types/ProductType.ts';
 
 export const ProductAddTab = () => {
-  const [data, setData] = useState<ManageProductType>({
-    name: '',
-    image: '',
-    price: 0,
-    quantity: 0,
-    isAvailable: false,
-  });
+  const [data, setData] = useState<ProductType>(initialProductState);
 
   return (
     <Main>
       <div className={'image-container'}>
-        {data.image === '' ? (
+        {data.imageSource === '' ? (
           <p>Aucune Image</p>
         ) : (
-          <img src={data.image} alt={data.name} />
+          <img src={data.imageSource} alt={data.title} />
         )}
       </div>
       <ProductAddForm data={data} setData={setData} />

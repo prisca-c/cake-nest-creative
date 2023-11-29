@@ -5,14 +5,14 @@ import { FiCheckCircle, FiPackage } from 'react-icons/fi';
 import { GiCupcake } from 'react-icons/gi';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
-import type { ManageProductType } from '@Types/ManageProductType.ts';
 
 import { theme } from '~@/ui/theme';
 import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io';
+import type { ProductType } from '@Types/ProductType.ts';
 
 type ProductAddFormProps = {
-  data: ManageProductType;
-  setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
+  data: ProductType;
+  setData: React.Dispatch<React.SetStateAction<ProductType>>;
 };
 
 export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
@@ -23,6 +23,7 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
     timerState,
     handleQuantity,
     handleAvailable,
+    handleAdvertised,
     stockStatus,
   } = useAddProductForm({ setData });
 
@@ -31,6 +32,7 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
       onSubmit={handleSubmit}
       $stockStatus={stockStatus()}
       $available={newData.isAvailable}
+      $advertise={newData.isAdvertised}
     >
       <div className={'input-group'}>
         <GiCupcake color={theme.colors.greyDark} size={20} />
@@ -38,8 +40,8 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           type="text"
           placeholder="Nom du produit"
           onChange={handleChange}
-          value={newData.name}
-          id="name"
+          value={newData.title}
+          id="title"
         />
       </div>
       <div className={'input-group'}>
@@ -48,8 +50,8 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           type="text"
           placeholder="Lien URL de l'image (ex: https://mon-url.me/mon-produit.png)"
           onChange={handleChange}
-          value={newData.image}
-          id="image"
+          value={newData.imageSource}
+          id="imageSource"
         />
       </div>
       <div className={'input-group'}>
@@ -96,6 +98,15 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
           )}
           <p>Disponible</p>
         </div>
+
+        <div className={'advertise'} onClick={handleAdvertised}>
+          {newData.isAdvertised ? (
+            <MdCheckBox color={theme.colors.greyDark} size={20} />
+          ) : (
+            <MdCheckBoxOutlineBlank color={theme.colors.greyDark} size={20} />
+          )}
+          <p>En avant</p>
+        </div>
       </div>
       <div className={'add-group'}>
         <button type={'submit'}>Ajouter un nouveau produit au menu</button>
@@ -110,7 +121,11 @@ export const ProductAddForm = ({ setData }: ProductAddFormProps) => {
   );
 };
 
-const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
+const Form = styled.form<{
+  $stockStatus: boolean;
+  $available: boolean;
+  $advertise: boolean;
+}>`
   .input-group {
     display: flex;
     align-items: center;
@@ -131,7 +146,8 @@ const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
 
   .stock {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
 
     .quantity {
       display: flex;
@@ -153,6 +169,7 @@ const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
 
     .stock_label {
       display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 10px;
       background-color: ${theme.colors.greyLight};
@@ -196,6 +213,7 @@ const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
 
   .available {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     background-color: ${theme.colors.greyLight};
@@ -207,5 +225,21 @@ const Form = styled.form<{ $stockStatus: boolean; $available: boolean }>`
     border: 1px solid
       ${({ $available }) =>
         $available ? theme.colors.success : theme.colors.greyLight};
+  }
+
+  .advertise {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: ${theme.colors.greyLight};
+    padding: 10px 20px;
+    border-radius: ${theme.borderRadius.round};
+    cursor: pointer;
+    color: ${({ $advertise }) =>
+      $advertise ? theme.colors.success : theme.colors.greyDark};
+    border: 1px solid
+      ${({ $advertise }) =>
+        $advertise ? theme.colors.success : theme.colors.greyLight};
   }
 `;

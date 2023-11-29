@@ -1,21 +1,15 @@
 import { useContext, useState } from 'react';
-import { ManageProductType } from '@Types/ManageProductType.ts';
 import styled from 'styled-components';
 import { theme } from '~@/ui/theme';
 import { ProductEditForm } from '~@/ui/components/ManageProductMenu/Tabs/ProductEditForm.tsx';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { DivCenter } from '~@/ui/components/DivCenter.tsx';
 import { HiCursorClick } from 'react-icons/hi';
+import { initialProductState, ProductType } from '@Types/ProductType.ts';
 
 export const ProductEditTab = () => {
   const { selectedProduct } = useContext(AdminModeContext);
-  const [data, setData] = useState<ManageProductType>({
-    name: '',
-    image: '',
-    price: 0,
-    quantity: 0,
-    isAvailable: false,
-  });
+  const [data, setData] = useState<ProductType>(initialProductState);
 
   return (
     <DivCenter>
@@ -24,10 +18,10 @@ export const ProductEditTab = () => {
       ) : (
         <Main>
           <div className={'image-container'}>
-            {data.image === '' ? (
+            {data.imageSource === '' ? (
               <p>Aucune Image</p>
             ) : (
-              <img src={data.image} alt={data.name} />
+              <img src={data.imageSource} alt={data.title} />
             )}
           </div>
           <ProductEditForm data={data} setData={setData} />
