@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import { LoginPage } from '../pages/LoginPage.tsx';
-import { OrderPage } from '../pages/OrderPage.tsx';
-import { ErrorPage } from '../pages/ErrorPage.tsx';
-import { MainLayout } from '../layouts/MainLayout.tsx';
+import { LoginPage } from './ui/pages/LoginPage.tsx';
+import { OrderPage } from './ui/pages/OrderPage.tsx';
+import { ErrorPage } from './ui/pages/ErrorPage.tsx';
+import { MainLayout } from './ui/layouts/MainLayout.tsx';
 
 const MainRoutes = () => {
   return (

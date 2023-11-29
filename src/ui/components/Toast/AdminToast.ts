@@ -1,5 +1,5 @@
 import { toast, ToastOptions } from 'react-toastify';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 
 export const AdminToastInfo = (text: string) => {
   const toastOptions: ToastOptions = {

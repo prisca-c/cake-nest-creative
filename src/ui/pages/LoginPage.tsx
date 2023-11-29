@@ -1,4 +1,4 @@
-import { Login } from '@Components/Login/Login.tsx';
+import { Login } from '~@/ui/components/Login/Login.tsx';
 import styled from 'styled-components';
 import { theme } from '../theme';
 import { DivCenter } from '../components/DivCenter.tsx';

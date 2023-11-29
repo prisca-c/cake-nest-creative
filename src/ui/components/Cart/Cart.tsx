@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
 import styled from 'styled-components';
-import { theme } from '~@/theme';
-import { CartItem } from '@Components/Cart/CartItem.tsx';
+import { theme } from '~@/ui/theme';
+import { CartItem } from '~@/ui/components/Cart/CartItem.tsx';
 
 export const Cart = () => {
   const { total, cart } = useContext(CartContext);

@@ -1,7 +1,7 @@
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdModeEditOutline } from 'react-icons/md';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
 
 type ManageProductNavigationBarProps = {

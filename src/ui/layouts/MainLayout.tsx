@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Navbar } from '../components/Navbar/Navbar.tsx';
 import { theme } from '../theme';
 import { useAuthMiddleware } from '@Hooks/useAuthMiddleware.ts';
-import { Cart } from '@Components/Cart/Cart.tsx';
+import { Cart } from '~@/ui/components/Cart/Cart.tsx';
 
 export const MainLayout = () => {
   useAuthMiddleware();

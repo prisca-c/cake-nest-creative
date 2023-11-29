@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import { BiSolidTrash } from 'react-icons/bi';
 import type { CartItemType } from '@Types/CartType.ts';
 import { useHandleCartItem } from '@Hooks/components/useHandleCartItem.ts';

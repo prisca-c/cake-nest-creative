@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import { ManageProductType } from '@Types/ManageProductType.ts';
 import styled from 'styled-components';
-import { theme } from '~@/theme';
-import { ProductEditForm } from '@Components/ManageProductMenu/Tabs/ProductEditForm.tsx';
+import { theme } from '~@/ui/theme';
+import { ProductEditForm } from '~@/ui/components/ManageProductMenu/Tabs/ProductEditForm.tsx';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
-import { DivCenter } from '@Components/DivCenter.tsx';
+import { DivCenter } from '~@/ui/components/DivCenter.tsx';
 import { HiCursorClick } from 'react-icons/hi';
 
 export const ProductEditTab = () => {

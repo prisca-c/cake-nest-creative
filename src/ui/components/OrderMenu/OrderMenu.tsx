@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { ItemCard } from './ItemCard.tsx';
 import styled from 'styled-components';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import { getDateNowNumber } from '@Utils/date.ts';
 import { OutOfStock } from './OutOfStock/OutOfStock.tsx';
 import { SelectMenu } from './SelectMenu.tsx';

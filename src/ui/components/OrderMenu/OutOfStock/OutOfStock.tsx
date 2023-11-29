@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { AdminOutOfStock } from './AdminOutOfStock.tsx';
 import { PublicOutOfStock } from './PublicOutOfStock.tsx';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 
 export const OutOfStock = () => {
   const { adminMode } = useContext(AdminModeContext);

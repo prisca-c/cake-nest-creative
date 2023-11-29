@@ -7,7 +7,7 @@ import { MdCheckBox, MdCheckBoxOutlineBlank, MdEuro } from 'react-icons/md';
 import styled from 'styled-components';
 import type { ManageProductType } from '@Types/ManageProductType.ts';
 
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io';
 
 type ProductAddFormProps = {

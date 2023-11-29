@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { Button } from '@Components/Button.tsx';
+import { Button } from '~@/ui/components/Button.tsx';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { fakeMenu1, fakeMenu2 } from '~@/data/fakeMenu.ts';
 import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';

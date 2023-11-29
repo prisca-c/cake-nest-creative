@@ -1,7 +1,7 @@
 import { OrderMenu } from '../components/OrderMenu/OrderMenu.tsx';
 import { ManageProductMenu } from '../components/ManageProductMenu/ManageProductMenu.tsx';
 import { useContext } from 'react';
-import { AdminModeContext } from '../context/AdminModeContext.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import styled from 'styled-components';
 
 export const OrderPage = () => {

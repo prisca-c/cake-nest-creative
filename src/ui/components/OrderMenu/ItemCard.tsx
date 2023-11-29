@@ -2,11 +2,11 @@ import React from 'react';
 import type { ProductType } from '@Types/ProductType.ts';
 import styled from 'styled-components';
 import { Button } from '../Button.tsx';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useHandleCard } from '@Hooks/components/useHandleCard.ts';
 import { useHandleProductSelected } from '@Hooks/useHandleProductSelected.ts';
-import { ItemCardOutOfStock } from '@Components/OrderMenu/OutOfStock/ItemCardOutOfStock.tsx';
+import { ItemCardOutOfStock } from '~@/ui/components/OrderMenu/OutOfStock/ItemCardOutOfStock.tsx';
 
 type ItemCardProps = {
   item: ProductType;

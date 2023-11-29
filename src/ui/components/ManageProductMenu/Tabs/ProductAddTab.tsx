@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
 import { ProductAddForm } from './ProductAddForm.tsx';
 import type { ManageProductType } from '@Types/ManageProductType.ts';

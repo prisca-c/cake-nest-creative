@@ -1,6 +1,6 @@
 import { Logo } from '../Logo.tsx';
 import styled from 'styled-components';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import { useNavigate } from 'react-router-dom';
 
 export const LogoNavItem = () => {

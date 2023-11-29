@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IoPersonCircleOutline } from 'react-icons/io5';
-import { theme } from '~@/theme';
+import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { UserContext } from '@Context/UserContext.ts';
