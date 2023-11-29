@@ -36,5 +36,5 @@ export const useAuthMiddleware = () => {
     if (user.isAdmin) {
       setIsAdmin(user.isAdmin);
     }
-  });
+  }, [user]);
 };

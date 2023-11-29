@@ -57,7 +57,7 @@ export class ApiUsersFirebase {
     return result.docs.map((doc) => doc.data());
   }
 
-  static async checkIfUserExists(
+  static async checkIfUsernameExists(
     username: string,
   ): Promise<DocumentData | null> {
     const q = query(

@@ -32,7 +32,7 @@ export const useLoginForm = () => {
           products: [],
         },
       });
-      const user = await ApiUsersFirebase.checkIfUserExists(newName);
+      const user = await ApiUsersFirebase.checkIfUsernameExists(newName);
       //console.log('before if', user);
       if (user) {
         //console.log('user exists');
