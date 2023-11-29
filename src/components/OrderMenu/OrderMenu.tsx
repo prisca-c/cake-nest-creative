@@ -10,20 +10,24 @@ import type { ProductType } from '@Types/ProductType.ts';
 import type { MenuType } from '@Types/MenuType.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { UserContext } from '@Context/UserContext.ts';
+import { CartContext } from '@Context/CartContext.ts';
+import { IsAdminContext } from '@Context/IsAdminContext.ts';
 
 export const OrderMenu = () => {
   const { user } = useContext(UserContext);
   const { menus, setMenus, setSelectedMenu, selectedMenu } =
     useContext(MenusContext);
+  const { setCart } = useContext(CartContext);
+  const { setIsAdmin } = useContext(IsAdminContext);
   const { adminMode } = useContext(AdminModeContext);
 
   useEffect(() => {
     if (user) {
-      const { menu } = user;
-      if (menu) {
-        setMenus(menu);
-        setSelectedMenu(menu[0].id);
-      }
+      const { menus, cart, isAdmin } = user;
+      setCart(cart);
+      setMenus(menus);
+      setSelectedMenu(menus[0].id);
+      setIsAdmin(isAdmin);
     }
   }, [setMenus, setSelectedMenu]);
 
@@ -34,7 +38,7 @@ export const OrderMenu = () => {
   return (
     <>
       <SelectMenu />
-      {getSelectedMenu()?.products?.length === 0 ? (
+      {menus && getSelectedMenu()?.products?.length === 0 ? (
         <OutOfStock />
       ) : (
         <MenuDiv>

@@ -1,25 +1,19 @@
-import { ProductType } from '@Types/ProductType.ts';
 import { MenuType } from '@Types/MenuType.ts';
 import { fakeMenu1 } from '~@/data/fakeMenu.ts';
+import { CartType, initialCartState } from '@Types/CartType.ts';
 
 export const initialUserState: UserType = {
   id: crypto.randomUUID(),
   username: '',
   isAdmin: false,
-  menu: [fakeMenu1],
-  cart: {
-    id: '',
-    products: [],
-  },
+  menus: [fakeMenu1],
+  cart: initialCartState,
 };
 
 export type UserType = {
   id: string;
   username: string;
   isAdmin: boolean;
-  menu: MenuType[];
-  cart: {
-    id: string;
-    products: ProductType[];
-  };
+  menus: MenuType[];
+  cart: CartType;
 };

@@ -30,7 +30,7 @@ export class ApiUsersFirebase {
       id: userInfo.id,
       username: userInfo.username,
       isAdmin: false,
-      menu: userInfo.menu,
+      menus: userInfo.menus,
       cart: userInfo.cart,
     };
 
@@ -43,7 +43,7 @@ export class ApiUsersFirebase {
       id: userInfo.id,
       username: userInfo.username,
       isAdmin: userInfo.isAdmin,
-      menu: userInfo.menu,
+      menus: userInfo.menus,
       cart: userInfo.cart,
     };
 
