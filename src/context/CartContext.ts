@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { CartType } from '@Types/CartType.ts';
+import { CartType, initialCartState } from '@Types/CartType.ts';
 
 export const CartContext = createContext<{
   cart: CartType;
@@ -7,11 +7,7 @@ export const CartContext = createContext<{
   total: string;
   setTotal: Dispatch<SetStateAction<string>>;
 }>({
-  cart: {
-    id: '',
-    user: '',
-    items: [],
-  },
+  cart: initialCartState,
   setCart: () => {},
   total: '0,00',
   setTotal: () => {},

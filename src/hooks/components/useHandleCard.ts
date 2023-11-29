@@ -6,18 +6,22 @@ import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
 import type { ProductType } from '@Types/ProductType.ts';
 import type { CartItemType } from '@Types/CartType.ts';
+import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
+import { useUpdateCartUseCases } from '~@/usecases/useUpdateCartUseCases.ts';
 
 export const useHandleCard = () => {
   const { adminMode } = useContext(AdminModeContext);
-  const { menus, setMenus, selectedMenu } = useContext(MenusContext);
+  const { menus, selectedMenu } = useContext(MenusContext);
   const { cart, setCart } = useContext(CartContext);
+  const { updateMenus } = useUpdateMenuUseCases();
+  const { updateCart: updateCartDB } = useUpdateCartUseCases();
 
   const [hover, setHover] = useState(false);
 
   const handlePrice = (price: number | string) =>
     handleFrenchPriceFormat(price);
 
-  const handleDelete = (
+  const handleDelete = async (
     e: React.MouseEvent<SVGSVGElement>,
     product: ProductType,
   ) => {
@@ -31,11 +35,12 @@ export const useHandleCard = () => {
           }
         : menu,
     );
-    setMenus(newMenus);
+
+    await updateMenus(newMenus);
 
     const newCartItems = cart.items.filter(
       (cartItem) =>
-        cartItem.productId !== product.id || selectedMenu !== cartItem.menuId,
+        cartItem.product.id !== product.id || selectedMenu !== cartItem.menuId,
     );
 
     setCart({ ...cart, items: newCartItems });
@@ -53,34 +58,42 @@ export const useHandleCard = () => {
 
     const cartItem: CartItemType | undefined = cart.items.find(
       (cartItem) =>
-        product.id === cartItem.productId && selectedMenu === cartItem.menuId,
+        product.id === cartItem.product.id && selectedMenu === cartItem.menuId,
     );
 
     const updateCart = (quantity: number) => {
       const newCartItems = cart.items.map((cartItem) =>
-        cartItem.productId === product.id && selectedMenu === cartItem.menuId
+        cartItem.product.id === product.id && selectedMenu === cartItem.menuId
           ? { ...cartItem, quantity }
           : cartItem,
       );
 
-      setCart({ ...cart, items: newCartItems });
+      const newCart = {
+        ...cart,
+        items: newCartItems,
+      };
+
+      updateCartDB(newCart);
     };
 
     if (cartItem) {
       updateCart(cartItem.quantity + 1);
     } else {
-      const newCartItems = [
-        ...cart.items,
-        {
-          id: `${product.id}-${getDateNowNumber()}`,
-          menuId: selectedMenu,
-          quantity: 1,
-          productId: product.id,
-          createdAt: new Date().toISOString(),
-        },
-      ];
+      const newCart = {
+        ...cart,
+        items: [
+          ...cart.items,
+          {
+            id: `${product.id}-${getDateNowNumber()}`,
+            menuId: selectedMenu,
+            quantity: 1,
+            product,
+            createdAt: new Date().toISOString(),
+          },
+        ],
+      };
 
-      setCart({ ...cart, items: newCartItems });
+      updateCartDB(newCart);
     }
   };
 

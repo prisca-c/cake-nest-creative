@@ -1,6 +1,6 @@
 import React from 'react';
 import { AdminModeContext } from './AdminModeContext.ts';
-import { NameContext } from './NameContext.ts';
+import { UserContext } from './UserContext.ts';
 import { ManageProductStatesContext } from './ManageProductStates.ts';
 import { IsAdminContext } from './IsAdminContext.ts';
 import { MenusContext } from './MenusContext.ts';
@@ -20,7 +20,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     totalState,
     selectedTabState,
     openStateState,
-    nameState,
+    userState,
     menusState,
     selectedMenuState,
     selectedProductState,
@@ -44,9 +44,9 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
                 ...selectedProductState,
               }}
             >
-              <NameContext.Provider value={{ ...nameState }}>
+              <UserContext.Provider value={{ ...userState }}>
                 {children}
-              </NameContext.Provider>
+              </UserContext.Provider>
             </AdminModeContext.Provider>
           </ManageProductStatesContext.Provider>
         </IsAdminContext.Provider>
