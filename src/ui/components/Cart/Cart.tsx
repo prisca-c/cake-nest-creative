@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
 import styled from 'styled-components';
 import { theme } from '~@/ui/theme';
@@ -6,9 +6,11 @@ import { CartItem } from '~@/ui/components/Cart/CartItem.tsx';
 import { AddDiscount } from '~@/ui/components/Cart/AddDiscount.tsx';
 import { useGetCartDiscountTotal } from '@Hooks/useGetCartDiscountTotal.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
+import { UserContext } from '@Context/UserContext.ts';
 
 export const Cart = () => {
   const { total, cart } = useContext(CartContext);
+  const { user } = useContext(UserContext);
   const discountTotal = useGetCartDiscountTotal();
 
   return (
@@ -24,7 +26,7 @@ export const Cart = () => {
         </p>
         <AddDiscount />
       </div>
-      {cart.items?.length > 0 ? (
+      {user.cart.items.length && user.cart.items?.length > 0 ? (
         <div className={'list'}>
           {cart.items
             .map((item) => <CartItem key={item.id} cartItem={item} />)

@@ -1,11 +1,11 @@
 import { MenuType } from '@Types/MenuType.ts';
 
 export const fakeMenu1: MenuType = {
-  id: '1',
+  id: '5420511c-4316-435f-a0c7-259d6dbd9007',
   name: 'Menu 1',
   products: [
     {
-      id: '1',
+      id: '67ab62bc-ba14-4737-ba05-d13f39447651',
       imageSource: '/images/cupcake-item.png',
       title: 'ChocoBliss',
       price: 9.297,
@@ -14,7 +14,7 @@ export const fakeMenu1: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '2',
+      id: 'd34c2743-1e71-4c01-bbe7-406d6695c3ad',
       imageSource: '/images/cupcake-item.png',
       title: 'SweetZing',
       price: 7.556,
@@ -26,11 +26,11 @@ export const fakeMenu1: MenuType = {
 };
 
 export const fakeMenu2: MenuType = {
-  id: '2',
+  id: 'e4171ebd-8636-435a-bde2-7b3432b2620f',
   name: 'Menu 2',
   products: [
     {
-      id: '1',
+      id: 'e65492a4-e970-48ac-a705-b815f99077c5',
       imageSource: '/images/cupcake-item.png',
       title: 'BerryJoy',
       price: 3.598,
@@ -39,7 +39,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '2',
+      id: '3f50d1d5-99d5-4b88-98c1-e55fdfa05d7c',
       imageSource: '/images/cupcake-item.png',
       title: 'MintCharm',
       price: 5.4985,
@@ -48,7 +48,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '3',
+      id: 'ec256146-c206-4084-aa73-57d93fef6608',
       imageSource: '/images/cupcake-item.png',
       title: 'FrostGlo',
       price: 8.367,
@@ -57,7 +57,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '4',
+      id: '3c095c03-2019-4192-8387-f8947083abf4',
       imageSource: '/images/cupcake-item.png',
       title: 'LushCup',
       price: 6.568,
@@ -66,7 +66,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '5',
+      id: '26879c9a-4a2c-4757-a281-e9b7d0f589fc',
       imageSource: '/images/cupcake-item.png',
       title: 'VelvetCup',
       price: 5.487,
@@ -75,7 +75,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '6',
+      id: '4a79cec8-2820-440b-bb2f-8406f953b75a',
       imageSource: '/images/cupcake-item.png',
       title: 'ZestyFun',
       price: 7.156,
@@ -84,7 +84,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '7',
+      id: 'bbc57d8f-854e-4a6b-94e3-f441eab4f799',
       imageSource: '/images/cupcake-item.png',
       title: 'BlissZu',
       price: 7.5,
@@ -93,7 +93,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '8',
+      id: '6bca8151-f065-402f-823d-3dde4624db19',
       imageSource: '/images/cupcake-item.png',
       title: 'ZingCup',
       price: 6.6,
@@ -102,7 +102,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '9',
+      id: '3a353e69-a826-45a2-8dce-90876dd3b5c9',
       imageSource: '/images/cupcake-item.png',
       title: 'FrostJoy',
       price: 5.7,
@@ -111,7 +111,7 @@ export const fakeMenu2: MenuType = {
       isAdvertised: false,
     },
     {
-      id: '10',
+      id: 'e9423d3e-ad3c-44b3-bea3-9f25a467d6cc',
       imageSource: '/images/cupcake-item.png',
       title: 'CocoZest',
       price: 4.7,

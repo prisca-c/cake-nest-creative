@@ -10,7 +10,7 @@ import { useUpdateCartUseCases } from '~@/usecases/useUpdateCartUseCases.ts';
 export const useHandleCartItem = (cartItem: CartItemType) => {
   const [deleteOnOver, setDeleteOnOver] = useState(false);
   const [selectOnOver, setSelectOnOver] = useState(false);
-  const { cart, setTotal } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   const { adminMode } = useContext(AdminModeContext);
   const { menus } = useContext(MenusContext);
   const { handleSelect, handleClass, handleActiveSelectedCard } =
@@ -31,12 +31,6 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
     const newCart = cart.items.filter((item) => item.id !== cartItem.id);
     const newCartState = { ...cart, items: newCart };
     updateCart(newCartState);
-
-    setTotal(
-      handleFrenchPriceFormat(
-        newCart.reduce((acc, item) => acc + product.price * item.quantity, 0),
-      ),
-    );
   };
 
   const handleOnHover = (type: 'over' | 'out') => {

@@ -13,14 +13,11 @@ export const useDeleteDiscountUseCase = () => {
       (discount) => discount.id !== discountId,
     );
 
-    console.log('discou', updatedDiscounts);
-
     try {
       await Promise.all([
         ApiDiscountFirebase.updateDiscount(updatedDiscounts, user.id),
         ApiUsersFirebase.getUser(user.id).then((getUser) => {
           if (getUser) {
-            console.log('getuser', getUser);
             localStorage.setItem('user', JSON.stringify(getUser));
             setDiscounts(getUser.discounts);
             setUser(getUser);

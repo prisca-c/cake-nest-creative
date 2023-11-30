@@ -2,26 +2,21 @@ import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { UserContext } from '@Context/UserContext.ts';
 import { MenuType } from '@Types/MenuType.ts';
 import { useContext } from 'react';
-import { MenusContext } from '@Context/MenusContext.ts';
-import { UserType } from '@Types/UserType.ts';
+import { useInitContextData } from '@Hooks/useInitContextData.ts';
+import { ApiMenusFirebase } from '~@/services/Firebase/Api/ApiMenusDirebase.ts';
 
 export const useUpdateMenuUseCases = () => {
-  const { user, setUser } = useContext(UserContext);
-  const { setMenus } = useContext(MenusContext);
+  const { user } = useContext(UserContext);
+  const { init } = useInitContextData();
 
   const updateMenus = async (newMenus: MenuType[]) => {
-    const updateUser: UserType = {
-      ...user,
-      menus: newMenus,
-    };
     try {
       await Promise.all([
-        ApiUsersFirebase.updateUser(updateUser),
-        ApiUsersFirebase.getUser(user.id).then((user) => {
-          if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            setUser(user);
-            setMenus(user.menus);
+        ApiMenusFirebase.updateMenus(newMenus, user.id),
+        ApiUsersFirebase.getUser(user.id).then((getUser) => {
+          if (getUser) {
+            localStorage.setItem('user', JSON.stringify(getUser));
+            init(getUser);
           }
         }),
       ]);

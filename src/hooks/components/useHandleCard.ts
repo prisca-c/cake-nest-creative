@@ -12,7 +12,7 @@ import { useUpdateCartUseCases } from '~@/usecases/useUpdateCartUseCases.ts';
 export const useHandleCard = () => {
   const { adminMode } = useContext(AdminModeContext);
   const { menus, selectedMenu } = useContext(MenusContext);
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   const { updateMenus } = useUpdateMenuUseCases();
   const { updateCart: updateCartDB } = useUpdateCartUseCases();
 
@@ -36,14 +36,14 @@ export const useHandleCard = () => {
         : menu,
     );
 
-    await updateMenus(newMenus);
-
     const newCartItems = cart.items.filter(
       (cartItem) =>
         cartItem.product.id !== product.id || selectedMenu !== cartItem.menuId,
     );
 
-    setCart({ ...cart, items: newCartItems });
+    await updateMenus(newMenus).then(async () => {
+      await updateCartDB({ ...cart, items: newCartItems });
+    });
   };
 
   const handleOnHover = (state: boolean) => adminMode && setHover(state);
