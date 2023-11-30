@@ -7,6 +7,7 @@ import { MenusContext } from './MenusContext.ts';
 import { CartContext } from '@Context/CartContext.ts';
 import { useContextProviderState } from '@Hooks/useContextProviderState.ts';
 import { useUpdateTotal } from '@Hooks/useUpdateTotal.ts';
+import { DiscountsContext } from './DiscountsContext.ts';
 
 type ContextProviderProps = {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     menusState,
     selectedMenuState,
     selectedProductState,
+    discountsState,
   } = useContextProviderState();
   useUpdateTotal({
     menus: menusState.menus,
@@ -32,25 +34,27 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
   });
 
   return (
-    <CartContext.Provider value={{ ...cartState, ...totalState }}>
-      <MenusContext.Provider value={{ ...menusState, ...selectedMenuState }}>
-        <IsAdminContext.Provider value={{ ...isAdminState }}>
-          <ManageProductStatesContext.Provider
-            value={{ ...openStateState, ...selectedTabState }}
-          >
-            <AdminModeContext.Provider
-              value={{
-                ...adminModeState,
-                ...selectedProductState,
-              }}
+    <DiscountsContext.Provider value={{ ...discountsState }}>
+      <CartContext.Provider value={{ ...cartState, ...totalState }}>
+        <MenusContext.Provider value={{ ...menusState, ...selectedMenuState }}>
+          <IsAdminContext.Provider value={{ ...isAdminState }}>
+            <ManageProductStatesContext.Provider
+              value={{ ...openStateState, ...selectedTabState }}
             >
-              <UserContext.Provider value={{ ...userState }}>
-                {children}
-              </UserContext.Provider>
-            </AdminModeContext.Provider>
-          </ManageProductStatesContext.Provider>
-        </IsAdminContext.Provider>
-      </MenusContext.Provider>
-    </CartContext.Provider>
+              <AdminModeContext.Provider
+                value={{
+                  ...adminModeState,
+                  ...selectedProductState,
+                }}
+              >
+                <UserContext.Provider value={{ ...userState }}>
+                  {children}
+                </UserContext.Provider>
+              </AdminModeContext.Provider>
+            </ManageProductStatesContext.Provider>
+          </IsAdminContext.Provider>
+        </MenusContext.Provider>
+      </CartContext.Provider>
+    </DiscountsContext.Provider>
   );
 };

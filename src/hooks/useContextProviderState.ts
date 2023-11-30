@@ -3,6 +3,7 @@ import { MenuType } from '@Types/MenuType.ts';
 import { CartType, initialCartState } from '@Types/CartType.ts';
 import { initialUserState, UserType } from '@Types/UserType.ts';
 import { ManageProductTabType } from '@Types/ManageProductTabType.ts';
+import { DiscountType } from '@Types/DiscountType.ts';
 
 export const useContextProviderState = () => {
   const [user, setUser] = useState<UserType>(initialUserState);
@@ -18,6 +19,7 @@ export const useContextProviderState = () => {
   const [selectedMenu, setSelectedMenu] = useState<string>('');
   const [cart, setCart] = useState<CartType>(initialCartState);
   const [total, setTotal] = useState('0,00');
+  const [discounts, setDiscounts] = useState<DiscountType[]>([]);
 
   return {
     userState: {
@@ -59,6 +61,10 @@ export const useContextProviderState = () => {
     totalState: {
       total,
       setTotal,
+    },
+    discountsState: {
+      discounts,
+      setDiscounts,
     },
   };
 };
