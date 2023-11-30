@@ -6,7 +6,7 @@ import { theme } from '~@/ui/theme';
 import { toLocaleDateString } from '@Utils/date.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { DiscountType } from '@Types/DiscountType.ts';
-import { DateTime } from 'luxon';
+import { isValidDiscount } from '@Utils/discountHelper.ts';
 
 export const DiscountTab = () => {
   const { discounts } = useContext(DiscountsContext);
@@ -22,21 +22,7 @@ export const DiscountTab = () => {
   };
 
   const isActive = (discount: DiscountType) => {
-    if (!discount.enabled) return false;
-
-    const now = DateTime.now();
-    const startDate = DateTime.fromISO(discount.startDate);
-    const endDate = DateTime.fromISO(discount.endDate);
-    if (
-      startDate.toFormat('yyyy-MM-dd') === endDate.toFormat('yyyy-MM-dd') &&
-      startDate.toFormat('yyyy-MM-dd') === now.toFormat('yyyy-MM-dd')
-    ) {
-      return true;
-    }
-    const isAfterOrEqualStart = now >= startDate;
-    const isBeforeOrEqualEnd = now <= endDate;
-
-    return isAfterOrEqualStart && isBeforeOrEqualEnd;
+    return isValidDiscount(discount);
   };
 
   return (
