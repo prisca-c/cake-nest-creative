@@ -1,9 +1,9 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { DiscountType } from '@Types/DiscountType.ts';
 
 export const DiscountsContext = createContext<{
   discounts: DiscountType[];
-  setDiscounts: (discounts: DiscountType[]) => void;
+  setDiscounts: React.Dispatch<React.SetStateAction<DiscountType[]>>;
 }>({
   discounts: [],
   setDiscounts: () => {},
