@@ -17,7 +17,6 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
     handleSelect,
     handleClass,
     handleActiveSelectedCard,
-    product,
     selectOnOver,
     deleteOnOver,
     handleLabel,
@@ -27,16 +26,16 @@ export const CartItem = ({ cartItem }: CartItemProps) => {
     <Main
       $deleteOnHover={deleteOnOver}
       $selectOnHover={selectOnOver}
-      $active={handleActiveSelectedCard(product.id, menuId)}
+      $active={handleActiveSelectedCard(cartItem.product.id, menuId)}
       onMouseOver={() => handleOnHover('over')}
       onMouseOut={() => handleOnHover('out')}
-      onClick={(e) => handleSelect(e, product.id, menuId)}
-      className={handleClass(product.id)}
+      onClick={(e) => handleSelect(e, cartItem.product.id, menuId)}
+      className={handleClass(cartItem.product.id)}
     >
       <div className={'left'}>
-        <img src={product.imageSource} alt={product.title} />
+        <img src={cartItem.product.imageSource} alt={cartItem.product.title} />
         <div>
-          <h3>{product.title}</h3>
+          <h3>{cartItem.product.title}</h3>
           <div className="information">
             <p className={'price'}>{handleLabel()}</p>
           </div>

@@ -17,13 +17,6 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
     useHandleProductSelected();
   const { updateCart } = useUpdateCartUseCases();
 
-  const menu = menus.find((menu) => menu.id === cartItem.menuId);
-  const product = menu?.products.find(
-    (product) => product.id === cartItem.product.id,
-  );
-
-  if (!product) return null;
-
   const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
 
@@ -44,6 +37,11 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
   };
 
   const handleLabel = () => {
+    const menu = menus.find((menu) => menu.id === cartItem.menuId);
+    const product = menu?.products.find(
+      (product) => product.id === cartItem.product.id,
+    );
+    if (!product) return '';
     if (!product.isAvailable) return 'Indisponible à la vente';
     if (product.quantity <= 0) return 'Rupture de stock';
     if (isNaN(product.price)) return 'NaN€';
@@ -57,7 +55,6 @@ export const useHandleCartItem = (cartItem: CartItemType) => {
     handleClass,
     handleLabel,
     handleActiveSelectedCard,
-    product,
     selectOnOver,
     deleteOnOver,
   };
