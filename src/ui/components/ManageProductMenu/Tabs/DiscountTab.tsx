@@ -1,6 +1,5 @@
 import { DiscountForm } from '~@/ui/components/ManageProductMenu/Tabs/DiscountForm.tsx';
 import styled from 'styled-components';
-import { Button } from '~@/ui/components/Button.tsx';
 import { DiscountsContext } from '@Context/DiscountsContext.ts';
 import { useContext } from 'react';
 import { theme } from '~@/ui/theme';

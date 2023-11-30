@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { DiscountType, initialDiscountState } from '@Types/DiscountType.ts';
 import React, { useEffect, useState } from 'react';
 import { Button } from '~@/ui/components/Button.tsx';
+import { convertDateToInput } from '@Utils/date.ts';
+import { theme } from '~@/ui/theme';
 
 export const DiscountForm = () => {
   const [data, setData] = useState<DiscountType>(initialDiscountState);
@@ -19,12 +21,13 @@ export const DiscountForm = () => {
     }
   };
 
-  const startDateMin = new Date().toISOString().split('T')[0];
-  const endDateMin = new Date(data.startDate).toISOString().split('T')[0];
+  const startDateMin = convertDateToInput(new Date());
+  const endDateMin = convertDateToInput(data.startDate);
 
   return (
     <Main>
       <form>
+        <h3>Ajouter un code promo</h3>
         <div className={'form_container'}>
           <div className={'input_group'}>
             <label htmlFor="code">Code</label>
@@ -48,7 +51,7 @@ export const DiscountForm = () => {
               id="startDate"
               onChange={onChange}
               min={startDateMin}
-              value={data.startDate.toString()}
+              value={convertDateToInput(data.startDate)}
             />
           </div>
           <div className={'input_group'}>
@@ -59,7 +62,7 @@ export const DiscountForm = () => {
               id="endDate"
               onChange={onChange}
               min={endDateMin}
-              value={data.endDate.toString()}
+              value={convertDateToInput(data.endDate)}
             />
           </div>
           <div className={'input_group'}>
@@ -105,6 +108,11 @@ const Main = styled.div`
     width: 100%;
     height: 100%;
 
+    h3 {
+      text-align: center;
+      color: ${theme.colors.primary};
+    }
+
     .form_container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -120,6 +128,12 @@ const Main = styled.div`
         gap: 5px;
         width: 100%;
         height: 100%;
+
+        input {
+          border: 1px solid ${theme.colors.primary};
+          border-radius: 5px;
+          padding: 5px;
+        }
       }
     }
   }
