@@ -6,7 +6,7 @@ import { MenusContext } from '@Context/MenusContext.ts';
 import { UserType } from '@Types/UserType.ts';
 
 export const useUpdateMenuUseCases = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { setMenus } = useContext(MenusContext);
 
   const updateMenus = async (newMenus: MenuType[]) => {
@@ -20,6 +20,7 @@ export const useUpdateMenuUseCases = () => {
         ApiUsersFirebase.getUser(user.id).then((user) => {
           if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
             setMenus(user.menus);
           }
         }),

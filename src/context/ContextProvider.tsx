@@ -29,8 +29,10 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     selectedDiscountState,
   } = useContextProviderState();
   useUpdateTotal({
+    user: userState.user,
     menus: menusState.menus,
     cart: cartState.cart,
+    discounts: discountsState.discounts,
     setTotal: totalState.setTotal,
   });
 

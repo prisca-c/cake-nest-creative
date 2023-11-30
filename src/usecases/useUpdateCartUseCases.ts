@@ -6,7 +6,7 @@ import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { UserType } from '@Types/UserType.ts';
 
 export const useUpdateCartUseCases = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { setCart } = useContext(CartContext);
 
   const updateCart = async (newCart: CartType) => {
@@ -21,6 +21,7 @@ export const useUpdateCartUseCases = () => {
         ApiUsersFirebase.getUser(user.id).then((user) => {
           if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
             setCart(user.cart);
           }
         }),

@@ -3,17 +3,24 @@ import { getAssociatedProduct } from '@Utils/cartHelper.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { MenuType } from '@Types/MenuType.ts';
 import { CartType } from '@Types/CartType.ts';
+import { DiscountType } from '@Types/DiscountType.ts';
+import { isValidDiscount } from '@Utils/discountHelper.ts';
+import { UserType } from '@Types/UserType.ts';
 
 type UseUpdateTotalProps = {
+  user: UserType;
   menus: MenuType[];
   cart: CartType;
+  discounts: DiscountType[];
   setTotal: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const useUpdateTotal = ({
+  user,
   menus,
   cart,
   setTotal,
+  discounts,
 }: UseUpdateTotalProps) => {
   useEffect(() => {
     const cartItems = cart.items;
@@ -27,9 +34,22 @@ export const useUpdateTotal = ({
       if (unavailable) return 0;
       return product.price * item.quantity;
     });
-
-    const newTotal = itemsPrices.reduce((acc, price) => acc + price, 0);
+    const cartDiscounts = cart.discounts;
+    let newTotal = itemsPrices.reduce((acc, price) => acc + price, 0);
+    let discountTotal = 0;
+    if (discounts.length > 0) {
+      cartDiscounts.forEach((cartDiscount) => {
+        if (!isValidDiscount(cartDiscount)) return;
+        discounts.forEach((discount) => {
+          if (!isValidDiscount(discount)) return;
+          if (discount.id === cartDiscount.id) {
+            discountTotal = discount.percentage / 100;
+            newTotal = newTotal - newTotal * discountTotal;
+          }
+        });
+      });
+    }
 
     setTotal(handleFrenchPriceFormat(newTotal));
-  }, [menus, cart]);
+  }, [menus, cart, discounts, user]);
 };

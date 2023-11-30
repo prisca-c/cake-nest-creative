@@ -3,16 +3,18 @@ import { CartContext } from '@Context/CartContext.ts';
 import styled from 'styled-components';
 import { theme } from '~@/ui/theme';
 import { CartItem } from '~@/ui/components/Cart/CartItem.tsx';
+import { AddDiscount } from '~@/ui/components/Cart/AddDiscount.tsx';
 
 export const Cart = () => {
   const { total, cart } = useContext(CartContext);
   return (
     <Main>
       <div className={'header'}>
-        <p>
+        <p className={'total'}>
           <span>Total</span>
           <span>{total}</span>
         </p>
+        <AddDiscount />
       </div>
       {cart.items?.length > 0 ? (
         <div className={'list'}>
@@ -40,7 +42,7 @@ const Main = styled.div`
   background-color: ${theme.colors.greyLight};
 
   .header {
-    p {
+    .total {
       display: flex;
       justify-content: space-between;
       align-items: center;
