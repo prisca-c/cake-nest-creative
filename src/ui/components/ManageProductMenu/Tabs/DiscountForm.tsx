@@ -5,6 +5,7 @@ import { Button } from '~@/ui/components/Button.tsx';
 import { convertDateToInput } from '@Utils/date.ts';
 import { theme } from '~@/ui/theme';
 import { useUpsertDiscountUseCase } from '~@/usecases/useUpsertDiscountUseCase.ts';
+import { useDeleteDiscountUseCase } from '~@/usecases/useDeleteDiscountUseCase.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 
 export const DiscountForm = () => {
@@ -14,6 +15,7 @@ export const DiscountForm = () => {
     useContext(AdminModeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { updateDiscounts } = useUpsertDiscountUseCase();
+  const { deleteDiscount } = useDeleteDiscountUseCase();
 
   useEffect(() => {
     if (data.endDate < data.startDate) {
@@ -52,10 +54,22 @@ export const DiscountForm = () => {
 
   const label = selectedDiscount ? 'Modifier' : 'Ajouter';
 
+  const resetSelectedDiscount = () => {
+    setSelectedDiscount(null);
+    setData(init);
+  };
+
+  const removeDiscount = async () => {
+    if (selectedDiscount) {
+      await deleteDiscount(selectedDiscount.id);
+      resetSelectedDiscount();
+    }
+  };
+
   return (
     <Main $selectedDiscount={selectedDiscount}>
+      <h3>{label} un code promo</h3>
       <form onSubmit={handleSubmit}>
-        <h3>{label} un code promo</h3>
         <div className={'form_container'}>
           <div className={'input_group'}>
             <label htmlFor="code">Code</label>
@@ -121,14 +135,36 @@ export const DiscountForm = () => {
             />
           </div>
         </div>
-        <Button
-          variant={selectedDiscount ? 'red' : 'primary'}
-          width={'100%'}
-          padded={false}
-          disabled={isLoading}
-        >
-          {label} le code promo
-        </Button>
+        <div className={'buttons'}>
+          <Button
+            variant={'primary'}
+            width={'100%'}
+            padded={false}
+            disabled={isLoading}
+          >
+            {label} le code promo
+          </Button>
+          {selectedDiscount && (
+            <>
+              <Button
+                variant={'red'}
+                width={'100%'}
+                padded={false}
+                onClick={resetSelectedDiscount}
+              >
+                Annuler
+              </Button>
+              <Button
+                variant={'red'}
+                width={'100%'}
+                padded={false}
+                onClick={removeDiscount}
+              >
+                Supprimer
+              </Button>
+            </>
+          )}
+        </div>
       </form>
     </Main>
   );
@@ -139,7 +175,9 @@ const Main = styled.div<{ $selectedDiscount: DiscountType | null }>`
   flex-direction: column;
   align-items: center;
   font-weight: bold;
-  width: 70%;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px;
 
   form {
     display: flex;
@@ -176,6 +214,14 @@ const Main = styled.div<{ $selectedDiscount: DiscountType | null }>`
           padding: 5px;
         }
       }
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: ${({ $selectedDiscount }) =>
+        $selectedDiscount ? '3fr 1fr 1fr' : '1fr'};
+      gap: 5px;
+      margin-top: 5px;
     }
   }
 `;

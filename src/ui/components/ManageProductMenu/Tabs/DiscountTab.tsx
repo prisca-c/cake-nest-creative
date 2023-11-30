@@ -9,32 +9,41 @@ import { DiscountType } from '@Types/DiscountType.ts';
 
 export const DiscountTab = () => {
   const { discounts } = useContext(DiscountsContext);
-  const { setSelectedDiscount } = useContext(AdminModeContext);
+  const { setSelectedDiscount, selectedDiscount } =
+    useContext(AdminModeContext);
   const handleSelectDiscount = (item: DiscountType) => {
     setSelectedDiscount(item);
+  };
+
+  const isSelected = (id: string) => {
+    return selectedDiscount?.id === id;
   };
 
   return (
     <Main>
       <div className={'container'}>
         <div className={'discounts_list'}>
-          <p>Discounts</p>
+          <p className={'title'}>Discounts</p>
           {discounts?.map((discount) => (
-            <div
+            <DiscountItem
               key={discount.id}
               className={'discount_item'}
               onClick={() => handleSelectDiscount(discount)}
+              $selected={isSelected(discount.id)}
+              $active={discount.enabled}
             >
-              <div>
-                <p>
-                  {discount.code} - {discount.percentage}%
-                </p>
+              <div className={'left'}>
+                <p>{discount.code}</p>
+                <p>{discount.percentage}%</p>
                 <p>
                   {toLocaleDateString(discount.startDate)} -{' '}
                   {toLocaleDateString(discount.endDate)}
                 </p>
               </div>
-            </div>
+              <div className={'right'}>
+                <p>{discount.enabled ? 'Actif' : 'Inactif'}</p>
+              </div>
+            </DiscountItem>
           ))}
         </div>
         <DiscountForm />
@@ -69,27 +78,39 @@ const Main = styled.div`
       width: 70%;
       padding: 10px;
 
-      .discount_item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 5px 0;
-        border-bottom: 1px solid ${theme.colors.greyLight};
-        font-size: 1.2rem;
-        font-weight: 400;
-        color: ${theme.colors.primary};
-        text-transform: uppercase;
-        background-color: ${theme.colors.white};
-        border-radius: 5px;
-        width: 100%;
-        span {
-          text-align: center;
-        }
-      }
-
-      p {
+      .title {
         text-align: center;
       }
     }
+  }
+`;
+
+const DiscountItem = styled.div<{
+  $selected?: boolean;
+  $active: boolean;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid ${theme.colors.greyLight};
+  font-weight: 400;
+  color: ${({ $selected }) =>
+    $selected ? theme.colors.white : theme.colors.primary};
+  text-transform: uppercase;
+  background-color: ${({ $selected }) =>
+    $selected ? theme.colors.primary : theme.colors.white};
+  border-radius: 5px;
+  width: calc(100% - 20px);
+  cursor: pointer;
+  padding: 0 10px;
+
+  &:hover {
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+  }
+
+  .right {
+    color: ${({ $active }) =>
+      $active ? theme.colors.success : theme.colors.red};
   }
 `;
