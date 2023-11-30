@@ -1,21 +1,32 @@
 import styled from 'styled-components';
 import { DiscountType, initialDiscountState } from '@Types/DiscountType.ts';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from '~@/ui/components/Button.tsx';
 import { convertDateToInput } from '@Utils/date.ts';
 import { theme } from '~@/ui/theme';
 import { useUpsertDiscountUseCase } from '~@/usecases/useUpsertDiscountUseCase.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
 
 export const DiscountForm = () => {
   const init = initialDiscountState;
   const [data, setData] = useState<DiscountType>(init);
+  const { selectedDiscount, setSelectedDiscount } =
+    useContext(AdminModeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { updateDiscounts } = useUpsertDiscountUseCase();
+
   useEffect(() => {
     if (data.endDate < data.startDate) {
       setData({ ...data, endDate: data.startDate });
     }
   }, [data]);
+
+  useEffect(() => {
+    if (selectedDiscount) {
+      setData(selectedDiscount);
+    }
+  }, [selectedDiscount]);
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
     if (name === 'cumulative' || name === 'enabled') {
@@ -35,13 +46,16 @@ export const DiscountForm = () => {
     await updateDiscounts(data).then(() => {
       setData(init);
       setIsLoading(false);
+      setSelectedDiscount(null);
     });
   };
 
+  const label = selectedDiscount ? 'Modifier' : 'Ajouter';
+
   return (
-    <Main>
+    <Main $selectedDiscount={selectedDiscount}>
       <form onSubmit={handleSubmit}>
-        <h3>Ajouter un code promo</h3>
+        <h3>{label} un code promo</h3>
         <div className={'form_container'}>
           <div className={'input_group'}>
             <label htmlFor="code">Code</label>
@@ -51,6 +65,7 @@ export const DiscountForm = () => {
               id="code"
               onChange={onChange}
               value={data.code}
+              required
             />
           </div>
           <div className={'input_group'}>
@@ -107,19 +122,19 @@ export const DiscountForm = () => {
           </div>
         </div>
         <Button
-          variant={'primary'}
+          variant={selectedDiscount ? 'red' : 'primary'}
           width={'100%'}
           padded={false}
           disabled={isLoading}
         >
-          Ajouter un code promo
+          {label} le code promo
         </Button>
       </form>
     </Main>
   );
 };
 
-const Main = styled.div`
+const Main = styled.div<{ $selectedDiscount: DiscountType | null }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -135,7 +150,8 @@ const Main = styled.div`
 
     h3 {
       text-align: center;
-      color: ${theme.colors.primary};
+      color: ${({ $selectedDiscount }) =>
+        $selectedDiscount ? theme.colors.red : theme.colors.primary};
     }
 
     .form_container {

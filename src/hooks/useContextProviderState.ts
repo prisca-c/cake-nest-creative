@@ -20,6 +20,9 @@ export const useContextProviderState = () => {
   const [cart, setCart] = useState<CartType>(initialCartState);
   const [total, setTotal] = useState('0,00');
   const [discounts, setDiscounts] = useState<DiscountType[]>([]);
+  const [selectedDiscount, setSelectedDiscount] = useState<DiscountType | null>(
+    null,
+  );
 
   return {
     userState: {
@@ -65,6 +68,10 @@ export const useContextProviderState = () => {
     discountsState: {
       discounts,
       setDiscounts,
+    },
+    selectedDiscountState: {
+      selectedDiscount,
+      setSelectedDiscount,
     },
   };
 };

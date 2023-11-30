@@ -26,6 +26,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     selectedMenuState,
     selectedProductState,
     discountsState,
+    selectedDiscountState,
   } = useContextProviderState();
   useUpdateTotal({
     menus: menusState.menus,
@@ -45,6 +46,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
                 value={{
                   ...adminModeState,
                   ...selectedProductState,
+                  ...selectedDiscountState,
                 }}
               >
                 <UserContext.Provider value={{ ...userState }}>

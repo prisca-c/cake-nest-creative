@@ -4,24 +4,37 @@ import { DiscountsContext } from '@Context/DiscountsContext.ts';
 import { useContext } from 'react';
 import { theme } from '~@/ui/theme';
 import { toLocaleDateString } from '@Utils/date.ts';
+import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { DiscountType } from '@Types/DiscountType.ts';
 
 export const DiscountTab = () => {
   const { discounts } = useContext(DiscountsContext);
+  const { setSelectedDiscount } = useContext(AdminModeContext);
+  const handleSelectDiscount = (item: DiscountType) => {
+    setSelectedDiscount(item);
+  };
+
   return (
     <Main>
       <div className={'container'}>
         <div className={'discounts_list'}>
           <p>Discounts</p>
           {discounts?.map((discount) => (
-            <p key={discount.id} className={'discount_item'}>
-              <span>
-                {discount.code} - {discount.percentage}%
-              </span>
-              <span>
-                {toLocaleDateString(discount.startDate)} -{' '}
-                {toLocaleDateString(discount.endDate)}
-              </span>
-            </p>
+            <div
+              key={discount.id}
+              className={'discount_item'}
+              onClick={() => handleSelectDiscount(discount)}
+            >
+              <div>
+                <p>
+                  {discount.code} - {discount.percentage}%
+                </p>
+                <p>
+                  {toLocaleDateString(discount.startDate)} -{' '}
+                  {toLocaleDateString(discount.endDate)}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
         <DiscountForm />
