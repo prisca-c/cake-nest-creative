@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MenuType } from '@Types/MenuType.ts';
 import { CartType, initialCartState } from '@Types/CartType.ts';
 import { initialUserState, UserType } from '@Types/UserType.ts';
+import { ManageProductTabType } from '@Types/ManageProductTabType.ts';
 
 export const useContextProviderState = () => {
   const [user, setUser] = useState<UserType>(initialUserState);
@@ -10,7 +11,7 @@ export const useContextProviderState = () => {
     menuId: string;
     productId: string;
   }>({ menuId: '', productId: '' });
-  const [selectedTab, setSelectedTab] = useState<'add' | 'edit'>('add');
+  const [selectedTab, setSelectedTab] = useState<ManageProductTabType>('add');
   const [openState, setOpenState] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [menus, setMenus] = useState<MenuType[]>([]);

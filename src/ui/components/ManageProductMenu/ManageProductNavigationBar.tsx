@@ -3,10 +3,11 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { MdModeEditOutline } from 'react-icons/md';
 import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
+import { ManageProductTabType } from '@Types/ManageProductTabType.ts';
 
 type ManageProductNavigationBarProps = {
-  selectedTab: 'add' | 'edit';
-  setSelectedTab: (selectedTab: 'add' | 'edit') => void;
+  selectedTab: ManageProductTabType;
+  setSelectedTab: (selectedTab: ManageProductTabType) => void;
   openState: boolean;
   setOpenState: (openState: boolean) => void;
 };
@@ -21,12 +22,12 @@ export const ManageProductNavigationBar = ({
     setOpenState(!openState);
   };
 
-  const handleSelectedTab = (tab: 'add' | 'edit') => {
+  const handleSelectedTab = (tab: ManageProductTabType) => {
     if (!openState) handleOpenState();
     setSelectedTab(tab);
   };
 
-  const handleIconColor = (tab: 'add' | 'edit'): string => {
+  const handleIconColor = (tab: ManageProductTabType): string => {
     return selectedTab === tab ? theme.colors.white : theme.colors.greyMedium;
   };
 
@@ -53,7 +54,7 @@ export const ManageProductNavigationBar = ({
 
 const Container = styled.div<{
   $openState: boolean;
-  $selectedTab: 'add' | 'edit';
+  $selectedTab: ManageProductTabType;
 }>`
   display: inline-flex;
   height: 50px;
