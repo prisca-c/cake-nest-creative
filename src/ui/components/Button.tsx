@@ -23,6 +23,7 @@ export const Button = ({
   disabled = false,
   padded = true,
 }: ButtonProps) => {
+  const type = onClick ? 'button' : 'submit';
   return (
     <ButtonStyle
       $width={width}
@@ -32,6 +33,7 @@ export const Button = ({
       $active={active}
       $padded={padded}
       disabled={disabled}
+      type={type}
     >
       {children}
     </ButtonStyle>

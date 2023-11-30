@@ -44,6 +44,7 @@ export const DiscountForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
+    console.log('handleSubmit');
     setIsLoading(true);
     await updateDiscounts(data).then(() => {
       setData(init);
@@ -57,12 +58,17 @@ export const DiscountForm = () => {
   const resetSelectedDiscount = () => {
     setSelectedDiscount(null);
     setData(init);
+    console.log('resetSelectedDiscount');
   };
 
-  const removeDiscount = async () => {
+  const removeDiscount = () => {
+    if (isLoading) return;
     if (selectedDiscount) {
-      await deleteDiscount(selectedDiscount.id);
-      resetSelectedDiscount();
+      setIsLoading(true);
+      deleteDiscount(selectedDiscount.id).then(() => {
+        setIsLoading(false);
+        resetSelectedDiscount();
+      });
     }
   };
 

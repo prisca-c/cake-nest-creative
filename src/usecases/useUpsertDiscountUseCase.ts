@@ -4,6 +4,7 @@ import { UserContext } from '@Context/UserContext.ts';
 import { DiscountType } from '@Types/DiscountType.ts';
 import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { generateUUID } from '@Utils/math.ts';
+import { ApiDiscountFirebase } from '~@/services/Firebase/Api/ApiDiscountFirebase.ts';
 
 export const useUpsertDiscountUseCase = () => {
   const { setDiscounts } = useContext(DiscountsContext);
@@ -23,14 +24,9 @@ export const useUpsertDiscountUseCase = () => {
         })
       : [...user.discounts, newDiscount];
 
-    const updatedUser = {
-      ...user,
-      discounts: updatedDiscounts,
-    };
-
     try {
       await Promise.all([
-        ApiUsersFirebase.updateUser(updatedUser),
+        ApiDiscountFirebase.updateDiscount(updatedDiscounts, user.id),
         ApiUsersFirebase.getUser(user.id).then((getUser) => {
           if (getUser) {
             localStorage.setItem('user', JSON.stringify(getUser));
