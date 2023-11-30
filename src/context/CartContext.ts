@@ -4,11 +4,11 @@ import { CartType, initialCartState } from '@Types/CartType.ts';
 export const CartContext = createContext<{
   cart: CartType;
   setCart: Dispatch<SetStateAction<CartType>>;
-  total: string;
-  setTotal: Dispatch<SetStateAction<string>>;
+  total: number;
+  setTotal: Dispatch<SetStateAction<number>>;
 }>({
   cart: initialCartState,
   setCart: () => {},
-  total: '0,00',
+  total: 0,
   setTotal: () => {},
 });

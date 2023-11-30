@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { getAssociatedProduct } from '@Utils/cartHelper.ts';
-import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { MenuType } from '@Types/MenuType.ts';
 import { CartType } from '@Types/CartType.ts';
 import { DiscountType } from '@Types/DiscountType.ts';
@@ -12,7 +11,7 @@ type UseUpdateTotalProps = {
   menus: MenuType[];
   cart: CartType;
   discounts: DiscountType[];
-  setTotal: React.Dispatch<React.SetStateAction<string>>;
+  setTotal: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const useUpdateTotal = ({
@@ -50,6 +49,6 @@ export const useUpdateTotal = ({
       });
     }
 
-    setTotal(handleFrenchPriceFormat(newTotal));
+    setTotal(newTotal);
   }, [menus, cart, discounts, user]);
 };

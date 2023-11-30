@@ -1,18 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { CartContext } from '@Context/CartContext.ts';
 import styled from 'styled-components';
 import { theme } from '~@/ui/theme';
 import { CartItem } from '~@/ui/components/Cart/CartItem.tsx';
 import { AddDiscount } from '~@/ui/components/Cart/AddDiscount.tsx';
+import { useGetCartDiscountTotal } from '@Hooks/useGetCartDiscountTotal.ts';
+import { handleFrenchPriceFormat } from '@Utils/math.ts';
 
 export const Cart = () => {
   const { total, cart } = useContext(CartContext);
+  const discountTotal = useGetCartDiscountTotal();
+
   return (
     <Main>
       <div className={'header'}>
         <p className={'total'}>
           <span>Total</span>
-          <span>{total}</span>
+          <span>{handleFrenchPriceFormat(total)}</span>
+        </p>
+        <p className={'discount'}>
+          Réduction actuelle:{' '}
+          <span>{handleFrenchPriceFormat(discountTotal)}</span>
         </p>
         <AddDiscount />
       </div>
@@ -83,6 +91,20 @@ const Main = styled.div`
       font-size: ${theme.fonts.size.P3};
       color: ${theme.colors.greyDark};
       text-align: center;
+    }
+  }
+
+  .discount {
+    display: flex;
+    gap: 10px;
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.primary};
+    border: 2px solid ${theme.colors.background_dark};
+    border-bottom: none;
+    padding: 10px 10px;
+    span {
+      font-weight: 700;
+      color: ${theme.colors.background_dark};
     }
   }
 `;

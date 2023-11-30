@@ -18,7 +18,7 @@ export const useContextProviderState = () => {
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [selectedMenu, setSelectedMenu] = useState<string>('');
   const [cart, setCart] = useState<CartType>(initialCartState);
-  const [total, setTotal] = useState('0,00');
+  const [total, setTotal] = useState(0);
   const [discounts, setDiscounts] = useState<DiscountType[]>([]);
   const [selectedDiscount, setSelectedDiscount] = useState<DiscountType | null>(
     null,

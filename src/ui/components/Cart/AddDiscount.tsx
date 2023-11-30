@@ -16,17 +16,26 @@ export const AddDiscount = () => {
     e.preventDefault();
     const code = e.currentTarget.code.value;
     const newCart = cart;
+    const newCartHasNonCumulativeDiscount = newCart.discounts.some(
+      (discount) => !discount.cumulative,
+    );
+
+    const discountExists = newCart.discounts.some(
+      (discount) => discount.code.toLowerCase() === code.toLowerCase(),
+    );
+
     discounts.forEach((discount) => {
       if (!isValidDiscount(discount)) return;
       if (
         discount.code.toLowerCase() === code.toLowerCase() &&
-        !newCart.discounts.includes(discount) &&
-        (newCart.discounts.length === 0 || discount.cumulative)
+        !discountExists &&
+        (newCart.discounts.length === 0 || discount.cumulative) &&
+        !newCartHasNonCumulativeDiscount
       ) {
         newCart.discounts = [...newCart.discounts, discount];
+        updateCart(newCart).catch(() => console.error('Something went wrong'));
       }
     });
-    updateCart(newCart).catch(() => console.error('Something went wrong'));
   };
 
   return (
