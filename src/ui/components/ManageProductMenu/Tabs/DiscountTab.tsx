@@ -6,11 +6,13 @@ import { theme } from '~@/ui/theme';
 import { toLocaleDateString } from '@Utils/date.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { DiscountType } from '@Types/DiscountType.ts';
+import { DateTime } from 'luxon';
 
 export const DiscountTab = () => {
   const { discounts } = useContext(DiscountsContext);
   const { setSelectedDiscount, selectedDiscount } =
     useContext(AdminModeContext);
+
   const handleSelectDiscount = (item: DiscountType) => {
     setSelectedDiscount(item);
   };
@@ -19,32 +21,51 @@ export const DiscountTab = () => {
     return selectedDiscount?.id === id;
   };
 
+  const isActive = (discount: DiscountType) => {
+    if (!discount.enabled) return false;
+
+    const now = DateTime.now();
+    const startDate = DateTime.fromISO(discount.startDate);
+    const endDate = DateTime.fromISO(discount.endDate);
+    if (
+      startDate.toFormat('yyyy-MM-dd') === endDate.toFormat('yyyy-MM-dd') &&
+      startDate.toFormat('yyyy-MM-dd') === now.toFormat('yyyy-MM-dd')
+    ) {
+      return true;
+    }
+    const isAfterOrEqualStart = now >= startDate;
+    const isBeforeOrEqualEnd = now <= endDate;
+
+    return isAfterOrEqualStart && isBeforeOrEqualEnd;
+  };
+
   return (
     <Main>
       <div className={'container'}>
         <div className={'discounts_list'}>
           <p className={'title'}>Discounts</p>
-          {discounts?.map((discount) => (
-            <DiscountItem
-              key={discount.id}
-              className={'discount_item'}
-              onClick={() => handleSelectDiscount(discount)}
-              $selected={isSelected(discount.id)}
-              $active={discount.enabled}
-            >
-              <div className={'left'}>
-                <p>{discount.code}</p>
-                <p>{discount.percentage}%</p>
-                <p>
-                  {toLocaleDateString(discount.startDate)} -{' '}
-                  {toLocaleDateString(discount.endDate)}
+          {discounts &&
+            discounts.length !== 0 &&
+            discounts?.map((discount) => (
+              <DiscountItem
+                key={discount.id}
+                className={'discount_item'}
+                onClick={() => handleSelectDiscount(discount)}
+                $selected={isSelected(discount.id)}
+              >
+                <div className={'left'}>
+                  <p>{discount.code}</p>
+                  <p>{discount.percentage}%</p>
+                  <p>
+                    {toLocaleDateString(discount.startDate)} -{' '}
+                    {toLocaleDateString(discount.endDate)}
+                  </p>
+                </div>
+                <p className={isActive(discount) ? 'active' : 'inactive'}>
+                  {isActive(discount) ? 'Actif' : 'Inactif'}
                 </p>
-              </div>
-              <div className={'right'}>
-                <p>{discount.enabled ? 'Actif' : 'Inactif'}</p>
-              </div>
-            </DiscountItem>
-          ))}
+              </DiscountItem>
+            ))}
         </div>
         <DiscountForm />
       </div>
@@ -87,7 +108,6 @@ const Main = styled.div`
 
 const DiscountItem = styled.div<{
   $selected?: boolean;
-  $active: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -109,8 +129,11 @@ const DiscountItem = styled.div<{
     color: ${theme.colors.white};
   }
 
-  .right {
-    color: ${({ $active }) =>
-      $active ? theme.colors.success : theme.colors.red};
+  .active {
+    color: ${theme.colors.success};
+  }
+
+  .inactive {
+    color: ${theme.colors.red};
   }
 `;

@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { DiscountType, initialDiscountState } from '@Types/DiscountType.ts';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from '~@/ui/components/Button.tsx';
-import { convertDateToInput } from '@Utils/date.ts';
 import { theme } from '~@/ui/theme';
 import { useUpsertDiscountUseCase } from '~@/usecases/useUpsertDiscountUseCase.ts';
 import { useDeleteDiscountUseCase } from '~@/usecases/useDeleteDiscountUseCase.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
+import { DateTime } from 'luxon';
+import { convertDateToInput } from '@Utils/date.ts';
 
 export const DiscountForm = () => {
   const init = initialDiscountState;
@@ -38,19 +39,20 @@ export const DiscountForm = () => {
     }
   };
 
-  const startDateMin = convertDateToInput(new Date());
-  const endDateMin = convertDateToInput(data.startDate);
+  const startDateMin = DateTime.now().toFormat('yyyy-MM-dd');
+  const endDateMin = DateTime.fromISO(data.startDate).toFormat('yyyy-MM-dd');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
-    console.log('handleSubmit');
     setIsLoading(true);
-    await updateDiscounts(data).then(() => {
-      setData(init);
-      setIsLoading(false);
-      setSelectedDiscount(null);
-    });
+    await updateDiscounts(data)
+      .then(() => {
+        resetSelectedDiscount();
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   };
 
   const label = selectedDiscount ? 'Modifier' : 'Ajouter';
@@ -58,17 +60,20 @@ export const DiscountForm = () => {
   const resetSelectedDiscount = () => {
     setSelectedDiscount(null);
     setData(init);
-    console.log('resetSelectedDiscount');
+    setIsLoading(false);
   };
 
   const removeDiscount = () => {
     if (isLoading) return;
     if (selectedDiscount) {
       setIsLoading(true);
-      deleteDiscount(selectedDiscount.id).then(() => {
-        setIsLoading(false);
-        resetSelectedDiscount();
-      });
+      deleteDiscount(selectedDiscount.id)
+        .then(() => {
+          resetSelectedDiscount();
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -127,7 +132,7 @@ export const DiscountForm = () => {
               name="cumulative"
               id="cumulative"
               onChange={onChange}
-              value={data.cumulative ? 'true' : 'false'}
+              checked={data.cumulative}
             />
           </div>
           <div className={'input_group'}>
@@ -137,7 +142,7 @@ export const DiscountForm = () => {
               name="enabled"
               id="enabled"
               onChange={onChange}
-              value={data.enabled ? 'true' : 'false'}
+              checked={data.enabled}
             />
           </div>
         </div>
@@ -165,6 +170,7 @@ export const DiscountForm = () => {
                 width={'100%'}
                 padded={false}
                 onClick={removeDiscount}
+                disabled={isLoading}
               >
                 Supprimer
               </Button>
@@ -185,18 +191,18 @@ const Main = styled.div<{ $selectedDiscount: DiscountType | null }>`
   overflow: hidden;
   padding: 10px;
 
+  h3 {
+    text-align: center;
+    color: ${({ $selectedDiscount }) =>
+      $selectedDiscount ? theme.colors.red : theme.colors.primary};
+  }
+
   form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
     height: 100%;
-
-    h3 {
-      text-align: center;
-      color: ${({ $selectedDiscount }) =>
-        $selectedDiscount ? theme.colors.red : theme.colors.primary};
-    }
 
     .form_container {
       display: grid;

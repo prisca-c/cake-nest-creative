@@ -1,9 +1,11 @@
-export const initialDiscountState = {
+import { DateTime } from 'luxon';
+
+export const initialDiscountState: DiscountType = {
   id: '',
   code: '',
   enabled: false,
-  startDate: new Date().toISOString(),
-  endDate: new Date().toISOString(),
+  startDate: DateTime.now().toFormat('yyyy-MM-dd'),
+  endDate: DateTime.now().toFormat('yyyy-MM-dd'),
   percentage: 0,
   cumulative: false,
 };
