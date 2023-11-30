@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { DiscountsContext } from '@Context/DiscountsContext.ts';
 import { useContext } from 'react';
 import { theme } from '~@/ui/theme';
+import { toLocaleDateString } from '@Utils/date.ts';
 
 export const DiscountTab = () => {
   const { discounts } = useContext(DiscountsContext);
@@ -12,8 +13,14 @@ export const DiscountTab = () => {
         <div className={'discounts_list'}>
           <p>Discounts</p>
           {discounts?.map((discount) => (
-            <p key={discount.id}>
-              {discount.code} - {discount.percentage}%
+            <p key={discount.id} className={'discount_item'}>
+              <span>
+                {discount.code} - {discount.percentage}%
+              </span>
+              <span>
+                {toLocaleDateString(discount.startDate)} -{' '}
+                {toLocaleDateString(discount.endDate)}
+              </span>
             </p>
           ))}
         </div>
@@ -42,12 +49,30 @@ const Main = styled.div`
     .discounts_list {
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
+      gap: 10px;
+      overflow-y: scroll;
       overflow-x: hidden;
       background-color: ${theme.colors.greyLight};
-      width: 30%;
-      height: 100%;
+      width: 70%;
       padding: 10px;
+
+      .discount_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px 0;
+        border-bottom: 1px solid ${theme.colors.greyLight};
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: ${theme.colors.primary};
+        text-transform: uppercase;
+        background-color: ${theme.colors.white};
+        border-radius: 5px;
+        width: 100%;
+        span {
+          text-align: center;
+        }
+      }
 
       p {
         text-align: center;

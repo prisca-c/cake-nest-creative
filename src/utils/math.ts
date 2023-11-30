@@ -18,3 +18,7 @@ export function replaceFrenchCommaWithDot(price: number | string) {
 export const handleFrenchPriceFormat = (price: number | string) => {
   return formatPrice(replaceFrenchCommaWithDot(price));
 };
+
+export const generateUUID = () => {
+  return crypto.randomUUID();
+};

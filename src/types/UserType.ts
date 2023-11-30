@@ -4,7 +4,7 @@ import { CartType, initialCartState } from '@Types/CartType.ts';
 import { DiscountType } from '@Types/DiscountType.ts';
 
 export const initialUserState: UserType = {
-  id: crypto.randomUUID(),
+  id: '',
   username: '',
   isAdmin: false,
   menus: [fakeMenu1],

@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
   query,
   where,
 } from 'firebase/firestore';
@@ -49,7 +50,7 @@ export class ApiUsersFirebase {
       discounts: userInfo.discounts,
     };
 
-    return await setDoc(collectionRef, info);
+    return await updateDoc(collectionRef, info);
   }
 
   static async users(): Promise<UserType[]> {

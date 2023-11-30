@@ -1,9 +1,9 @@
 export const initialDiscountState = {
-  id: crypto.randomUUID(),
+  id: '',
   code: '',
   enabled: false,
-  startDate: new Date(),
-  endDate: new Date(),
+  startDate: new Date().toISOString(),
+  endDate: new Date().toISOString(),
   percentage: 0,
   cumulative: false,
 };
@@ -12,8 +12,8 @@ export type DiscountType = {
   id: string;
   code: string;
   enabled: boolean;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   percentage: number;
   cumulative: boolean;
 };

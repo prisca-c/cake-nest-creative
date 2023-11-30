@@ -70,6 +70,7 @@ const Main = styled.div<{
         : theme.colors.white};
   border-radius: ${theme.borderRadius.round};
   cursor: ${({ $selectOnHover }) => ($selectOnHover ? 'pointer' : 'default')};
+  overflow: hidden;
 
   .left {
     display: flex;
