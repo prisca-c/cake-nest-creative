@@ -4,6 +4,7 @@ import { ManageProductNavigationBar } from './ManageProductNavigationBar.tsx';
 import { ProductAddTab } from './Tabs/ProductAddTab.tsx';
 import { ProductEditTab } from './Tabs/ProductEditTab.tsx';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
+import { DiscountTab } from '~@/ui/components/ManageProductMenu/Tabs/DiscountTab.tsx';
 
 export const ManageProductMenu = () => {
   const { openState, setOpenState, selectedTab, setSelectedTab } = useContext(
@@ -23,7 +24,9 @@ export const ManageProductMenu = () => {
           setOpenState={setOpenState}
         />
         <MenuBody className={handleBodyClass()}>
-          {selectedTab === 'add' ? <ProductAddTab /> : <ProductEditTab />}
+          {selectedTab === 'add' && <ProductAddTab />}
+          {selectedTab === 'edit' && <ProductEditTab />}
+          {selectedTab === 'discount' && <DiscountTab />}
         </MenuBody>
       </div>
     </MenuContainer>
@@ -38,6 +41,9 @@ const MenuContainer = styled.div`
 `;
 
 const MenuBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #fff;
   padding: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
@@ -46,10 +52,6 @@ const MenuBody = styled.div`
   overflow: scroll;
   transition: height 0.3s ease-in-out;
   font-family: 'Open Sans', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   p {
     display: none;

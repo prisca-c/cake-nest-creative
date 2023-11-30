@@ -1,10 +1,12 @@
 import { ProductType } from '@Types/ProductType.ts';
+import { DiscountType } from '@Types/DiscountType.ts';
 
 export const initialCartState: CartType = {
   id: crypto.randomUUID(),
   userId: '',
   items: [],
   createdAt: new Date().toISOString(),
+  discounts: [],
 };
 
 export type CartItemType = {
@@ -20,4 +22,5 @@ export type CartType = {
   userId: string;
   items: CartItemType[];
   createdAt: string;
+  discounts: DiscountType[];
 };

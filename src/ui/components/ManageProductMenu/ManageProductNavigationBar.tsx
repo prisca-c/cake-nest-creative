@@ -4,6 +4,7 @@ import { MdModeEditOutline } from 'react-icons/md';
 import { theme } from '~@/ui/theme';
 import styled from 'styled-components';
 import { ManageProductTabType } from '@Types/ManageProductTabType.ts';
+import { BiSolidDiscount } from 'react-icons/bi';
 
 type ManageProductNavigationBarProps = {
   selectedTab: ManageProductTabType;
@@ -48,6 +49,13 @@ export const ManageProductNavigationBar = ({
         <MdModeEditOutline color={handleIconColor('edit')} />
         <p>Modifier un produit</p>
       </div>
+      <div
+        className={'discount-tab'}
+        onClick={() => handleSelectedTab('discount')}
+      >
+        <BiSolidDiscount color={handleIconColor('discount')} />
+        <p>Code promo</p>
+      </div>
     </Container>
   );
 };
@@ -63,7 +71,8 @@ const Container = styled.div<{
 
   .open-tab,
   .add-tab,
-  .edit-tab {
+  .edit-tab,
+  .discount-tab {
     display: flex;
     align-items: center;
     height: 100%;
@@ -92,8 +101,20 @@ const Container = styled.div<{
       $selectedTab === 'edit' ? theme.colors.white : theme.colors.greyMedium};
   }
 
+  .discount-tab {
+    background-color: ${({ $selectedTab }) =>
+      $selectedTab === 'discount'
+        ? theme.colors.incognito
+        : theme.colors.white};
+    color: ${({ $selectedTab }) =>
+      $selectedTab === 'discount'
+        ? theme.colors.white
+        : theme.colors.greyMedium};
+  }
+
   .add-tab,
-  .edit-tab {
+  .edit-tab,
+  .discount-tab {
     display: inline-flex;
     gap: 10px;
   }

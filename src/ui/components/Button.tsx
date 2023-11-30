@@ -10,6 +10,7 @@ type ButtonProps = {
   textAlign?: string;
   active?: boolean;
   disabled?: boolean;
+  padded?: boolean;
 };
 
 export const Button = ({
@@ -20,6 +21,7 @@ export const Button = ({
   textAlign = 'center',
   active = false,
   disabled = false,
+  padded = true,
 }: ButtonProps) => {
   return (
     <ButtonStyle
@@ -28,6 +30,7 @@ export const Button = ({
       $textAlign={textAlign}
       $variant={variant}
       $active={active}
+      $padded={padded}
       disabled={disabled}
     >
       {children}
@@ -40,6 +43,7 @@ const ButtonStyle = styled.button<{
   $width: string;
   $textAlign: string;
   $active: boolean;
+  $padded: boolean;
 }>`
   background-color: ${({ $active, $variant }) =>
     $active ? theme.colors.white : theme.colors[$variant]};
@@ -48,7 +52,7 @@ const ButtonStyle = styled.button<{
   border: 1px solid
     ${({ $active }) => ($active ? theme.colors.primary : theme.colors.white)};
   border-radius: 5px;
-  padding: 15px 25px;
+  padding: ${({ $padded }) => ($padded ? '15px 25px' : '10px')};
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   cursor: pointer;

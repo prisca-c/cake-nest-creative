@@ -12,7 +12,7 @@ export const ProductEditTab = () => {
   const [data, setData] = useState<ProductType>(initialProductState);
 
   return (
-    <DivCenter>
+    <DivCenter $height={'100%'}>
       {selectedProduct.productId === '' ? (
         <Text>Cliquez sur un produit pour le modifier {HiCursorClick()}</Text>
       ) : (
