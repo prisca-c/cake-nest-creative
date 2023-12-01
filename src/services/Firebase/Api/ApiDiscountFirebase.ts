@@ -19,9 +19,9 @@ export class ApiDiscountFirebase {
     discounts: DiscountType[],
     userId: string,
   ): Promise<void> {
-    const collectionRef = doc(this.#db, 'users', 'cart', userId);
+    const collectionRef = doc(this.#db, 'users', userId);
     return await updateDoc(collectionRef, {
-      discounts: discounts,
+      ['cart.discounts']: discounts,
     });
   }
 }

@@ -7,6 +7,7 @@ import { AddDiscount } from '~@/ui/components/Cart/AddDiscount.tsx';
 import { useGetCartDiscountTotal } from '@Hooks/useGetCartDiscountTotal.ts';
 import { handleFrenchPriceFormat } from '@Utils/math.ts';
 import { UserContext } from '@Context/UserContext.ts';
+import { DiscountsList } from '~@/ui/components/Cart/DiscountsList.tsx';
 
 export const Cart = () => {
   const { total, cart } = useContext(CartContext);
@@ -25,9 +26,10 @@ export const Cart = () => {
           <span>{handleFrenchPriceFormat(discountTotal)}</span>
         </p>
         <AddDiscount />
+        <DiscountsList item={user.cart.discounts} />
       </div>
       {user.cart.items.length && user.cart.items?.length > 0 ? (
-        <div className={'list'}>
+        <div className={'cart_list'}>
           {cart.items
             .map((item) => <CartItem key={item.id} cartItem={item} />)
             .sort((a, b) =>
@@ -68,7 +70,7 @@ const Main = styled.div`
     }
   }
 
-  .list {
+  .cart_list {
     display: flex;
     flex-direction: column;
     gap: 15px;
