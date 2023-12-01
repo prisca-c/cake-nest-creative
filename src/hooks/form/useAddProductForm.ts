@@ -2,23 +2,16 @@ import React, { useState } from 'react';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { useTimer } from '@Hooks/useTimer.ts';
 import { getDateNowNumber } from '@Utils/date.ts';
-import type { ManageProductType } from '@Types/ManageProductType.ts';
 import type { ProductType } from '@Types/ProductType.ts';
 import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
+import { initialProductState } from '@Types/ProductType.ts';
 
 type UseAddProductFormProps = {
-  setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
+  setData: React.Dispatch<React.SetStateAction<ProductType>>;
 };
 
 export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
-  const initialData = {
-    name: '',
-    image: '',
-    price: 0.0,
-    quantity: 0,
-    isAvailable: false,
-  };
-  const [newData, setNewData] = useState<ManageProductType>(initialData);
+  const [newData, setNewData] = useState<ProductType>(initialProductState);
   const { menus, selectedMenu } = React.useContext(MenusContext);
   const { timerState, setTimerState } = useTimer({ time: 2000 });
   const { updateMenus } = useUpdateMenuUseCases();
@@ -28,16 +21,21 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
       ...newData,
       [e.target.id]: e.target.value,
     });
+
+    setData({
+      ...newData,
+      [e.target.id]: e.target.value,
+    });
   };
 
-  const handleAddProduct = async (data: ManageProductType) => {
+  const handleAddProduct = async (data: ProductType) => {
     const newProduct: ProductType = {
       id: getDateNowNumber(),
-      title: data.name,
-      imageSource: data.image,
+      title: data.title,
+      imageSource: data.imageSource,
       price: data.price,
       quantity: data.quantity,
-      isAdvertised: false,
+      isAdvertised: data.isAdvertised,
       isAvailable: data.isAvailable,
     };
 
@@ -60,8 +58,8 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
     setData(newData);
     handleAddProduct(newData);
     setTimerState(true);
-    setNewData(initialData);
-    setData(initialData);
+    setNewData(initialProductState);
+    setData(initialProductState);
   };
 
   const handleQuantity = (type: 'add' | 'remove') => {
@@ -88,6 +86,10 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
     setNewData((prev) => ({ ...prev, isAvailable: !prev.isAvailable }));
   };
 
+  const handleAdvertised = () => {
+    setNewData((prev) => ({ ...prev, isAdvertised: !prev.isAdvertised }));
+  };
+
   return {
     setNewData,
     newData,
@@ -97,5 +99,6 @@ export const useAddProductForm = ({ setData }: UseAddProductFormProps) => {
     handleQuantity,
     stockStatus,
     handleAvailable,
+    handleAdvertised,
   };
 };
