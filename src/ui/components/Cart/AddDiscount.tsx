@@ -15,7 +15,7 @@ export const AddDiscount = () => {
   const handleAddDiscount = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const code = e.currentTarget.code.value;
-    const newCart = cart;
+    const newCart = { ...cart };
     const newCartHasNonCumulativeDiscount = newCart.discounts.some(
       (discount) => !discount.cumulative,
     );
