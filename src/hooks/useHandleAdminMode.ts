@@ -1,4 +1,4 @@
-import { AdminToastInfo } from '@Components/Toast/AdminToast.ts';
+import { AdminToastInfo } from '~@/ui/components/Toast/AdminToast.ts';
 import { useContext } from 'react';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 

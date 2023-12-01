@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import type { ManageProductType } from '@Types/ManageProductType.ts';
 import { MenusContext } from '@Context/MenusContext.ts';
 import { AdminModeContext } from '@Context/AdminModeContext.ts';
 import { ManageProductStatesContext } from '@Context/ManageProductStates.ts';
 import { useUpdateMenuUseCases } from '~@/usecases/useUpdateMenuUseCases.ts';
+import { ProductType } from '@Types/ProductType.ts';
 
 type UseEditProductFormProps = {
-  data: ManageProductType;
-  setData: React.Dispatch<React.SetStateAction<ManageProductType>>;
+  data: ProductType;
+  setData: React.Dispatch<React.SetStateAction<ProductType>>;
 };
 
 export const useEditProductForm = ({
@@ -42,11 +42,13 @@ export const useEditProductForm = ({
 
     if (product) {
       setData({
-        name: product.title,
-        image: product.imageSource,
+        ...data,
+        title: product.title,
+        imageSource: product.imageSource,
         price: product.price,
         quantity: product.quantity,
         isAvailable: product.isAvailable,
+        isAdvertised: product.isAdvertised,
       });
     }
   };
@@ -60,11 +62,12 @@ export const useEditProductForm = ({
             if (product.id === productId) {
               return {
                 ...product,
-                title: data.name,
-                imageSource: data.image,
+                title: data.title,
+                imageSource: data.imageSource,
                 price: data.price,
                 quantity: data.quantity,
                 isAvailable: data.isAvailable,
+                isAdvertised: data.isAdvertised,
               };
             }
             return product;
@@ -79,6 +82,10 @@ export const useEditProductForm = ({
 
   const handleAvailable = () => {
     setData((prev) => ({ ...prev, isAvailable: !prev.isAvailable }));
+  };
+
+  const handleAdvertised = () => {
+    setData((prev) => ({ ...prev, isAdvertised: !prev.isAdvertised }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,6 +117,7 @@ export const useEditProductForm = ({
     openState,
     selectedProduct,
     handleAvailable,
+    handleAdvertised,
     handleQuantity,
     stockStatus,
     inputRef,

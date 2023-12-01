@@ -1,8 +1,9 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
+import { ManageProductTabType } from '@Types/ManageProductTabType.ts';
 
 export const ManageProductStatesContext = createContext<{
-  selectedTab: 'add' | 'edit';
-  setSelectedTab: Dispatch<SetStateAction<'add' | 'edit'>>;
+  selectedTab: ManageProductTabType;
+  setSelectedTab: Dispatch<SetStateAction<ManageProductTabType>>;
   openState: boolean;
   setOpenState: Dispatch<SetStateAction<boolean>>;
 }>({

@@ -3,6 +3,7 @@ import { UserContext } from '@Context/UserContext.ts';
 import { useNavigate } from 'react-router-dom';
 import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
 import { initialUserState } from '@Types/UserType.ts';
+import { generateUUID } from '@Utils/math.ts';
 
 export const useLoginForm = () => {
   const { setUser } = useContext(UserContext);
@@ -36,9 +37,9 @@ export const useLoginForm = () => {
         const userInfo = {
           ...initialUserState,
           username: newName,
+          id: generateUUID(),
         };
         await ApiUsersFirebase.createUser(userInfo).then(() => {
-          //console.log('user created');
           localStorage.setItem('user', JSON.stringify(userInfo));
           return navigate('/order');
         });

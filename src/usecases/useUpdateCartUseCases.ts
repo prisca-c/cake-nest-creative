@@ -3,24 +3,20 @@ import { useContext } from 'react';
 import { UserContext } from '@Context/UserContext.ts';
 import { CartContext } from '@Context/CartContext.ts';
 import { ApiUsersFirebase } from '~@/services/Firebase/Api/ApiUsersFirebase.ts';
-import { UserType } from '@Types/UserType.ts';
+import { ApiCartFirebase } from '~@/services/Firebase/Api/ApiCartFirebase.ts';
 
 export const useUpdateCartUseCases = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { setCart } = useContext(CartContext);
 
   const updateCart = async (newCart: CartType) => {
-    const updateUser: UserType = {
-      ...user,
-      cart: newCart,
-    };
-
     try {
       await Promise.all([
-        ApiUsersFirebase.updateUser(updateUser),
+        ApiCartFirebase.updateCart(newCart, user.id),
         ApiUsersFirebase.getUser(user.id).then((user) => {
           if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
             setCart(user.cart);
           }
         }),
