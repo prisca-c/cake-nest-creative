@@ -25,7 +25,8 @@ export const useHandleProductSelected = () => {
     setSelectedProduct({ productId: id, menuId: menu });
     setSelectedMenu(menu);
 
-    if (selectedTab === 'add') setSelectedTab('edit');
+    if (selectedTab === 'add' || selectedTab === 'discount')
+      setSelectedTab('edit');
     if (!openState) setOpenState(true);
   };
 
